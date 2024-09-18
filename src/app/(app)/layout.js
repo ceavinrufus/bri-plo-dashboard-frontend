@@ -11,9 +11,13 @@ const AppLayout = ({ children }) => {
     //     return <Loading />
     // }
 
+    const mockUser = {
+        name: 'John Doe',
+        email: 'johndoe@gmail.com',
+    }
     return (
         <div className="min-h-screen bg-gray-100">
-            <Navigation />
+            <Navigation user={mockUser} />
             {/* <Navigation user={user} /> */}
 
             <main>{children}</main>
