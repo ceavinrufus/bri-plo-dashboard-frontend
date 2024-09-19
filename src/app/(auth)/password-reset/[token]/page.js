@@ -1,7 +1,7 @@
 'use client'
 
 import Button from '@/components/Button'
-import Input from '@/components/Input'
+import { Input } from '@/components/ui/Input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import { useAuth } from '@/hooks/auth'
@@ -71,10 +71,7 @@ const PasswordReset = () => {
                         required
                     />
 
-                    <InputError
-                        messages={errors.password}
-                        className="mt-2"
-                    />
+                    <InputError messages={errors.password} className="mt-2" />
                 </div>
 
                 {/* Confirm Password */}

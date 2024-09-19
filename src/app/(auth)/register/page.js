@@ -1,7 +1,7 @@
 'use client'
 
 import Button from '@/components/Button'
-import Input from '@/components/Input'
+import { Input } from '@/components/ui/Input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import Link from 'next/link'
@@ -86,9 +86,7 @@ const Page = () => {
 
             {/* Confirm Password */}
             <div className="mt-4">
-                <Label htmlFor="passwordConfirmation">
-                    Confirm Password
-                </Label>
+                <Label htmlFor="passwordConfirmation">Confirm Password</Label>
 
                 <Input
                     id="passwordConfirmation"

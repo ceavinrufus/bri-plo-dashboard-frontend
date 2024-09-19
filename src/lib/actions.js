@@ -10,7 +10,7 @@ export const fetchPengadaanData = async () => {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
         // Make the API request
-        const response = await axios.get(`${backendUrl}/data-pengadaan/igp`)
+        const response = await axios.get(`${backendUrl}/api/data-pengadaan/igp`)
 
         // Return the data from the response
         return response.data

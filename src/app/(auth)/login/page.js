@@ -1,7 +1,7 @@
 'use client'
 
 import Button from '@/components/Button'
-import Input from '@/components/Input'
+import { Input } from '@/components/ui/Input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import Link from 'next/link'
@@ -18,7 +18,7 @@ const Login = () => {
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [email, setEmail] = useState('')
+    const [pn, setPn] = useState('')
     const [password, setPassword] = useState('')
     const [shouldRemember, setShouldRemember] = useState(false)
     const [errors, setErrors] = useState([])
@@ -36,7 +36,7 @@ const Login = () => {
         event.preventDefault()
 
         login({
-            email,
+            pn,
             password,
             remember: shouldRemember,
             setErrors,
@@ -48,21 +48,20 @@ const Login = () => {
         <>
             <AuthSessionStatus className="mb-4" status={status} />
             <form onSubmit={submitForm}>
-                {/* Email Address */}
+                {/* Personal Number */}
                 <div>
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="pn">Personal Number</Label>
 
                     <Input
-                        id="email"
-                        type="email"
-                        value={email}
+                        id="pn"
+                        value={pn}
                         className="block mt-1 w-full"
-                        onChange={event => setEmail(event.target.value)}
+                        onChange={event => setPn(event.target.value)}
                         required
                         autoFocus
                     />
 
-                    <InputError messages={errors.email} className="mt-2" />
+                    <InputError messages={errors.pn} className="mt-2" />
                 </div>
 
                 {/* Password */}
