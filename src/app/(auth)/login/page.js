@@ -54,6 +54,7 @@ const Login = () => {
 
                     <Input
                         id="pn"
+                        type="text"
                         value={pn}
                         className="block mt-1 w-full"
                         onChange={event => setPn(event.target.value)}

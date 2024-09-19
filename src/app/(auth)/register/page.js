@@ -15,6 +15,7 @@ const Page = () => {
     })
 
     const [name, setName] = useState('')
+    const [pn, setPn] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
@@ -25,6 +26,7 @@ const Page = () => {
 
         register({
             name,
+            pn,
             email,
             password,
             password_confirmation: passwordConfirmation,
@@ -49,6 +51,23 @@ const Page = () => {
                 />
 
                 <InputError messages={errors.name} className="mt-2" />
+            </div>
+
+            {/* Personal Number */}
+            <div className="mt-4">
+                <Label htmlFor="pn">Personal Number</Label>
+
+                <Input
+                    id="pn"
+                    type="text"
+                    value={pn}
+                    className="block mt-1 w-full"
+                    onChange={event => setPn(event.target.value)}
+                    required
+                    autoFocus
+                />
+
+                <InputError messages={errors.pn} className="mt-2" />
             </div>
 
             {/* Email Address */}
