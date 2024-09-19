@@ -5,20 +5,16 @@ import Navigation from '@/app/(app)/Navigation'
 import Loading from '@/app/(app)/Loading'
 
 const AppLayout = ({ children }) => {
-    // const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useAuth({ middleware: 'auth' })
 
-    // if (!user) {
-    //     return <Loading />
-    // }
-
-    const mockUser = {
-        name: 'John Doe',
-        email: 'johndoe@gmail.com',
+    if (!user) {
+        return <Loading />
     }
+
     return (
         <div className="min-h-screen bg-gray-100">
-            <Navigation user={mockUser} />
-            {/* <Navigation user={user} /> */}
+            {/* <Navigation user={mockUser} /> */}
+            <Navigation user={user} />
 
             <main>{children}</main>
         </div>
