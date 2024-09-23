@@ -1,7 +1,7 @@
 'use client'
 
 import Button from '@/components/Button'
-import { Input } from '@/components/ui/Input'
+import { Input } from '@/components/ui/input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import { useAuth } from '@/hooks/auth'

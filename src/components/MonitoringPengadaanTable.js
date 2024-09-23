@@ -3,9 +3,9 @@
 import { fetchPengadaanData } from '@/lib/actions'
 import React, { useEffect, useMemo, useState } from 'react'
 import { DataTable } from './DataTable'
-import { rekapPengadaanColumns } from '@/mocks/Columns'
+import { prosesPengadaanColumns } from '@/mocks/Columns'
 
-const PengadaanTable = () => {
+const ProsesPengadaanTable = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -13,7 +13,6 @@ const PengadaanTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await fetchPengadaanData()
-            console.log(result.data)
             setData(result.data)
             setLoading(false)
         }
@@ -29,9 +28,9 @@ const PengadaanTable = () => {
     return (
         <div>
             <h1>Pengadaan Data</h1>
-            <DataTable data={memoizedData} columns={rekapPengadaanColumns} />
+            <DataTable data={memoizedData} columns={prosesPengadaanColumns} />
         </div>
     )
 }
 
-export default PengadaanTable
+export default ProsesPengadaanTable

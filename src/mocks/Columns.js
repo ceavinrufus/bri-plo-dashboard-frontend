@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { calculateDaysDifference } from '@/utils'
 
 export const columns = [
     {
@@ -130,7 +131,8 @@ export const columns = [
         },
     },
 ]
-export const rekapPengadaanColumns = [
+export const prosesPengadaanColumns = [
+    // Select
     {
         id: 'select',
         header: ({ table }) => (
@@ -155,6 +157,7 @@ export const rekapPengadaanColumns = [
         enableSorting: false,
         enableHiding: false,
     },
+    // Nomor
     {
         accessorKey: 'nomor',
         header: ({ column }) => {
@@ -173,8 +176,9 @@ export const rekapPengadaanColumns = [
             <div className="capitalize">{row.getValue('nomor')}</div>
         ),
     },
+    // Kode User
     {
-        accessorKey: 'nama_pengadaan',
+        accessorKey: 'kode_user',
         header: ({ column }) => {
             return (
                 <Button
@@ -182,17 +186,18 @@ export const rekapPengadaanColumns = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }>
-                    Nama Pengadaan
+                    Kode User
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
         cell: ({ row }) => (
-            <div className="lowercase">{row.getValue('nama_pengadaan')}</div>
+            <div className="capitalize">{row.getValue('kode_user')}</div>
         ),
     },
+    // Perihal
     {
-        accessorKey: 'tanggal_nodin',
+        accessorKey: 'perihal',
         header: ({ column }) => {
             return (
                 <Button
@@ -200,13 +205,53 @@ export const rekapPengadaanColumns = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }>
-                    Tanggal Nodin
+                    Perihal
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
         cell: ({ row }) => (
-            <div className="lowercase">{row.getValue('tanggal_nodin')}</div>
+            <div className="lowercase">{row.getValue('perihal')}</div>
+        ),
+    },
+    // Tanggal Nodin
+    {
+        accessorKey: 'nodin_user',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Nodin User
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="lowercase">{row.getValue('nodin_user')}</div>
+        ),
+    },
+    // Tanggal Nodin
+    {
+        accessorKey: 'tanggal_nodin_user',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Tanggal Nodin User
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="lowercase">
+                {row.getValue('tanggal_nodin_user')}
+            </div>
         ),
     },
     {
@@ -241,12 +286,17 @@ export const rekapPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => (
-            <div className="lowercase">
-                {row.getValue('hari_pengerjaan')}{' '}
-                {row.getValue('hari_pengerjaan') ? 'hari' : ''}
-            </div>
-        ),
+        cell: ({ row }) => {
+            const diff = calculateDaysDifference(
+                row.getValue('tanggal_spk'),
+                row.getValue('tanggal_nodin_user'),
+            )
+            return (
+                <div className="lowercase">
+                    {diff} {diff ? 'hari' : ''}
+                </div>
+            )
+        },
     },
     {
         accessorKey: 'metode',
@@ -265,7 +315,7 @@ export const rekapPengadaanColumns = [
         cell: ({ row }) => <div className="">{row.getValue('metode')}</div>,
     },
     {
-        accessorKey: 'progres',
+        accessorKey: 'proses_pengadaan',
         header: ({ column }) => {
             return (
                 <Button
@@ -273,47 +323,13 @@ export const rekapPengadaanColumns = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }>
-                    Progress
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => <div className="">{row.getValue('progres')}</div>,
-    },
-    {
-        accessorKey: 'hari_proses',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }>
-                    Hari Proses
+                    Proses Pengadaan
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
         cell: ({ row }) => (
-            <div className="">{row.getValue('hari_proses')}</div>
-        ),
-    },
-    {
-        accessorKey: 'progres_pengadaan',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }>
-                    Progres Pengadaan
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => (
-            <div className="">{row.getValue('progres_pengadaan')}</div>
+            <div className="">{row.getValue('proses_pengadaan')}</div>
         ),
     },
     {
