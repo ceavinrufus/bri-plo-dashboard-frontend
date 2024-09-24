@@ -36,11 +36,6 @@ const Navigation = ({ user }) => {
                                 Dashboard
                             </NavLink>
                             <NavLink
-                                href="/rekap-pengadaan"
-                                active={usePathname() === '/rekap-pengadaan'}>
-                                Rekap Pengadaan
-                            </NavLink>
-                            <NavLink
                                 href="/proses-pengadaan"
                                 active={usePathname() === '/proses-pengadaan'}>
                                 Proses Pengadaan
@@ -126,11 +121,6 @@ const Navigation = ({ user }) => {
                             href="/dashboard"
                             active={usePathname() === '/dashboard'}>
                             Dashboard
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href="/rekap-pengadaan"
-                            active={usePathname() === '/rekap-pengadaan'}>
-                            Rekap Pengadaan
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href="/proses-pengadaan"

@@ -4,6 +4,7 @@ import { fetchPengadaanData } from '@/lib/actions'
 import React, { useEffect, useMemo, useState } from 'react'
 import { DataTable } from './DataTable'
 import { prosesPengadaanColumns } from '@/mocks/Columns'
+import { AddDataSheet } from './AddDataSheet'
 
 const ProsesPengadaanTable = () => {
     const [data, setData] = useState([])
@@ -27,7 +28,10 @@ const ProsesPengadaanTable = () => {
 
     return (
         <div>
-            <h1>Pengadaan Data</h1>
+            <div className="flex">
+                <h1>Pengadaan Data</h1>
+                <AddDataSheet />
+            </div>
             <DataTable data={memoizedData} columns={prosesPengadaanColumns} />
         </div>
     )

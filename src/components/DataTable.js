@@ -27,12 +27,14 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
+import { cn } from '@/lib/utils'
 
 export function DataTable({ data, columns }) {
     const [sorting, setSorting] = React.useState([])
     const [columnFilters, setColumnFilters] = React.useState([])
     const [columnVisibility, setColumnVisibility] = React.useState({})
     const [rowSelection, setRowSelection] = React.useState({})
+    const [selectedColumnId, setSelectedColumnId] = React.useState('')
 
     const table = useReactTable({
         data,
@@ -58,13 +60,10 @@ export function DataTable({ data, columns }) {
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Search pengadaan..."
-                    value={
-                        table.getColumn('nama_pengadaan')?.getFilterValue() ??
-                        ''
-                    }
+                    value={table.getColumn('perihal')?.getFilterValue() ?? ''}
                     onChange={event =>
                         table
-                            .getColumn('nama_pengadaan')
+                            .getColumn('perihal')
                             ?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
@@ -102,7 +101,16 @@ export function DataTable({ data, columns }) {
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map(header => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead
+                                            className={cn(
+                                                header.id ===
+                                                    selectedColumnId &&
+                                                    '[&>*:first-child]:bg-gray-100',
+                                            )}
+                                            onClick={() =>
+                                                setSelectedColumnId(header.id)
+                                            }
+                                            key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(

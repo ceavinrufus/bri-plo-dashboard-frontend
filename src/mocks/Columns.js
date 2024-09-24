@@ -348,17 +348,18 @@ export const prosesPengadaanColumns = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem
                             onClick={() =>
-                                navigator.clipboard.writeText(
-                                    pengadaan.nama_pengadaan,
-                                )
+                                navigator.clipboard.writeText(pengadaan.perihal)
                             }>
                             Salin nama pengadaan
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             Lihat detail pengadaan
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            Edit informasi pengadaan
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
