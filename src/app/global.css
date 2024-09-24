@@ -67,3 +67,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .date-picker {
+    @apply overflow-hidden border-transparent w-full py-1.5 rounded-md px-3 outline-none !important;
+  }
+}
+
+/* =====  REACT-DATEPICKER OVERRIDES */
+.react-datepicker-wrapper.date-picker {
+  display: flex;
+  align-items: center;
+}
+
+.react-datepicker__time-list-item {
+  display: flex !important;
+  align-items: center !important;
+}

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import AuthCard from '@/app/(auth)/AuthCard'
 import ApplicationLogo from '@/components/ApplicationLogo'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata = {
     title: 'Laravel',
@@ -8,7 +9,7 @@ export const metadata = {
 
 const Layout = ({ children }) => {
     return (
-        <div>
+        <body>
             <div className="text-gray-900 antialiased">
                 <AuthCard
                     logo={
@@ -19,7 +20,8 @@ const Layout = ({ children }) => {
                     {children}
                 </AuthCard>
             </div>
-        </div>
+            <Toaster />
+        </body>
     )
 }
 
