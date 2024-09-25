@@ -1,25 +1,29 @@
 'use client'
 
-import { fetchPengadaanData } from '@/lib/actions'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { DataTable } from './DataTable'
 import { prosesPengadaanColumns } from '@/mocks/Columns'
 import { AddDataSheet } from './AddDataSheet'
+import { gql, useQuery } from '@apollo/client'
+import client from '@/lib/apolloClient'
+
+const GET_PENGADAANS = gql`
+    query GetPengadaans {
+        pengadaans {
+            id
+            kode_user
+            perihal
+            nodin_user
+            tanggal_nodin_user
+            tanggal_spk
+            metode
+            proses_pengadaan
+        }
+    }
+`
 
 const ProsesPengadaanTable = () => {
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
-
-    // Fetch data when the component mounts
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await fetchPengadaanData()
-            setData(result.data)
-            setLoading(false)
-        }
-
-        fetchData()
-    }, [])
+    const { loading, data } = useQuery(GET_PENGADAANS, { client })
 
     // Memoize the data for performance optimization
     const memoizedData = useMemo(() => data, [data])
@@ -32,7 +36,10 @@ const ProsesPengadaanTable = () => {
                 <h1>Pengadaan Data</h1>
                 <AddDataSheet />
             </div>
-            <DataTable data={memoizedData} columns={prosesPengadaanColumns} />
+            <DataTable
+                data={memoizedData.pengadaans}
+                columns={prosesPengadaanColumns}
+            />
         </div>
     )
 }

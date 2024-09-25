@@ -157,25 +157,6 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false,
     },
-    // Nomor
-    {
-        accessorKey: 'nomor',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }>
-                    Nomor
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => (
-            <div className="capitalize">{row.getValue('nomor')}</div>
-        ),
-    },
     // Kode User
     {
         accessorKey: 'kode_user',
@@ -192,7 +173,9 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="capitalize">{row.getValue('kode_user')}</div>
+            <div className="capitalize text-center">
+                {row.getValue('kode_user')}
+            </div>
         ),
     },
     // Perihal

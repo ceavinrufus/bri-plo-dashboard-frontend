@@ -9,7 +9,7 @@ export const metadata = {
 
 const Layout = ({ children }) => {
     return (
-        <body>
+        <main>
             <div className="text-gray-900 antialiased">
                 <AuthCard
                     logo={
@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
                 </AuthCard>
             </div>
             <Toaster />
-        </body>
+        </main>
     )
 }
 

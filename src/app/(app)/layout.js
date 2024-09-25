@@ -13,13 +13,13 @@ const AppLayout = ({ children }) => {
     }
 
     return (
-        <body className="min-h-screen bg-gray-100">
+        <main className="min-h-screen bg-gray-100">
             {/* <Navigation user={mockUser} /> */}
             <Navigation user={user} />
 
-            <main>{children}</main>
+            <div>{children}</div>
             <Toaster />
-        </body>
+        </main>
     )
 }
 
