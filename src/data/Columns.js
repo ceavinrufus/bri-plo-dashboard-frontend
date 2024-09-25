@@ -68,9 +68,7 @@ export const columns = [
                 </Button>
             )
         },
-        cell: ({ row }) => (
-            <div className="lowercase">{row.getValue('email')}</div>
-        ),
+        cell: ({ row }) => <div className="">{row.getValue('email')}</div>,
     },
     {
         accessorKey: 'amount',
@@ -159,6 +157,25 @@ export const prosesPengadaanColumns = [
     },
     // Kode User
     {
+        accessorKey: 'tim',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Tim
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="uppercase text-center">{row.getValue('tim')}</div>
+        ),
+    },
+    // Kode User
+    {
         accessorKey: 'kode_user',
         header: ({ column }) => {
             return (
@@ -173,7 +190,7 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="capitalize text-center">
+            <div className="uppercase text-center">
                 {row.getValue('kode_user')}
             </div>
         ),
@@ -193,9 +210,7 @@ export const prosesPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => (
-            <div className="lowercase">{row.getValue('perihal')}</div>
-        ),
+        cell: ({ row }) => <div className="">{row.getValue('perihal')}</div>,
     },
     // Tanggal Nodin
     {
@@ -212,9 +227,7 @@ export const prosesPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => (
-            <div className="lowercase">{row.getValue('nodin_user')}</div>
-        ),
+        cell: ({ row }) => <div className="">{row.getValue('nodin_user')}</div>,
     },
     // Tanggal Nodin
     {
@@ -232,9 +245,7 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="lowercase">
-                {row.getValue('tanggal_nodin_user')}
-            </div>
+            <div className="">{row.getValue('tanggal_nodin_user')}</div>
         ),
     },
     {
@@ -252,7 +263,7 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="lowercase">{row.getValue('tanggal_spk')}</div>
+            <div className="">{row.getValue('tanggal_spk')}</div>
         ),
     },
     {
@@ -275,7 +286,7 @@ export const prosesPengadaanColumns = [
                 row.getValue('tanggal_nodin_user'),
             )
             return (
-                <div className="lowercase">
+                <div className="">
                     {diff} {diff ? 'hari' : ''}
                 </div>
             )

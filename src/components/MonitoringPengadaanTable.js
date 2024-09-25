@@ -3,7 +3,7 @@
 import { fetchPengadaanData } from '@/lib/actions'
 import React, { useEffect, useMemo, useState } from 'react'
 import { DataTable } from './DataTable'
-import { prosesPengadaanColumns } from '@/mocks/Columns'
+import { prosesPengadaanColumns } from '@/data/Columns'
 
 const ProsesPengadaanTable = () => {
     const [data, setData] = useState([])

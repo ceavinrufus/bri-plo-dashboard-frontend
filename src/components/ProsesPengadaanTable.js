@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react'
 import { DataTable } from './DataTable'
-import { prosesPengadaanColumns } from '@/mocks/Columns'
+import { prosesPengadaanColumns } from '@/data/Columns'
 import { AddDataSheet } from './AddDataSheet'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
@@ -11,6 +11,7 @@ const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
         pengadaans(departemen: $departemen) {
             id
+            tim
             kode_user
             perihal
             nodin_user

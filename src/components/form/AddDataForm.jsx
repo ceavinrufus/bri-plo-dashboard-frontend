@@ -10,6 +10,7 @@ import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
 import { postPengadaanData } from '@/lib/actions'
 import { formatDate } from '@/lib/utils'
+import { progress } from '@/data/ProgressSelection'
 
 // Validation schema based on the model's fillable fields
 const FormSchema = z.object({
@@ -149,13 +150,19 @@ export function AddDataForm() {
                     name="is_done"
                     label="Done"
                 />
-                <CustomFormField
-                    fieldType={FormFieldType.INPUT}
-                    control={form.control}
-                    name="proses_pengadaan"
-                    label="Proses Pengadaan"
-                    placeholder="Proses Pengadaan"
-                />
+                {form.watch('metode') && (
+                    <CustomFormField
+                        fieldType={FormFieldType.SELECT}
+                        control={form.control}
+                        name="proses_pengadaan"
+                        label="Proses Pengadaan">
+                        {progress[form.watch('metode')].map((item, index) => (
+                            <SelectItem key={index} value={item}>
+                                {item}
+                            </SelectItem>
+                        ))}
+                    </CustomFormField>
+                )}
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
