@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { DataTable } from './DataTable'
 import { prosesPengadaanColumns } from '@/mocks/Columns'
 import { AddDataSheet } from './AddDataSheet'
@@ -8,8 +8,8 @@ import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
 
 const GET_PENGADAANS = gql`
-    query GetPengadaans {
-        pengadaans {
+    query GetPengadaans($departemen: String!) {
+        pengadaans(departemen: $departemen) {
             id
             kode_user
             perihal
@@ -23,7 +23,12 @@ const GET_PENGADAANS = gql`
 `
 
 const ProsesPengadaanTable = () => {
-    const { loading, data } = useQuery(GET_PENGADAANS, { client })
+    const [departemen, setDepartemen] = useState('igp')
+
+    const { loading, data } = useQuery(GET_PENGADAANS, {
+        variables: { departemen },
+        client,
+    })
 
     // Memoize the data for performance optimization
     const memoizedData = useMemo(() => data, [data])
@@ -33,7 +38,7 @@ const ProsesPengadaanTable = () => {
     return (
         <div>
             <div className="flex">
-                <h1>Pengadaan Data</h1>
+                <h1>Pengadaan Data for {departemen.toUpperCase()}</h1>
                 <AddDataSheet />
             </div>
             <DataTable

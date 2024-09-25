@@ -9,15 +9,16 @@ import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
 import { postPengadaanData } from '@/lib/actions'
+import { formatDate } from '@/lib/utils'
 
 // Validation schema based on the model's fillable fields
 const FormSchema = z.object({
     kode_user: z.string().min(1, { message: 'Kode user is required.' }),
     nodin_user: z.string().optional(),
-    tanggal_nodin_user: z.string().optional(),
-    departemen: z.string().min(1, { message: 'Departemen is required.' }),
+    tanggal_nodin_user: z.date().optional(),
+    departemen: z.enum(['bcp', 'igp', 'psr']),
     perihal: z.string().min(1, { message: 'Perihal is required.' }),
-    tanggal_spk: z.string().optional(),
+    tanggal_spk: z.date().optional(),
     metode: z
         .enum([
             'Lelang',
@@ -39,30 +40,13 @@ const FormSchema = z.object({
 export function AddDataForm() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
-        defaultValues: {
-            kode_user: 'UDG',
-            nodin_user: 'N123',
-            tanggal_nodin_user: '2024-09-25',
-            departemen: 'igp',
-            perihal: 'Procurement of Office Supplies',
-            tanggal_spk: '2024-09-26',
-            metode: 'Lelang',
-            is_verification_complete: true,
-            is_done: false,
-            proses_pengadaan: 'Tender',
-            nilai_spk: 1000000,
-            anggaran: 1200000,
-            hps: 950000,
-            tkdn_percentage: 25,
-            catatan: 'Initial procurement for supplies.',
-        },
     })
 
     async function onSubmit(data) {
         const transformedData = {
             ...data,
-            tanggal_nodin_user: data.tanggal_nodin_user,
-            tanggal_spk: data.tanggal_spk,
+            tanggal_nodin_user: formatDate(data.tanggal_nodin_user),
+            tanggal_spk: formatDate(data.tanggal_spk),
             nilai_spk: data.nilai_spk ? parseInt(data.nilai_spk) : null,
             anggaran: data.anggaran ? parseInt(data.anggaran) : null,
             hps: data.hps ? parseInt(data.hps) : null,
@@ -116,12 +100,14 @@ export function AddDataForm() {
                     label="Tanggal Nodin User"
                 />
                 <CustomFormField
-                    fieldType={FormFieldType.INPUT}
+                    fieldType={FormFieldType.SELECT}
                     control={form.control}
                     name="departemen"
-                    label="Departemen"
-                    placeholder="Departemen"
-                />
+                    label="Departemen">
+                    <SelectItem value="bcp">BCP</SelectItem>
+                    <SelectItem value="igp">IGP</SelectItem>
+                    <SelectItem value="psr">PSR</SelectItem>
+                </CustomFormField>
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
