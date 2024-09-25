@@ -3,21 +3,21 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
+import { postPengadaanData } from '@/lib/actions'
 
 // Validation schema based on the model's fillable fields
 const FormSchema = z.object({
     kode_user: z.string().min(1, { message: 'Kode user is required.' }),
     nodin_user: z.string().optional(),
-    tanggal_nodin_user: z.date().optional(),
+    tanggal_nodin_user: z.string().optional(),
     departemen: z.string().min(1, { message: 'Departemen is required.' }),
     perihal: z.string().min(1, { message: 'Perihal is required.' }),
-    tanggal_spk: z.date().optional(),
+    tanggal_spk: z.string().optional(),
     metode: z
         .enum([
             'Lelang',
@@ -40,35 +40,54 @@ export function AddDataForm() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            kode_user: '',
-            nodin_user: '',
-            tanggal_nodin_user: null,
-            departemen: '',
-            perihal: '',
-            tanggal_spk: null,
-            metode: '',
-            is_verification_complete: false,
+            kode_user: 'UDG',
+            nodin_user: 'N123',
+            tanggal_nodin_user: '2024-09-25',
+            departemen: 'igp',
+            perihal: 'Procurement of Office Supplies',
+            tanggal_spk: '2024-09-26',
+            metode: 'Lelang',
+            is_verification_complete: true,
             is_done: false,
-            proses_pengadaan: '',
-            nilai_spk: null,
-            anggaran: null,
-            hps: null,
-            tkdn_percentage: null,
-            catatan: '',
+            proses_pengadaan: 'Tender',
+            nilai_spk: 1000000,
+            anggaran: 1200000,
+            hps: 950000,
+            tkdn_percentage: 25,
+            catatan: 'Initial procurement for supplies.',
         },
     })
 
-    function onSubmit(data) {
-        toast({
-            title: 'You submitted the following values:',
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        })
+    async function onSubmit(data) {
+        const transformedData = {
+            ...data,
+            tanggal_nodin_user: data.tanggal_nodin_user,
+            tanggal_spk: data.tanggal_spk,
+            nilai_spk: data.nilai_spk ? parseInt(data.nilai_spk) : null,
+            anggaran: data.anggaran ? parseInt(data.anggaran) : null,
+            hps: data.hps ? parseInt(data.hps) : null,
+            tkdn_percentage: data.tkdn_percentage
+                ? parseInt(data.tkdn_percentage)
+                : null,
+        }
+
+        try {
+            await postPengadaanData(transformedData)
+
+            toast({
+                title: 'Success',
+                description: 'Data has been submitted successfully!',
+                status: 'success',
+            })
+        } catch (error) {
+            toast({
+                title: 'Error',
+                description:
+                    error.response?.data?.message ||
+                    'An error occurred while submitting data.',
+                status: 'error',
+            })
+        }
     }
 
     return (

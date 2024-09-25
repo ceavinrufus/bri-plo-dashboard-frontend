@@ -20,3 +20,24 @@ export const fetchPengadaanData = async () => {
         throw error
     }
 }
+
+// Define the function to post data
+export const postPengadaanData = async data => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.post(
+            `${backendUrl}/api/pengadaan/store`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error posting data:', error)
+        throw error
+    }
+}
