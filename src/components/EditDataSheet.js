@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/sheet'
 import { EditDataForm } from './form/EditDataForm'
 
-export function EditDataSheet() {
+export function EditDataSheet({ defaultValues }) {
     return (
         <Sheet>
             <SheetTrigger
@@ -24,7 +24,7 @@ export function EditDataSheet() {
                         Fill in the form below to edit data.
                     </SheetDescription>
                 </SheetHeader>
-                <EditDataForm />
+                <EditDataForm defaultValues={defaultValues} />
             </SheetContent>
         </Sheet>
     )

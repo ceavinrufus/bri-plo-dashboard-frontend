@@ -8,18 +8,19 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
-import { postPengadaanData } from '@/lib/actions'
 import { formatDate } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
+import { updatePengadaanData } from '@/lib/actions'
 
 // Validation schema based on the model's fillable fields
 const FormSchema = z.object({
     kode_user: z.string().min(1, { message: 'Kode user is required.' }),
     nodin_user: z.string().optional(),
-    tanggal_nodin_user: z.date().optional(),
+    tanggal_nodin_user: z.union([z.string(), z.date()]).optional(),
+    tim: z.string().optional(),
     departemen: z.enum(['bcp', 'igp', 'psr']),
     perihal: z.string().min(1, { message: 'Perihal is required.' }),
-    tanggal_spk: z.date().optional(),
+    tanggal_spk: z.union([z.string(), z.date()]).optional(),
     metode: z
         .enum([
             'Lelang',
@@ -38,9 +39,10 @@ const FormSchema = z.object({
     catatan: z.string().optional(),
 })
 
-export function EditDataForm() {
+export function EditDataForm({ defaultValues }) {
     const form = useForm({
         resolver: zodResolver(FormSchema),
+        defaultValues,
     })
 
     async function onSubmit(data) {
@@ -57,7 +59,7 @@ export function EditDataForm() {
         }
 
         try {
-            await postPengadaanData(transformedData)
+            await updatePengadaanData(defaultValues.id, transformedData)
 
             toast({
                 title: 'Success',
@@ -100,15 +102,6 @@ export function EditDataForm() {
                     name="tanggal_nodin_user"
                     label="Tanggal Nodin User"
                 />
-                <CustomFormField
-                    fieldType={FormFieldType.SELECT}
-                    control={form.control}
-                    name="departemen"
-                    label="Departemen">
-                    <SelectItem value="bcp">BCP</SelectItem>
-                    <SelectItem value="igp">IGP</SelectItem>
-                    <SelectItem value="psr">PSR</SelectItem>
-                </CustomFormField>
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
@@ -198,7 +191,7 @@ export function EditDataForm() {
                     label="Catatan"
                     placeholder="Catatan"
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit">Save</Button>
             </form>
         </Form>
     )

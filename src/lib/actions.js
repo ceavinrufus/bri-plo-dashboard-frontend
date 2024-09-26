@@ -41,3 +41,25 @@ export const postPengadaanData = async data => {
         throw error
     }
 }
+
+// Define the function to update data
+export const updatePengadaanData = async (pengadaanId, data) => {
+    try {
+        console.log(pengadaanId)
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.put(
+            `${backendUrl}/api/pengadaan/update/${pengadaanId}`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error updating data:', error)
+        throw error
+    }
+}

@@ -16,10 +16,11 @@ import { progress } from '@/data/ProgressSelection'
 const FormSchema = z.object({
     kode_user: z.string().min(1, { message: 'Kode user is required.' }),
     nodin_user: z.string().optional(),
-    tanggal_nodin_user: z.date().optional(),
+    tanggal_nodin_user: z.union([z.string(), z.date()]).optional(),
+    tim: z.string().optional(),
     departemen: z.enum(['bcp', 'igp', 'psr']),
     perihal: z.string().min(1, { message: 'Perihal is required.' }),
-    tanggal_spk: z.date().optional(),
+    tanggal_spk: z.union([z.string(), z.date()]).optional(),
     metode: z
         .enum([
             'Lelang',

@@ -12,6 +12,7 @@ const GET_PENGADAANS = gql`
         pengadaans(departemen: $departemen) {
             id
             tim
+            departemen
             kode_user
             perihal
             nodin_user

@@ -353,7 +353,7 @@ export const prosesPengadaanColumns = [
                         <DropdownMenuItem>
                             Lihat detail pengadaan
                         </DropdownMenuItem>
-                        <EditDataSheet />
+                        <EditDataSheet defaultValues={pengadaan} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
