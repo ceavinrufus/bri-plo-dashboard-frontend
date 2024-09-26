@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { DataTable } from './DataTable'
 import { prosesPengadaanColumns } from '@/data/Columns'
 import { AddDataSheet } from './AddDataSheet'
@@ -34,7 +34,7 @@ const GET_PENGADAANS = gql`
 `
 
 const ProsesPengadaanTable = () => {
-    const [departemen, setDepartemen] = useState('igp')
+    const [departemen] = useState('igp')
     const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
 
     const { loading } = useQuery(GET_PENGADAANS, {

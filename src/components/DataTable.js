@@ -135,8 +135,22 @@ export function DataTable({ data, columns }) {
                                 <TableRow
                                     key={row.id}
                                     data-state={
-                                        row.getIsSelected() && 'selected'
-                                    }>
+                                        data.find(
+                                            item =>
+                                                item.nodin_user ===
+                                                row.original.nodin_user,
+                                        )?.verification_alert_at &&
+                                        new Date(
+                                            data.find(
+                                                item =>
+                                                    item.nodin_user ===
+                                                    row.original.nodin_user,
+                                            ).verification_alert_at,
+                                        ) <= new Date()
+                                            ? 'alert-red'
+                                            : ''
+                                    }
+                                    selected={row.getIsSelected()}>
                                     {row.getVisibleCells().map(cell => (
                                         <TableCell key={cell.id}>
                                             {flexRender(
