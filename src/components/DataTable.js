@@ -87,7 +87,9 @@ export function DataTable({ data, columns }) {
                                         onCheckedChange={value =>
                                             column.toggleVisibility(!!value)
                                         }>
-                                        {column.id.split('_').join(' ')}
+                                        {column.id === 'tanggal_spk'
+                                            ? 'Tanggal SPK'
+                                            : column.id.split('_').join(' ')}
                                     </DropdownMenuCheckboxItem>
                                 )
                             })}

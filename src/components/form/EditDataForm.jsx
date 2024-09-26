@@ -38,7 +38,7 @@ const FormSchema = z.object({
     catatan: z.string().optional(),
 })
 
-export function AddDataForm() {
+export function EditDataForm() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
     })
@@ -198,7 +198,6 @@ export function AddDataForm() {
                     label="Catatan"
                     placeholder="Catatan"
                 />
-
                 <Button type="submit">Submit</Button>
             </form>
         </Form>

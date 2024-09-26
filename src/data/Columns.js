@@ -10,6 +10,7 @@ import {
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { calculateDaysDifference } from '@/utils'
+import { EditDataSheet } from '@/components/EditDataSheet'
 
 export const columns = [
     {
@@ -352,9 +353,7 @@ export const prosesPengadaanColumns = [
                         <DropdownMenuItem>
                             Lihat detail pengadaan
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            Edit informasi pengadaan
-                        </DropdownMenuItem>
+                        <EditDataSheet />
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
