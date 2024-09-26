@@ -89,7 +89,10 @@ export function DataTable({ data, columns }) {
                                         }>
                                         {column.id === 'tanggal_spk'
                                             ? 'Tanggal SPK'
-                                            : column.id.split('_').join(' ')}
+                                            : column.id ===
+                                                'is_verification_complete'
+                                              ? 'Verified?'
+                                              : column.id.split('_').join(' ')}
                                     </DropdownMenuCheckboxItem>
                                 )
                             })}

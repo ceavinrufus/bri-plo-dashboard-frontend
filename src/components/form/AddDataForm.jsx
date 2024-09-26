@@ -17,7 +17,7 @@ const FormSchema = z.object({
     kode_user: z.string().min(1, { message: 'Kode user is required.' }),
     nodin_user: z.string().optional(),
     tanggal_nodin_user: z.union([z.string(), z.date()]).optional(),
-    tim: z.string().optional(),
+    tim: z.string(),
     departemen: z.enum(['bcp', 'igp', 'psr']),
     perihal: z.string().min(1, { message: 'Perihal is required.' }),
     tanggal_spk: z.union([z.string(), z.date()]).optional(),
@@ -42,6 +42,20 @@ const FormSchema = z.object({
 export function AddDataForm() {
     const form = useForm({
         resolver: zodResolver(FormSchema),
+        defaultValues: {
+            kode_user: '',
+            nodin_user: '',
+            tanggal_nodin_user: '',
+            tim: 'ptt',
+            departemen: 'bcp',
+            perihal: '',
+            tanggal_spk: '',
+            metode: '',
+            is_verification_complete: false,
+            is_done: false,
+            proses_pengadaan: '',
+            catatan: '',
+        },
     })
 
     async function onSubmit(data) {
@@ -55,9 +69,13 @@ export function AddDataForm() {
             tkdn_percentage: data.tkdn_percentage
                 ? parseInt(data.tkdn_percentage)
                 : null,
+            verification_alert_at: data.is_verification_complete
+                ? null
+                : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
         }
 
         try {
+            console.log(transformedData)
             await postPengadaanData(transformedData)
 
             toast({

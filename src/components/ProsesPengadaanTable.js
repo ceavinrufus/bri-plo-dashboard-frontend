@@ -20,7 +20,15 @@ const GET_PENGADAANS = gql`
             tanggal_nodin_user
             tanggal_spk
             metode
+            is_verification_complete
             proses_pengadaan
+            verification_alert_at
+            nodin_alert_at
+            # nilai_spk
+            # anggaran
+            # hps
+            # tkdn_percentage
+            # catatan
         }
     }
 `
@@ -33,6 +41,7 @@ const ProsesPengadaanTable = () => {
         variables: { departemen },
         client,
         onCompleted: data => {
+            console.log(data)
             setPengadaanData(data.pengadaans)
         },
     })
