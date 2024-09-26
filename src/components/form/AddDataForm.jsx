@@ -45,12 +45,12 @@ export function AddDataForm() {
         defaultValues: {
             kode_user: '',
             nodin_user: '',
-            tanggal_nodin_user: '',
+            tanggal_nodin_user: new Date(),
             tim: 'ptt',
             departemen: 'bcp',
             perihal: '',
             tanggal_spk: '',
-            metode: '',
+            metode: undefined,
             is_verification_complete: false,
             is_done: false,
             proses_pengadaan: '',
@@ -75,7 +75,6 @@ export function AddDataForm() {
         }
 
         try {
-            console.log(transformedData)
             await postPengadaanData(transformedData)
 
             toast({

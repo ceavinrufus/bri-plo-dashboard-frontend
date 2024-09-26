@@ -19,7 +19,7 @@ const FormSchema = z.object({
     kode_user: z.string().min(1, { message: 'Kode user is required.' }),
     nodin_user: z.string().optional(),
     tanggal_nodin_user: z.union([z.string(), z.date()]).optional(),
-    tim: z.string().optional(),
+    tim: z.string(),
     departemen: z.enum(['bcp', 'igp', 'psr']),
     perihal: z.string().min(1, { message: 'Perihal is required.' }),
     tanggal_spk: z.union([z.string(), z.date()]).optional(),
@@ -46,7 +46,10 @@ export function EditDataForm({ defaultValues }) {
 
     const form = useForm({
         resolver: zodResolver(FormSchema),
-        defaultValues,
+        defaultValues: {
+            ...defaultValues,
+            metode: defaultValues.metode || undefined,
+        },
     })
 
     async function onSubmit(data) {
@@ -60,6 +63,11 @@ export function EditDataForm({ defaultValues }) {
             tkdn_percentage: data.tkdn_percentage
                 ? parseInt(data.tkdn_percentage)
                 : null,
+            verification_alert_at: data.is_verification_complete
+                ? null
+                : defaultValues.verification_alert_at
+                  ? defaultValues.verification_alert_at
+                  : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
         }
 
         try {

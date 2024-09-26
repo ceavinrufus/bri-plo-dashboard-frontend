@@ -41,7 +41,6 @@ const ProsesPengadaanTable = () => {
         variables: { departemen },
         client,
         onCompleted: data => {
-            console.log(data)
             setPengadaanData(data.pengadaans)
         },
     })
