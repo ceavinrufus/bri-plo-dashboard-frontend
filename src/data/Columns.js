@@ -346,9 +346,11 @@ export const prosesPengadaanColumns = [
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             onClick={() =>
-                                navigator.clipboard.writeText(pengadaan.perihal)
+                                navigator.clipboard.writeText(
+                                    pengadaan.nodin_user,
+                                )
                             }>
-                            Salin nama pengadaan
+                            Salin nodin user
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             Lihat detail pengadaan

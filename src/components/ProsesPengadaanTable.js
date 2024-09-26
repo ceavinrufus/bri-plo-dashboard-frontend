@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useContext } from 'react'
 import { DataTable } from './DataTable'
 import { prosesPengadaanColumns } from '@/data/Columns'
 import { AddDataSheet } from './AddDataSheet'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
+import { PengadaanContext } from '@/components/context/PengadaanContext' // Adjust the import path as necessary
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
@@ -26,14 +27,15 @@ const GET_PENGADAANS = gql`
 
 const ProsesPengadaanTable = () => {
     const [departemen, setDepartemen] = useState('igp')
+    const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
 
-    const { loading, data } = useQuery(GET_PENGADAANS, {
+    const { loading } = useQuery(GET_PENGADAANS, {
         variables: { departemen },
         client,
+        onCompleted: data => {
+            setPengadaanData(data.pengadaans)
+        },
     })
-
-    // Memoize the data for performance optimization
-    const memoizedData = useMemo(() => data, [data])
 
     if (loading) return <div>Loading...</div>
 
@@ -43,10 +45,7 @@ const ProsesPengadaanTable = () => {
                 <h1>Pengadaan Data for {departemen.toUpperCase()}</h1>
                 <AddDataSheet />
             </div>
-            <DataTable
-                data={memoizedData.pengadaans}
-                columns={prosesPengadaanColumns}
-            />
+            <DataTable data={pengadaanData} columns={prosesPengadaanColumns} />
         </div>
     )
 }

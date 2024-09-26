@@ -11,6 +11,8 @@ import { SelectItem } from '../ui/select'
 import { formatDate } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { updatePengadaanData } from '@/lib/actions'
+import { useContext } from 'react'
+import { PengadaanContext } from '../context/PengadaanContext'
 
 // Validation schema based on the model's fillable fields
 const FormSchema = z.object({
@@ -40,6 +42,8 @@ const FormSchema = z.object({
 })
 
 export function EditDataForm({ defaultValues }) {
+    const { updatePengadaan } = useContext(PengadaanContext)
+
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues,
@@ -63,15 +67,16 @@ export function EditDataForm({ defaultValues }) {
 
             toast({
                 title: 'Success',
-                description: 'Data has been submitted successfully!',
+                description: 'Data has been edited successfully!',
                 status: 'success',
             })
+            updatePengadaan(defaultValues.id, transformedData)
         } catch (error) {
             toast({
                 title: 'Error',
                 description:
                     error.response?.data?.message ||
-                    'An error occurred while submitting data.',
+                    'An error occurred while editing data.',
                 status: 'error',
             })
         }
