@@ -22,6 +22,21 @@ export function EditDataForm({ defaultValues }) {
         defaultValues: {
             ...defaultValues,
             metode: defaultValues.metode || undefined,
+            nodin_plo:
+                defaultValues.nodin_plos.length > 0
+                    ? defaultValues.nodin_plos[
+                          defaultValues.nodin_plos.length - 1
+                      ].nodin
+                    : '',
+            tanggal_nodin_plo:
+                defaultValues.nodin_plos.length > 0
+                    ? formatDate(
+                          defaultValues.nodin_plos[
+                              defaultValues.nodin_plos.length - 1
+                          ].tanggal_nodin,
+                      )
+                    : '',
+            catatan: defaultValues.catatan || '',
         },
     })
 
@@ -46,14 +61,10 @@ export function EditDataForm({ defaultValues }) {
     }, [isVerificationComplete, form])
 
     async function onSubmit(data) {
-        let transformedData = transformPengadaanDataForSubmit(data)
-
-        transformedData = {
-            ...transformedData,
-            verification_alert_at: defaultValues.verification_alert_at
-                ? defaultValues.verification_alert_at
-                : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
-        }
+        const transformedData = transformPengadaanDataForSubmit(
+            defaultValues,
+            data,
+        )
 
         try {
             await updatePengadaanData(defaultValues.id, transformedData)
@@ -153,28 +164,28 @@ export function EditDataForm({ defaultValues }) {
                             </CustomFormField>
                         )}
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="nilai_spk"
                             label="Nilai SPK"
                             placeholder="Nilai SPK"
                         />
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="anggaran"
                             label="Anggaran"
                             placeholder="Anggaran"
                         />
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="hps"
                             label="HPS"
                             placeholder="HPS"
                         />
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="tkdn_percentage"
                             label="TKDN Percentage"

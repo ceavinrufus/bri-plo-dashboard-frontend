@@ -13,6 +13,13 @@ import { calculateDaysDifference } from '@/utils'
 import { EditDataSheet } from '@/components/EditDataSheet'
 
 export const prosesPengadaanColumns = [
+    {
+        accessorKey: 'nodin_plos',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: true, // Hides the column
+    },
     // Select
     {
         id: 'select',
@@ -227,6 +234,52 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">{row.getValue('proses_pengadaan')}</div>
+        ),
+    },
+    {
+        accessorKey: 'tanggal_nodin_plo',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Tanggal Nodin PLO
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {row.getValue('nodin_plos').map(nodin_plo => (
+                    <p key={nodin_plo.tanggal_nodin}>
+                        {nodin_plo.tanggal_nodin}
+                    </p>
+                ))}
+            </div>
+        ),
+    },
+    {
+        accessorKey: 'nodin_plo',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Nodin PLO
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {row.getValue('nodin_plos').map(nodin_plo => (
+                    <p key={nodin_plo.nodin}>{nodin_plo.nodin}</p>
+                ))}
+            </div>
         ),
     },
     {

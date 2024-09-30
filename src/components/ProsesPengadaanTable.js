@@ -24,11 +24,16 @@ const GET_PENGADAANS = gql`
             proses_pengadaan
             verification_alert_at
             nodin_alert_at
-            # nilai_spk
-            # anggaran
-            # hps
-            # tkdn_percentage
-            # catatan
+            nodin_plos {
+                id
+                nodin
+                tanggal_nodin
+            }
+            nilai_spk
+            anggaran
+            hps
+            tkdn_percentage
+            catatan
         }
     }
 `
@@ -37,15 +42,18 @@ const ProsesPengadaanTable = () => {
     const [departemen] = useState('igp')
     const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
 
-    const { loading } = useQuery(GET_PENGADAANS, {
+    const { loading, error } = useQuery(GET_PENGADAANS, {
         variables: { departemen },
         client,
         onCompleted: data => {
-            setPengadaanData(data.pengadaans)
+            const pengadaanData = data.pengadaans
+
+            setPengadaanData(pengadaanData)
         },
     })
 
     if (loading) return <div>Loading...</div>
+    if (error) return <p>Error: {error.message}</p>
 
     return (
         <div>

@@ -14,24 +14,26 @@ import { ProgressPengadaanFormValidation } from '@/lib/validation'
 import { useEffect } from 'react'
 
 export function AddDataForm() {
+    const defaultValues = {
+        kode_user: '',
+        nodin_user: '',
+        tanggal_nodin_user: formatDate(new Date()),
+        tim: 'ptt',
+        departemen: 'bcp',
+        perihal: '',
+        tanggal_spk: '',
+        metode: undefined,
+        is_verification_complete: false,
+        nodin_plo: '',
+        tanggal_nodin_plo: null,
+        is_done: false,
+        proses_pengadaan: '',
+        catatan: '',
+    }
+
     const form = useForm({
         resolver: zodResolver(ProgressPengadaanFormValidation),
-        defaultValues: {
-            kode_user: '',
-            nodin_user: '',
-            tanggal_nodin_user: formatDate(new Date()),
-            tim: 'ptt',
-            departemen: 'bcp',
-            perihal: '',
-            tanggal_spk: '',
-            metode: undefined,
-            is_verification_complete: false,
-            nodin_plo: '',
-            tanggal_nodin_plo: null,
-            is_done: false,
-            proses_pengadaan: '',
-            catatan: '',
-        },
+        defaultValues,
     })
 
     const isVerificationComplete = useWatch({
@@ -55,8 +57,10 @@ export function AddDataForm() {
     }, [isVerificationComplete, form])
 
     async function onSubmit(data) {
-        const transformedData = transformPengadaanDataForSubmit(data)
-
+        const transformedData = transformPengadaanDataForSubmit(
+            defaultValues,
+            data,
+        )
         try {
             await postPengadaanData(transformedData)
 
@@ -163,28 +167,28 @@ export function AddDataForm() {
                             </CustomFormField>
                         )}
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="nilai_spk"
                             label="Nilai SPK"
                             placeholder="Nilai SPK"
                         />
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="anggaran"
                             label="Anggaran"
                             placeholder="Anggaran"
                         />
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="hps"
                             label="HPS"
                             placeholder="HPS"
                         />
                         <CustomFormField
-                            fieldType={FormFieldType.INPUT}
+                            fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="tkdn_percentage"
                             label="TKDN Percentage"

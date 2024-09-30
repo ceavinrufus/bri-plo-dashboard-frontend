@@ -21,9 +21,9 @@ export const ProgressPengadaanFormValidation = z.object({
     nodin_plo: z.string().optional(),
     tanggal_nodin_plo: z.union([z.string(), z.date()]).optional(),
     proses_pengadaan: z.string().optional(),
-    nilai_spk: z.number().optional(),
-    anggaran: z.number().optional(),
-    hps: z.number().optional(),
-    tkdn_percentage: z.number().optional(),
+    nilai_spk: z.union([z.number(), z.null()]).optional(),
+    anggaran: z.union([z.number(), z.null()]).optional(),
+    hps: z.union([z.number(), z.null()]).optional(),
+    tkdn_percentage: z.union([z.number(), z.null()]).optional(),
     catatan: z.string().optional(),
 })

@@ -14,10 +14,29 @@ export const formatDate = date => {
     return `${year}-${month}-${day}`
 }
 
-export const transformPengadaanDataForSubmit = data => {
+// Modified generateNodinAlert function
+const generateNodinAlert = (defaultValues, data) => {
+    // Jika nodin_plos belum ada, return null
+    if (!data.nodin_plo) {
+        return null
+    }
+
+    // Jika nodin_plos telah diubah dari nilai default-nya,
+    // generate alert 14 hari setelah hari ini
+    if (
+        data.nodin_plo !==
+        defaultValues.nodin_plos[defaultValues.nodin_plos.length - 1].nodin
+    ) {
+        return formatDate(new Date(Date.now() + 86400000 * 14)) // 14 hari dalam milliseconds
+    }
+
+    // Jika nodin_plos tidak diubah, biarkan nilainya tetap
+    return defaultValues.nodin_alert_at || null
+}
+
+export const transformPengadaanDataForSubmit = (previousData, data) => {
     const transformedData = {
         ...data,
-        tanggal_nodin_user: formatDate(data.tanggal_nodin_user),
         tanggal_spk: formatDate(data.tanggal_spk),
         nilai_spk: data.nilai_spk ? parseInt(data.nilai_spk) : null,
         anggaran: data.anggaran ? parseInt(data.anggaran) : null,
@@ -27,7 +46,18 @@ export const transformPengadaanDataForSubmit = data => {
             : null,
         verification_alert_at: data.is_verification_complete
             ? null
-            : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
+            : previousData.verification_alert_at
+              ? previousData.verification_alert_at
+              : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
+        nodin_plos: [
+            ...previousData.nodin_plos,
+            {
+                nodin: data.nodin_plo,
+                tanggal_nodin: data.tanggal_nodin_plo,
+            },
+        ],
+        nodin_alert_at: generateNodinAlert(previousData, data),
     }
+
     return transformedData
 }
