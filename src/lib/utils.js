@@ -62,7 +62,9 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                   ]
                 : []),
         ],
-        nodin_alert_at: generateNodinAlert(previousData, data),
+        nodin_alert_at: data.is_verification_complete
+            ? null
+            : generateNodinAlert(previousData, data),
     }
 
     return transformedData
