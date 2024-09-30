@@ -2,50 +2,23 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
-import { formatDate } from '@/lib/utils'
+import { formatDate, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { updatePengadaanData } from '@/lib/actions'
 import { useContext } from 'react'
 import { PengadaanContext } from '../context/PengadaanContext'
-
-// Validation schema based on the model's fillable fields
-const FormSchema = z.object({
-    kode_user: z.string().min(1, { message: 'Kode user is required.' }),
-    nodin_user: z.string().optional(),
-    tanggal_nodin_user: z.union([z.string(), z.date()]).optional(),
-    tim: z.string(),
-    departemen: z.enum(['bcp', 'igp', 'psr']),
-    perihal: z.string().min(1, { message: 'Perihal is required.' }),
-    tanggal_spk: z.union([z.string(), z.date()]).optional(),
-    metode: z
-        .enum([
-            'Lelang',
-            'Pemilihan Langsung',
-            'Seleksi Langsung',
-            'Penunjukkan Langsung',
-        ])
-        .optional(),
-    is_verification_complete: z.boolean().optional(),
-    is_done: z.boolean().optional(),
-    proses_pengadaan: z.string().optional(),
-    nilai_spk: z.number().optional(),
-    anggaran: z.number().optional(),
-    hps: z.number().optional(),
-    tkdn_percentage: z.number().optional(),
-    catatan: z.string().optional(),
-})
+import { ProgressPengadaanFormValidation } from '@/lib/validation'
 
 export function EditDataForm({ defaultValues }) {
     const { updatePengadaan } = useContext(PengadaanContext)
 
     const form = useForm({
-        resolver: zodResolver(FormSchema),
+        resolver: zodResolver(ProgressPengadaanFormValidation),
         defaultValues: {
             ...defaultValues,
             metode: defaultValues.metode || undefined,
@@ -53,21 +26,13 @@ export function EditDataForm({ defaultValues }) {
     })
 
     async function onSubmit(data) {
-        const transformedData = {
-            ...data,
-            tanggal_nodin_user: formatDate(data.tanggal_nodin_user),
-            tanggal_spk: formatDate(data.tanggal_spk),
-            nilai_spk: data.nilai_spk ? parseInt(data.nilai_spk) : null,
-            anggaran: data.anggaran ? parseInt(data.anggaran) : null,
-            hps: data.hps ? parseInt(data.hps) : null,
-            tkdn_percentage: data.tkdn_percentage
-                ? parseInt(data.tkdn_percentage)
-                : null,
-            verification_alert_at: data.is_verification_complete
-                ? null
-                : defaultValues.verification_alert_at
-                  ? defaultValues.verification_alert_at
-                  : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
+        let transformedData = transformPengadaanDataForSubmit(data)
+
+        transformedData = {
+            ...transformedData,
+            verification_alert_at: defaultValues.verification_alert_at
+                ? defaultValues.verification_alert_at
+                : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
         }
 
         try {
@@ -134,7 +99,7 @@ export function EditDataForm({ defaultValues }) {
                     name="is_verification_complete"
                     label="Verification Complete"
                 />
-                {form.watch('is_verification_complete') && (
+                {form.watch('is_verification_complete') ? (
                     <>
                         <CustomFormField
                             fieldType={FormFieldType.SELECT}
@@ -194,6 +159,22 @@ export function EditDataForm({ defaultValues }) {
                             name="tkdn_percentage"
                             label="TKDN Percentage"
                             placeholder="TKDN Percentage"
+                        />
+                    </>
+                ) : (
+                    <>
+                        <CustomFormField
+                            fieldType={FormFieldType.INPUT}
+                            control={form.control}
+                            name="nodin_plo"
+                            label="Nodin PLO"
+                            placeholder="Nodin PLO"
+                        />
+                        <CustomFormField
+                            fieldType={FormFieldType.DATE_PICKER}
+                            control={form.control}
+                            name="tanggal_nodin_plo"
+                            label="Tanggal Nodin PLO"
                         />
                     </>
                 )}
