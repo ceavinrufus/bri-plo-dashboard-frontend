@@ -141,22 +141,6 @@ export function AddDataForm() {
                     label="Tanggal SPK"
                 />
                 <CustomFormField
-                    fieldType={FormFieldType.SELECT}
-                    control={form.control}
-                    name="metode"
-                    label="Metode">
-                    <SelectItem value="Lelang">Lelang</SelectItem>
-                    <SelectItem value="Pemilihan Langsung">
-                        Pemilihan Langsung
-                    </SelectItem>
-                    <SelectItem value="Seleksi Langsung">
-                        Seleksi Langsung
-                    </SelectItem>
-                    <SelectItem value="Penunjukkan Langsung">
-                        Penunjukkan Langsung
-                    </SelectItem>
-                </CustomFormField>
-                <CustomFormField
                     fieldType={FormFieldType.CHECKBOX}
                     control={form.control}
                     name="is_verification_complete"
@@ -164,6 +148,22 @@ export function AddDataForm() {
                 />
                 {form.watch('is_verification_complete') && (
                     <>
+                        <CustomFormField
+                            fieldType={FormFieldType.SELECT}
+                            control={form.control}
+                            name="metode"
+                            label="Metode">
+                            <SelectItem value="Lelang">Lelang</SelectItem>
+                            <SelectItem value="Pemilihan Langsung">
+                                Pemilihan Langsung
+                            </SelectItem>
+                            <SelectItem value="Seleksi Langsung">
+                                Seleksi Langsung
+                            </SelectItem>
+                            <SelectItem value="Penunjukkan Langsung">
+                                Penunjukkan Langsung
+                            </SelectItem>
+                        </CustomFormField>
                         {form.watch('metode') && (
                             <CustomFormField
                                 fieldType={FormFieldType.SELECT}
