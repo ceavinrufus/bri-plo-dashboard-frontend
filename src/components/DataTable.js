@@ -148,7 +148,21 @@ export function DataTable({ data, columns }) {
                                             ).verification_alert_at,
                                         ) <= new Date()
                                             ? 'alert-red'
-                                            : ''
+                                            : data.find(
+                                                    item =>
+                                                        item.nodin_user ===
+                                                        row.original.nodin_user,
+                                                )?.nodin_alert_at &&
+                                                new Date(
+                                                    data.find(
+                                                        item =>
+                                                            item.nodin_user ===
+                                                            row.original
+                                                                .nodin_user,
+                                                    ).nodin_alert_at,
+                                                ) <= new Date()
+                                              ? 'alert-yellow'
+                                              : ''
                                     }
                                     selected={row.getIsSelected()}>
                                     {row.getVisibleCells().map(cell => (
