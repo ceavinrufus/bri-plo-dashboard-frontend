@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
@@ -10,7 +10,7 @@ import { SelectItem } from '../ui/select'
 import { formatDate, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { updatePengadaanData } from '@/lib/actions'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { PengadaanContext } from '../context/PengadaanContext'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
 
@@ -24,6 +24,26 @@ export function EditDataForm({ defaultValues }) {
             metode: defaultValues.metode || undefined,
         },
     })
+
+    const isVerificationComplete = useWatch({
+        control: form.control,
+        name: 'is_verification_complete',
+    })
+
+    // Reset fields when is_verification_complete is unchecked
+    useEffect(() => {
+        if (!isVerificationComplete) {
+            form.resetField('metode')
+            form.resetField('proses_pengadaan')
+            form.resetField('nilai_spk')
+            form.resetField('anggaran')
+            form.resetField('hps')
+            form.resetField('tkdn_percentage')
+        } else {
+            form.resetField('nodin_plo')
+            form.resetField('tanggal_nodin_plo')
+        }
+    }, [isVerificationComplete, form])
 
     async function onSubmit(data) {
         let transformedData = transformPengadaanDataForSubmit(data)
@@ -99,7 +119,7 @@ export function EditDataForm({ defaultValues }) {
                     name="is_verification_complete"
                     label="Verification Complete"
                 />
-                {form.watch('is_verification_complete') ? (
+                {isVerificationComplete && (
                     <>
                         <CustomFormField
                             fieldType={FormFieldType.SELECT}
@@ -161,7 +181,8 @@ export function EditDataForm({ defaultValues }) {
                             placeholder="TKDN Percentage"
                         />
                     </>
-                ) : (
+                )}
+                {!isVerificationComplete && (
                     <>
                         <CustomFormField
                             fieldType={FormFieldType.INPUT}

@@ -1,16 +1,17 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
 import { postPengadaanData } from '@/lib/actions'
-import { transformPengadaanDataForSubmit } from '@/lib/utils'
+import { formatDate, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
+import { useEffect } from 'react'
 
 export function AddDataForm() {
     const form = useForm({
@@ -18,18 +19,40 @@ export function AddDataForm() {
         defaultValues: {
             kode_user: '',
             nodin_user: '',
-            tanggal_nodin_user: new Date(),
+            tanggal_nodin_user: formatDate(new Date()),
             tim: 'ptt',
             departemen: 'bcp',
             perihal: '',
             tanggal_spk: '',
             metode: undefined,
             is_verification_complete: false,
+            nodin_plo: '',
+            tanggal_nodin_plo: null,
             is_done: false,
             proses_pengadaan: '',
             catatan: '',
         },
     })
+
+    const isVerificationComplete = useWatch({
+        control: form.control,
+        name: 'is_verification_complete',
+    })
+
+    // Reset fields when is_verification_complete is unchecked
+    useEffect(() => {
+        if (!isVerificationComplete) {
+            form.resetField('metode')
+            form.resetField('proses_pengadaan')
+            form.resetField('nilai_spk')
+            form.resetField('anggaran')
+            form.resetField('hps')
+            form.resetField('tkdn_percentage')
+        } else {
+            form.resetField('nodin_plo')
+            form.resetField('tanggal_nodin_plo')
+        }
+    }, [isVerificationComplete, form])
 
     async function onSubmit(data) {
         const transformedData = transformPengadaanDataForSubmit(data)
@@ -106,7 +129,7 @@ export function AddDataForm() {
                     name="is_verification_complete"
                     label="Verification Complete"
                 />
-                {form.watch('is_verification_complete') ? (
+                {isVerificationComplete && (
                     <>
                         <CustomFormField
                             fieldType={FormFieldType.SELECT}
@@ -168,7 +191,8 @@ export function AddDataForm() {
                             placeholder="TKDN Percentage"
                         />
                     </>
-                ) : (
+                )}
+                {!isVerificationComplete && (
                     <>
                         <CustomFormField
                             fieldType={FormFieldType.INPUT}
