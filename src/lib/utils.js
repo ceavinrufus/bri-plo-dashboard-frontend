@@ -51,10 +51,16 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
               : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
         nodin_plos: [
             ...previousData.nodin_plos,
-            {
-                nodin: data.nodin_plo,
-                tanggal_nodin: data.tanggal_nodin_plo,
-            },
+            ...(previousData.nodin_plos.length === 0 ||
+            previousData.nodin_plos[previousData.nodin_plos.length - 1]
+                .nodin !== data.nodin_plo
+                ? [
+                      {
+                          nodin: data.nodin_plo,
+                          tanggal_nodin: data.tanggal_nodin_plo,
+                      },
+                  ]
+                : []),
         ],
         nodin_alert_at: generateNodinAlert(previousData, data),
     }

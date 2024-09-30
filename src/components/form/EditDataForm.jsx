@@ -37,6 +37,8 @@ export function EditDataForm({ defaultValues }) {
                       )
                     : '',
             catatan: defaultValues.catatan || '',
+            is_verification_complete:
+                defaultValues.is_verification_complete || false,
         },
     })
 
@@ -67,14 +69,17 @@ export function EditDataForm({ defaultValues }) {
         )
 
         try {
-            await updatePengadaanData(defaultValues.id, transformedData)
+            const response = await updatePengadaanData(
+                defaultValues.id,
+                transformedData,
+            )
 
             toast({
                 title: 'Success',
                 description: 'Data has been edited successfully!',
                 status: 'success',
             })
-            updatePengadaan(defaultValues.id, transformedData)
+            updatePengadaan(defaultValues.id, response.data)
         } catch (error) {
             toast({
                 title: 'Error',
