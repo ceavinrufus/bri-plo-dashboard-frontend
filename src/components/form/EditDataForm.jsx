@@ -124,12 +124,6 @@ export function EditDataForm({ defaultValues }) {
                     placeholder="Perihal"
                 />
                 <CustomFormField
-                    fieldType={FormFieldType.DATE_PICKER}
-                    control={form.control}
-                    name="tanggal_spk"
-                    label="Tanggal SPK"
-                />
-                <CustomFormField
                     fieldType={FormFieldType.CHECKBOX}
                     control={form.control}
                     name="is_verification_complete"
@@ -137,6 +131,13 @@ export function EditDataForm({ defaultValues }) {
                 />
                 {isVerificationComplete && (
                     <>
+                        <CustomFormField
+                            fieldType={FormFieldType.TEXTAREA}
+                            control={form.control}
+                            name="catatan"
+                            label="Catatan"
+                            placeholder="Catatan terkait verifikasi"
+                        />
                         <CustomFormField
                             fieldType={FormFieldType.SELECT}
                             control={form.control}
@@ -169,6 +170,19 @@ export function EditDataForm({ defaultValues }) {
                             </CustomFormField>
                         )}
                         <CustomFormField
+                            fieldType={FormFieldType.INPUT}
+                            control={form.control}
+                            name="nomor_spk"
+                            label="Nomor SPK"
+                            placeholder="Nomor SPK"
+                        />
+                        <CustomFormField
+                            fieldType={FormFieldType.DATE_PICKER}
+                            control={form.control}
+                            name="tanggal_spk"
+                            label="Tanggal SPK"
+                        />
+                        <CustomFormField
                             fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="nilai_spk"
@@ -176,25 +190,32 @@ export function EditDataForm({ defaultValues }) {
                             placeholder="Nilai SPK"
                         />
                         <CustomFormField
+                            fieldType={FormFieldType.INPUT}
+                            control={form.control}
+                            name="pelaku_pekerjaan"
+                            label="Pelaku Pekerjaan"
+                            placeholder="Pelaku Pekerjaan"
+                        />
+                        <CustomFormField
                             fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="anggaran"
                             label="Anggaran"
-                            placeholder="Anggaran"
+                            placeholder="Nilai Anggaran"
                         />
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="hps"
                             label="HPS"
-                            placeholder="HPS"
+                            placeholder="Nilai HPS"
                         />
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}
                             control={form.control}
                             name="tkdn_percentage"
                             label="TKDN Percentage"
-                            placeholder="TKDN Percentage"
+                            placeholder="Persentase TKDN"
                         />
                     </>
                 )}
@@ -215,13 +236,7 @@ export function EditDataForm({ defaultValues }) {
                         />
                     </>
                 )}
-                <CustomFormField
-                    fieldType={FormFieldType.TEXTAREA}
-                    control={form.control}
-                    name="catatan"
-                    label="Catatan"
-                    placeholder="Catatan"
-                />
+
                 <Button type="submit">Save</Button>
             </form>
         </Form>

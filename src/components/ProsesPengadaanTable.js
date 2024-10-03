@@ -53,7 +53,6 @@ const ProsesPengadaanTable = () => {
     })
 
     if (loading) return <div>Loading...</div>
-    if (error) return <p>Error: {error.message}</p>
 
     return (
         <div>
@@ -61,7 +60,14 @@ const ProsesPengadaanTable = () => {
                 <h1>Pengadaan Data for {departemen.toUpperCase()}</h1>
                 <AddDataSheet />
             </div>
-            <DataTable data={pengadaanData} columns={prosesPengadaanColumns} />
+            {error ? (
+                <p>Error: {error.message}</p>
+            ) : (
+                <DataTable
+                    data={pengadaanData}
+                    columns={prosesPengadaanColumns}
+                />
+            )}
         </div>
     )
 }
