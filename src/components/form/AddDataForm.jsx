@@ -183,18 +183,18 @@ export function AddDataForm() {
                             label="Tanggal SPK"
                         />
                         <CustomFormField
-                            fieldType={FormFieldType.NUMERIC}
-                            control={form.control}
-                            name="nilai_spk"
-                            label="Nilai SPK"
-                            placeholder="Nilai SPK"
-                        />
-                        <CustomFormField
                             fieldType={FormFieldType.INPUT}
                             control={form.control}
                             name="pelaku_pekerjaan"
                             label="Pelaku Pekerjaan"
                             placeholder="Pelaku Pekerjaan"
+                        />
+                        <CustomFormField
+                            fieldType={FormFieldType.NUMERIC}
+                            control={form.control}
+                            name="nilai_spk"
+                            label="Nilai SPK"
+                            placeholder="Nilai SPK"
                         />
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}

@@ -139,24 +139,6 @@ export const prosesPengadaanColumns = [
         ),
     },
     {
-        accessorKey: 'tanggal_spk',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }>
-                    Tanggal SPK
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => (
-            <div className="">{row.getValue('tanggal_spk')}</div>
-        ),
-    },
-    {
         accessorKey: 'hari_pengerjaan',
         header: ({ column }) => {
             return (
@@ -214,7 +196,16 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">
-                {row.getValue('is_verification_complete') ? 'YES' : 'NO'}
+                {row.getValue('is_verification_complete') ? (
+                    <p>YES</p>
+                ) : (
+                    <p>NO</p>
+                )}
+                <p>
+                    {row.getValue('catatan')
+                        ? `(${row.getValue('catatan')})`
+                        : ''}
+                </p>
             </div>
         ),
     },
@@ -234,6 +225,58 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">{row.getValue('proses_pengadaan')}</div>
+        ),
+    },
+    {
+        accessorKey: 'nomor_spk',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Nomor SPK
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="">{row.getValue('nomor_spk')}</div>,
+    },
+    {
+        accessorKey: 'tanggal_spk',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Tanggal SPK
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">{row.getValue('tanggal_spk')}</div>
+        ),
+    },
+    {
+        accessorKey: 'pelaku_pekerjaan',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Pelaku Pekerjaan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">{row.getValue('pelaku_pekerjaan')}</div>
         ),
     },
     {
@@ -284,19 +327,10 @@ export const prosesPengadaanColumns = [
     },
     {
         accessorKey: 'catatan',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }>
-                    Catatan
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => <div className="">{row.getValue('catatan')}</div>,
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
     },
     {
         id: 'actions',

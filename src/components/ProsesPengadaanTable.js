@@ -18,7 +18,6 @@ const GET_PENGADAANS = gql`
             perihal
             nodin_user
             tanggal_nodin_user
-            tanggal_spk
             metode
             is_verification_complete
             proses_pengadaan
@@ -29,6 +28,10 @@ const GET_PENGADAANS = gql`
                 nodin
                 tanggal_nodin
             }
+            nomor_spk
+            tanggal_spk
+            nomor_spk
+            pelaku_pekerjaan
             nilai_spk
             anggaran
             hps
