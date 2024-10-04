@@ -18,7 +18,7 @@ export const prosesPengadaanColumns = [
         header: () => null, // No header for the shadow column
         cell: () => null, // No cell rendering for the shadow column
         enableSorting: false,
-        enableHiding: true, // Hides the column
+        enableHiding: false, // Hides the column
     },
     // Select
     {

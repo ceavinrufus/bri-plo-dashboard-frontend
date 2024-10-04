@@ -29,10 +29,12 @@ import {
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 
-export function DataTable({ data, columns }) {
+export function DataTable({ data, columns, defaultColumnVisibility }) {
     const [sorting, setSorting] = React.useState([])
     const [columnFilters, setColumnFilters] = React.useState([])
-    const [columnVisibility, setColumnVisibility] = React.useState({})
+    const [columnVisibility, setColumnVisibility] = React.useState(
+        defaultColumnVisibility,
+    )
     const [rowSelection, setRowSelection] = React.useState({})
     const [selectedColumnId, setSelectedColumnId] = React.useState('')
 
@@ -104,7 +106,7 @@ export function DataTable({ data, columns }) {
                     <TableHeader>
                         {table.getHeaderGroups().map(headerGroup => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map(header => {
+                                {headerGroup.headers.map((header, idx) => {
                                     return (
                                         <TableHead
                                             className={cn(
@@ -112,9 +114,12 @@ export function DataTable({ data, columns }) {
                                                     selectedColumnId &&
                                                     '[&>*:first-child]:bg-gray-100',
                                             )}
-                                            onClick={() =>
-                                                setSelectedColumnId(header.id)
-                                            }
+                                            onClick={() => {
+                                                if (idx !== 0)
+                                                    setSelectedColumnId(
+                                                        header.id,
+                                                    )
+                                            }}
                                             key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
@@ -134,7 +139,7 @@ export function DataTable({ data, columns }) {
                             table.getRowModel().rows.map(row => (
                                 <TableRow
                                     key={row.id}
-                                    data-state={
+                                    data-alert-state={
                                         data.find(
                                             item =>
                                                 item.nodin_user ===
@@ -147,7 +152,7 @@ export function DataTable({ data, columns }) {
                                                     row.original.nodin_user,
                                             ).verification_alert_at,
                                         ) <= new Date()
-                                            ? 'alert-red'
+                                            ? 'red'
                                             : data.find(
                                                     item =>
                                                         item.nodin_user ===
@@ -161,10 +166,12 @@ export function DataTable({ data, columns }) {
                                                                 .nodin_user,
                                                     ).nodin_alert_at,
                                                 ) <= new Date()
-                                              ? 'alert-yellow'
+                                              ? 'yellow'
                                               : ''
                                     }
-                                    selected={row.getIsSelected()}>
+                                    data-state={
+                                        row.getIsSelected() && 'selected'
+                                    }>
                                     {row.getVisibleCells().map(cell => (
                                         <TableCell key={cell.id}>
                                             {flexRender(
