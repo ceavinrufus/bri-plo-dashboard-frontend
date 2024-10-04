@@ -11,6 +11,7 @@ import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { calculateDaysDifference } from '@/utils'
 import { EditDataSheet } from '@/components/EditDataSheet'
+import { InformationTooltip } from '@/components/InformationTooltip'
 
 export const prosesPengadaanColumns = [
     {
@@ -195,17 +196,17 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="">
+            <div className="flex items-center gap-2">
                 {row.getValue('is_verification_complete') ? (
                     <p>YES</p>
                 ) : (
                     <p>NO</p>
                 )}
-                <p>
-                    {row.getValue('catatan')
-                        ? `(${row.getValue('catatan')})`
-                        : ''}
-                </p>
+                {row.getValue('catatan') && (
+                    <InformationTooltip>
+                        {row.getValue('catatan')}
+                    </InformationTooltip>
+                )}
             </div>
         ),
     },
