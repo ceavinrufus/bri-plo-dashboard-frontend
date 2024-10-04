@@ -89,12 +89,14 @@ export function DataTable({ data, columns, defaultColumnVisibility }) {
                                         onCheckedChange={value =>
                                             column.toggleVisibility(!!value)
                                         }>
-                                        {column.id === 'tanggal_spk'
-                                            ? 'Tanggal SPK'
-                                            : column.id ===
-                                                'is_verification_complete'
-                                              ? 'Verified?'
-                                              : column.id.split('_').join(' ')}
+                                        {column.id ===
+                                        'is_verification_complete'
+                                            ? 'Verified?'
+                                            : column.id
+                                                  .split('_')
+                                                  .join(' ')
+                                                  .replace(/\bspk\b/g, 'SPK')
+                                                  .replace(/\bplo\b/g, 'PLO')}
                                     </DropdownMenuCheckboxItem>
                                 )
                             })}

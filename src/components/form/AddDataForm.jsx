@@ -11,9 +11,14 @@ import { postPengadaanData } from '@/lib/actions'
 import { formatDate, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
-import { useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { PulseLoader } from 'react-spinners'
+import { PengadaanContext } from '../context/PengadaanContext'
 
 export function AddDataForm() {
+    const { addPengadaan } = useContext(PengadaanContext)
+    const [isProcessing, setIsProcessing] = useState(false)
+
     const defaultValues = {
         kode_user: '',
         nodin_user: '',
@@ -27,8 +32,8 @@ export function AddDataForm() {
         metode: undefined,
         is_verification_complete: false,
         nodin_plo: '',
-        tanggal_nodin_plo: null,
-        is_done: false,
+        nodin_plos: null,
+        tanggal_nodin_plo: undefined,
         proses_pengadaan: '',
         catatan: '',
     }
@@ -46,8 +51,12 @@ export function AddDataForm() {
     // Reset fields when is_verification_complete is unchecked
     useEffect(() => {
         if (!isVerificationComplete) {
+            form.resetField('catatan')
             form.resetField('metode')
             form.resetField('proses_pengadaan')
+            form.resetField('nomor_spk')
+            form.resetField('tanggal_spk')
+            form.resetField('pelaku_pekerjaan')
             form.resetField('nilai_spk')
             form.resetField('anggaran')
             form.resetField('hps')
@@ -59,18 +68,20 @@ export function AddDataForm() {
     }, [isVerificationComplete, form])
 
     async function onSubmit(data) {
+        setIsProcessing(true)
         const transformedData = transformPengadaanDataForSubmit(
             defaultValues,
             data,
         )
         try {
-            await postPengadaanData(transformedData)
+            const response = await postPengadaanData(transformedData)
 
             toast({
                 title: 'Success',
                 description: 'Data has been submitted successfully!',
                 status: 'success',
             })
+            addPengadaan(response.data)
         } catch (error) {
             toast({
                 title: 'Error',
@@ -79,6 +90,8 @@ export function AddDataForm() {
                     'An error occurred while submitting data.',
                 status: 'error',
             })
+        } finally {
+            setIsProcessing(false)
         }
     }
 
@@ -237,7 +250,17 @@ export function AddDataForm() {
                     </>
                 )}
 
-                <Button type="submit">Submit</Button>
+                <Button type="submit">
+                    {isProcessing ? (
+                        <PulseLoader
+                            size={8}
+                            color="#ffffff"
+                            speedMultiplier={0.5}
+                        />
+                    ) : (
+                        'Submit'
+                    )}
+                </Button>
             </form>
         </Form>
     )

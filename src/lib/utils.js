@@ -49,23 +49,34 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
             : previousData.verification_alert_at
               ? previousData.verification_alert_at
               : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
-        nodin_plos: [
-            ...previousData.nodin_plos,
-            ...(previousData.nodin_plos.length === 0 ||
+        nodin_plos: emptyOrNullArray([
+            ...(previousData.nodin_plos ? previousData.nodin_plos : []),
+            ...(!previousData.nodin_plos ||
+            previousData.nodin_plos.length === 0 ||
             previousData.nodin_plos[previousData.nodin_plos.length - 1]
                 .nodin !== data.nodin_plo
-                ? [
-                      {
-                          nodin: data.nodin_plo,
-                          tanggal_nodin: data.tanggal_nodin_plo,
-                      },
-                  ]
+                ? data.nodin_plo
+                    ? [
+                          {
+                              nodin: data.nodin_plo,
+                              tanggal_nodin: data.tanggal_nodin_plo,
+                          },
+                      ]
+                    : []
                 : []),
-        ],
+        ]),
         nodin_alert_at: data.is_verification_complete
             ? null
             : generateNodinAlert(previousData, data),
     }
 
     return transformedData
+}
+
+const emptyOrNullArray = array => {
+    if (array.length === 0) {
+        return null
+    } else {
+        return array
+    }
 }

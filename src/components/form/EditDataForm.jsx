@@ -10,12 +10,14 @@ import { SelectItem } from '../ui/select'
 import { formatDate, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { updatePengadaanData } from '@/lib/actions'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { PengadaanContext } from '../context/PengadaanContext'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
+import { PulseLoader } from 'react-spinners'
 
 export function EditDataForm({ defaultValues }) {
     const { updatePengadaan } = useContext(PengadaanContext)
+    const [isProcessing, setIsProcessing] = useState(false)
 
     const form = useForm({
         resolver: zodResolver(ProgressPengadaanFormValidation),
@@ -50,8 +52,12 @@ export function EditDataForm({ defaultValues }) {
     // Reset fields when is_verification_complete is unchecked
     useEffect(() => {
         if (!isVerificationComplete) {
+            form.resetField('catatan')
             form.resetField('metode')
             form.resetField('proses_pengadaan')
+            form.resetField('nomor_spk')
+            form.resetField('tanggal_spk')
+            form.resetField('pelaku_pekerjaan')
             form.resetField('nilai_spk')
             form.resetField('anggaran')
             form.resetField('hps')
@@ -63,6 +69,7 @@ export function EditDataForm({ defaultValues }) {
     }, [isVerificationComplete, form])
 
     async function onSubmit(data) {
+        setIsProcessing(true)
         const transformedData = transformPengadaanDataForSubmit(
             defaultValues,
             data,
@@ -88,6 +95,8 @@ export function EditDataForm({ defaultValues }) {
                     'An error occurred while editing data.',
                 status: 'error',
             })
+        } finally {
+            setIsProcessing(false)
         }
     }
 
@@ -237,7 +246,17 @@ export function EditDataForm({ defaultValues }) {
                     </>
                 )}
 
-                <Button type="submit">Save</Button>
+                <Button type="submit">
+                    {isProcessing ? (
+                        <PulseLoader
+                            size={8}
+                            color="#ffffff"
+                            speedMultiplier={0.5}
+                        />
+                    ) : (
+                        'Save'
+                    )}
+                </Button>
             </form>
         </Form>
     )

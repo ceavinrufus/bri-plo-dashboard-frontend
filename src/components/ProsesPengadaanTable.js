@@ -69,7 +69,11 @@ const ProsesPengadaanTable = () => {
                 <DataTable
                     data={pengadaanData}
                     columns={prosesPengadaanColumns}
-                    defaultColumnVisibility={{ nodin_plos: false }}
+                    defaultColumnVisibility={{
+                        nodin_plos: false,
+                        tanggal_nodin_plo: false,
+                        nodin_plo: false,
+                    }}
                 />
             )}
         </div>
