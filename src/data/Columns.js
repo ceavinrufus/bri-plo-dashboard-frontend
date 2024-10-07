@@ -162,7 +162,8 @@ export const prosesPengadaanColumns = [
             )
             return (
                 <div className="">
-                    {diff} {diff ? 'hari' : ''}
+                    {row.getValue('tanggal_spk') ? diff : 'Ongoing'}{' '}
+                    {diff && row.getValue('tanggal_spk') ? 'hari' : ''}
                 </div>
             )
         },
@@ -325,6 +326,76 @@ export const prosesPengadaanColumns = [
                 {row.getValue('nodin_plos').map(nodin_plo => (
                     <p key={nodin_plo.nodin}>{nodin_plo.nodin}</p>
                 ))}
+            </div>
+        ),
+    },
+    {
+        accessorKey: 'hps',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    HPS
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="">{row.getValue('hps')}</div>,
+    },
+    {
+        accessorKey: 'anggaran',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Anggaran
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="">{row.getValue('anggaran')}</div>,
+    },
+    {
+        accessorKey: 'nilai_spk',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Nilai SPK
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="">{row.getValue('nilai_spk')}</div>,
+    },
+    {
+        accessorKey: 'tkdn_percentage',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    TKDN Percentage
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {row.getValue('tkdn_percentage')
+                    ? row.getValue('tkdn_percentage') + '%'
+                    : ''}
             </div>
         ),
     },

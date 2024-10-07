@@ -73,6 +73,10 @@ const ProsesPengadaanTable = () => {
                         nodin_plos: false,
                         tanggal_nodin_plo: false,
                         nodin_plo: false,
+                        tkdn_percentage: false,
+                        hps: false,
+                        anggaran: false,
+                        nilai_spk: false,
                     }}
                 />
             )}
