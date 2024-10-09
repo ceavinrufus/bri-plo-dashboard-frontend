@@ -160,9 +160,15 @@ export const prosesPengadaanColumns = [
                 row.getValue('tanggal_spk'),
                 row.getValue('tanggal_nodin_user'),
             )
+            const diffWithToday = calculateDaysDifference(
+                new Date().toISOString().split('T')[0],
+                row.getValue('tanggal_nodin_user'),
+            )
             return (
                 <div className="">
-                    {row.getValue('tanggal_spk') ? diff : 'Ongoing'}{' '}
+                    {row.getValue('tanggal_spk')
+                        ? diff
+                        : `Ongoing (${diffWithToday} hari)`}{' '}
                     {diff && row.getValue('tanggal_spk') ? 'hari' : ''}
                 </div>
             )
@@ -398,6 +404,29 @@ export const prosesPengadaanColumns = [
                     : ''}
             </div>
         ),
+    },
+    {
+        accessorKey: 'pdn_percentage',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    PDN Percentage
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const pdnPercentage = row.getValue('tkdn_percentage') > 0 ? 100 : 0
+            return (
+                <div className="">
+                    {row.getValue('tkdn_percentage') ? pdnPercentage + '%' : ''}
+                </div>
+            )
+        },
     },
     {
         accessorKey: 'catatan',
