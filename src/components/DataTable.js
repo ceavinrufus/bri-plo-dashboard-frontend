@@ -86,9 +86,16 @@ export function DataTable({ data, columns, defaultColumnVisibility }) {
                                         key={column.id}
                                         className="capitalize"
                                         checked={column.getIsVisible()}
-                                        onCheckedChange={value =>
-                                            column.toggleVisibility(!!value)
-                                        }>
+                                        onClick={e => {
+                                            column.toggleVisibility(
+                                                !column.getIsVisible(),
+                                            )
+                                            e.preventDefault()
+                                        }}
+                                        // onCheckedChange={value =>
+                                        //     column.toggleVisibility(!!value)
+                                        // }
+                                    >
                                         {column.id ===
                                         'is_verification_complete'
                                             ? 'Verified?'
@@ -96,7 +103,12 @@ export function DataTable({ data, columns, defaultColumnVisibility }) {
                                                   .split('_')
                                                   .join(' ')
                                                   .replace(/\bspk\b/g, 'SPK')
-                                                  .replace(/\bplo\b/g, 'PLO')}
+                                                  .replace(/\bsla\b/g, 'SLA')
+                                                  .replace(/\bplo\b/g, 'PLO')
+                                                  .replace(/\bhps\b/g, 'HPS')
+                                                  .replace(/\bpic\b/g, 'PIC')
+                                                  .replace(/\btkdn\b/g, 'TKDN')
+                                                  .replace(/\bpdn\b/g, 'PDN')}
                                     </DropdownMenuCheckboxItem>
                                 )
                             })}

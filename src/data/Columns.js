@@ -290,6 +290,22 @@ export const prosesPengadaanColumns = [
         ),
     },
     {
+        accessorKey: 'pic',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    PIC
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="">{row.getValue('pic').name}</div>,
+    },
+    {
         accessorKey: 'tanggal_nodin_plo',
         header: ({ column }) => {
             return (

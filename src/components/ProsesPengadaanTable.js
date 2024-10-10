@@ -37,6 +37,9 @@ const GET_PENGADAANS = gql`
             hps
             tkdn_percentage
             catatan
+            pic {
+                name
+            }
         }
     }
 `
