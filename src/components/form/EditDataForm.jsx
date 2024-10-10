@@ -57,7 +57,7 @@ export function EditDataForm({ defaultValues }) {
             form.resetField('proses_pengadaan')
             form.resetField('nomor_spk')
             form.resetField('tanggal_spk')
-            form.resetField('pelaku_pekerjaan')
+            form.resetField('pelaksana_pekerjaan')
             form.resetField('nilai_spk')
             form.resetField('anggaran')
             form.resetField('hps')
@@ -194,9 +194,9 @@ export function EditDataForm({ defaultValues }) {
                         <CustomFormField
                             fieldType={FormFieldType.INPUT}
                             control={form.control}
-                            name="pelaku_pekerjaan"
-                            label="Pelaku Pekerjaan"
-                            placeholder="Pelaku Pekerjaan"
+                            name="pelaksana_pekerjaan"
+                            label="Pelaksana Pekerjaan"
+                            placeholder="Pelaksana Pekerjaan"
                         />
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}

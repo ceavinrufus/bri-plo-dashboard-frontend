@@ -31,7 +31,7 @@ const GET_PENGADAANS = gql`
             nomor_spk
             tanggal_spk
             nomor_spk
-            pelaku_pekerjaan
+            pelaksana_pekerjaan
             nilai_spk
             anggaran
             hps

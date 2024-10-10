@@ -28,7 +28,7 @@ export function AddDataForm() {
         perihal: '',
         nomor_spk: '',
         tanggal_spk: '',
-        pelaku_pekerjaan: '',
+        pelaksana_pekerjaan: '',
         metode: undefined,
         is_verification_complete: false,
         nodin_plo: '',
@@ -56,7 +56,7 @@ export function AddDataForm() {
             form.resetField('proses_pengadaan')
             form.resetField('nomor_spk')
             form.resetField('tanggal_spk')
-            form.resetField('pelaku_pekerjaan')
+            form.resetField('pelaksana_pekerjaan')
             form.resetField('nilai_spk')
             form.resetField('anggaran')
             form.resetField('hps')
@@ -198,9 +198,9 @@ export function AddDataForm() {
                         <CustomFormField
                             fieldType={FormFieldType.INPUT}
                             control={form.control}
-                            name="pelaku_pekerjaan"
-                            label="Pelaku Pekerjaan"
-                            placeholder="Pelaku Pekerjaan"
+                            name="pelaksana_pekerjaan"
+                            label="Pelaksana Pekerjaan"
+                            placeholder="Pelaksana Pekerjaan"
                         />
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}

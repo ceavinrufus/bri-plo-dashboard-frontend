@@ -142,7 +142,7 @@ export const prosesPengadaanColumns = [
         ),
     },
     {
-        accessorKey: 'hari_pengerjaan',
+        accessorKey: 'sla',
         header: ({ column }) => {
             return (
                 <Button
@@ -150,7 +150,7 @@ export const prosesPengadaanColumns = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }>
-                    Hari Pengerjaan
+                    SLA
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -272,7 +272,7 @@ export const prosesPengadaanColumns = [
         ),
     },
     {
-        accessorKey: 'pelaku_pekerjaan',
+        accessorKey: 'pelaksana_pekerjaan',
         header: ({ column }) => {
             return (
                 <Button
@@ -280,13 +280,13 @@ export const prosesPengadaanColumns = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }>
-                    Pelaku Pekerjaan
+                    Pelaksana Pekerjaan
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
         cell: ({ row }) => (
-            <div className="">{row.getValue('pelaku_pekerjaan')}</div>
+            <div className="">{row.getValue('pelaksana_pekerjaan')}</div>
         ),
     },
     {
