@@ -8,7 +8,7 @@ import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
 import { postPengadaanData } from '@/lib/actions'
-import { formatDate, transformPengadaanDataForSubmit } from '@/lib/utils'
+import { formatDateYMD, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
 import { useContext, useEffect, useState } from 'react'
@@ -22,7 +22,7 @@ export function AddDataForm() {
     const defaultValues = {
         kode_user: '',
         nodin_user: '',
-        tanggal_nodin_user: formatDate(new Date()),
+        tanggal_nodin_user: formatDateYMD(new Date()),
         tim: 'ptt',
         departemen: 'bcp',
         perihal: '',

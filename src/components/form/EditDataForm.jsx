@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
-import { formatDate, transformPengadaanDataForSubmit } from '@/lib/utils'
+import { formatDateYMD, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { updatePengadaanData } from '@/lib/actions'
 import { useContext, useEffect, useState } from 'react'
@@ -32,7 +32,7 @@ export function EditDataForm({ defaultValues }) {
                     : '',
             tanggal_nodin_plo:
                 defaultValues.nodin_plos.length > 0
-                    ? formatDate(
+                    ? formatDateYMD(
                           defaultValues.nodin_plos[
                               defaultValues.nodin_plos.length - 1
                           ].tanggal_nodin,

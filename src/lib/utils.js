@@ -5,13 +5,21 @@ export function cn(...inputs) {
     return twMerge(clsx(inputs))
 }
 
-export const formatDate = date => {
+export const formatDateYMD = date => {
     if (!date) return null
     const d = new Date(date)
     const day = String(d.getDate()).padStart(2, '0')
     const month = String(d.getMonth() + 1).padStart(2, '0')
     const year = d.getFullYear()
     return `${year}-${month}-${day}`
+}
+
+export const formatDateDMY = dateString => {
+    const date = new Date(dateString)
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = String(date.getMonth() + 1).padStart(2, '0') // Months are zero-based
+    const year = date.getFullYear()
+    return `${day}-${month}-${year}`
 }
 
 // Modified generateNodinAlert function
@@ -27,7 +35,7 @@ const generateNodinAlert = (defaultValues, data) => {
         data.nodin_plo !==
         defaultValues.nodin_plos[defaultValues.nodin_plos.length - 1].nodin
     ) {
-        return formatDate(new Date(Date.now() + 86400000 * 14)) // 14 hari dalam milliseconds
+        return formatDateYMD(new Date(Date.now() + 86400000 * 14)) // 14 hari dalam milliseconds
     }
 
     // Jika nodin_plos tidak diubah, biarkan nilainya tetap
@@ -37,7 +45,7 @@ const generateNodinAlert = (defaultValues, data) => {
 export const transformPengadaanDataForSubmit = (previousData, data) => {
     const transformedData = {
         ...data,
-        tanggal_spk: formatDate(data.tanggal_spk),
+        tanggal_spk: formatDateYMD(data.tanggal_spk),
         nilai_spk: data.nilai_spk ? parseInt(data.nilai_spk) : null,
         anggaran: data.anggaran ? parseInt(data.anggaran) : null,
         hps: data.hps ? parseInt(data.hps) : null,
@@ -48,7 +56,7 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
             ? null
             : previousData.verification_alert_at
               ? previousData.verification_alert_at
-              : formatDate(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
+              : formatDateYMD(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
         nodin_plos: emptyOrNullArray([
             ...(previousData.nodin_plos ? previousData.nodin_plos : []),
             ...(!previousData.nodin_plos ||

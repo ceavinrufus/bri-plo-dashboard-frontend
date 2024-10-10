@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { calculateDaysDifference } from '@/utils'
 import { EditDataSheet } from '@/components/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
+import { formatDateDMY } from '@/lib/utils'
 
 export const prosesPengadaanColumns = [
     {
@@ -138,7 +139,9 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="">{row.getValue('tanggal_nodin_user')}</div>
+            <div className="">
+                {formatDateDMY(row.getValue('tanggal_nodin_user'))}
+            </div>
         ),
     },
     {
@@ -268,7 +271,7 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="">{row.getValue('tanggal_spk')}</div>
+            <div className="">{formatDateDMY(row.getValue('tanggal_spk'))}</div>
         ),
     },
     {
@@ -323,7 +326,7 @@ export const prosesPengadaanColumns = [
             <div className="">
                 {row.getValue('nodin_plos').map(nodin_plo => (
                     <p key={nodin_plo.tanggal_nodin}>
-                        {nodin_plo.tanggal_nodin}
+                        {formatDateDMY(nodin_plo.tanggal_nodin)}
                     </p>
                 ))}
             </div>
