@@ -45,7 +45,6 @@ export const postPengadaanData = async data => {
 // Define the function to update data
 export const updatePengadaanData = async (pengadaanId, data) => {
     try {
-        console.log(pengadaanId)
         // Get the backend URL from environment variables
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
@@ -60,6 +59,26 @@ export const updatePengadaanData = async (pengadaanId, data) => {
     } catch (error) {
         // Handle errors
         console.error('Error updating data:', error)
+        throw error
+    }
+}
+
+// Define the function to delete data
+export const deletePengadaanData = async pengadaanId => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request to delete the Pengadaan
+        const response = await axios.delete(
+            `${backendUrl}/api/pengadaan/delete/${pengadaanId}`,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error deleting data:', error)
         throw error
     }
 }

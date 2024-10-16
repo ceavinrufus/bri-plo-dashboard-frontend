@@ -13,6 +13,9 @@ import { calculateDaysDifference, convertToRupiah } from '@/utils'
 import { EditDataSheet } from '@/components/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY } from '@/lib/utils'
+import { deletePengadaanData } from '@/lib/actions'
+import { useContext } from 'react'
+import { PengadaanContext } from '@/components/context/PengadaanContext'
 
 export const prosesPengadaanColumns = [
     {
@@ -465,6 +468,7 @@ export const prosesPengadaanColumns = [
         enableHiding: false,
         cell: ({ row }) => {
             const pengadaan = row.original
+            const { removePengadaan } = useContext(PengadaanContext)
 
             return (
                 <DropdownMenu>
@@ -485,8 +489,12 @@ export const prosesPengadaanColumns = [
                             }>
                             Salin nodin user
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            Lihat detail pengadaan
+                        <DropdownMenuItem
+                            onClick={async () => {
+                                await deletePengadaanData(pengadaan.id)
+                                removePengadaan(pengadaan.id)
+                            }}>
+                            Delete data pengadaan
                         </DropdownMenuItem>
                         <EditDataSheet defaultValues={pengadaan} />
                     </DropdownMenuContent>
