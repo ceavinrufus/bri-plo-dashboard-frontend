@@ -1,7 +1,33 @@
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from '@/components/ui/card'
+import {
+    PieChart,
+    Pie,
+    Cell,
+    ResponsiveContainer,
+    Legend,
+    Tooltip,
+} from 'recharts'
 
 const DashboardMetrics = ({ metrics }) => {
+    // Data for the pie chart
+    const pieData = [
+        { name: 'Completed', value: metrics.completedWorks },
+        {
+            name: 'Not Completed',
+            value: 100 - metrics.completedWorks,
+        },
+    ]
+
+    // Colors for the pie chart slices
+    const COLORS = ['#00C49F', '#FF8042']
+
     return (
         <>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -88,24 +114,51 @@ const DashboardMetrics = ({ metrics }) => {
                     </CardContent>
                 </Card>
             </div>
-            {/* <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">
-                <Card className="col-span-1 lg:col-span-4">
-                    <CardHeader>
-                        <CardTitle>Overview</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pl-2">
-                    </CardContent>
-                </Card>
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">
                 <Card className="col-span-1 lg:col-span-3">
                     <CardHeader>
-                        <CardTitle>Recent Sales</CardTitle>
-                        <CardDescription>
-                            You made 265 sales this month.
-                        </CardDescription>
+                        <CardTitle>Persentase Pekerjaan Selesai</CardTitle>
                     </CardHeader>
-                    <CardContent></CardContent>
+                    <CardContent className="pl-2">
+                        <ResponsiveContainer width="100%" height={250}>
+                            <PieChart>
+                                <Pie
+                                    data={pieData}
+                                    dataKey="value"
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={50} // Adjust for donut
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    label>
+                                    {pieData.map((entry, index) => (
+                                        <Cell
+                                            key={`cell-${index}`}
+                                            fill={COLORS[index % COLORS.length]}
+                                        />
+                                    ))}
+                                </Pie>
+
+                                <Tooltip />
+                                <Legend
+                                    verticalAlign="bottom"
+                                    height={36}
+                                    formatter={(value, entry, index) => (
+                                        <span>{`${value}: ${pieData[index].value.toFixed(2)}%`}</span>
+                                    )}
+                                />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </CardContent>
                 </Card>
-            </div> */}
+                <Card className="col-span-1 lg:col-span-4">
+                    <CardHeader>
+                        <CardTitle>Blablabla</CardTitle>
+                        <CardDescription>This is description</CardDescription>
+                    </CardHeader>
+                    <CardContent>Tes</CardContent>
+                </Card>
+            </div>
         </>
     )
 }

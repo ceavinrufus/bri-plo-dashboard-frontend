@@ -25,9 +25,24 @@ const GET_PENGADAANS = gql`
 const Dashboard = () => {
     const departments = ['bcp', 'igp', 'psr']
     const [metrics, setMetrics] = useState({
-        bcp: { costEfficiencyHPS: 0, costEfficiencyAnggaran: 0, tkdn: 0 },
-        igp: { costEfficiencyHPS: 0, costEfficiencyAnggaran: 0, tkdn: 0 },
-        psr: { costEfficiencyHPS: 0, costEfficiencyAnggaran: 0, tkdn: 0 },
+        bcp: {
+            costEfficiencyHPS: 0,
+            costEfficiencyAnggaran: 0,
+            tkdn: 0,
+            completedWorks: 0,
+        },
+        igp: {
+            costEfficiencyHPS: 0,
+            costEfficiencyAnggaran: 0,
+            tkdn: 0,
+            completedWorks: 0,
+        },
+        psr: {
+            costEfficiencyHPS: 0,
+            costEfficiencyAnggaran: 0,
+            tkdn: 0,
+            completedWorks: 0,
+        },
     })
 
     const calculateMetrics = data => {
@@ -40,6 +55,15 @@ const Dashboard = () => {
         )
         const countTKDN = data.length
 
+        // Calculate completed works
+        const totalCompletedWorks = data.filter(
+            item => item.nilai_spk !== null,
+        ).length
+        const totalWorks = data.length
+        const completedWorks = totalWorks
+            ? (totalCompletedWorks / totalWorks) * 100
+            : 0
+
         return {
             costEfficiencyHPS: totalHPS
                 ? ((totalHPS - totalSPK) / totalHPS) * 100
@@ -48,6 +72,7 @@ const Dashboard = () => {
                 ? ((totalAnggaran - totalSPK) / totalAnggaran) * 100
                 : 0,
             tkdn: countTKDN ? totalTKDN / countTKDN : 0,
+            completedWorks,
         }
     }
 
