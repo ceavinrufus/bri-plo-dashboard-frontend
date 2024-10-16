@@ -7,7 +7,7 @@ export const metadata = {
 const Dashboard = () => {
     return (
         <>
-            <Header title="Monitoring Pengadaan" />
+            <Header title="Monitoring Pekerjaan" />
             <div className="py-12">
                 <div className="mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
