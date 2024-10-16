@@ -16,6 +16,7 @@ import { formatDateDMY } from '@/lib/utils'
 import { deletePengadaanData } from '@/lib/actions'
 import { useContext } from 'react'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
+import { toast } from '@/hooks/use-toast'
 
 export const prosesPengadaanColumns = [
     {
@@ -491,8 +492,25 @@ export const prosesPengadaanColumns = [
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={async () => {
-                                await deletePengadaanData(pengadaan.id)
-                                removePengadaan(pengadaan.id)
+                                try {
+                                    await deletePengadaanData(pengadaan.id)
+
+                                    toast({
+                                        title: 'Success',
+                                        description:
+                                            'Data has been deleted successfully!',
+                                        status: 'success',
+                                    })
+                                    removePengadaan(pengadaan.id)
+                                } catch (error) {
+                                    toast({
+                                        title: 'Error',
+                                        description:
+                                            error.response?.data?.message ||
+                                            'An error occurred while deleting data.',
+                                        status: 'error',
+                                    })
+                                }
                             }}>
                             Delete data pengadaan
                         </DropdownMenuItem>
