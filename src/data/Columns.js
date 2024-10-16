@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { calculateDaysDifference } from '@/utils'
+import { calculateDaysDifference, convertToRupiah } from '@/utils'
 import { EditDataSheet } from '@/components/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY } from '@/lib/utils'
@@ -368,7 +368,9 @@ export const prosesPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="">{row.getValue('hps')}</div>,
+        cell: ({ row }) => (
+            <div className="">{convertToRupiah(row.getValue('hps'))}</div>
+        ),
     },
     {
         accessorKey: 'anggaran',
@@ -384,7 +386,9 @@ export const prosesPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="">{row.getValue('anggaran')}</div>,
+        cell: ({ row }) => (
+            <div className="">{convertToRupiah(row.getValue('anggaran'))}</div>
+        ),
     },
     {
         accessorKey: 'nilai_spk',
@@ -400,7 +404,9 @@ export const prosesPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="">{row.getValue('nilai_spk')}</div>,
+        cell: ({ row }) => (
+            <div className="">{convertToRupiah(row.getValue('nilai_spk'))}</div>
+        ),
     },
     {
         accessorKey: 'tkdn_percentage',

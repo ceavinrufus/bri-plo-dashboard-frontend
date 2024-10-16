@@ -9,3 +9,14 @@ export function calculateDaysDifference(date1, date2) {
 
     return differenceInDays
 }
+
+export function convertToRupiah(amount) {
+    return amount
+        ? amount.toLocaleString('id-ID', {
+              style: 'currency',
+              currency: 'IDR',
+              minimumFractionDigits: 0, // No decimals
+              maximumFractionDigits: 0,
+          })
+        : ''
+}
