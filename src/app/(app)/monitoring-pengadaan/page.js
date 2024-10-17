@@ -4,7 +4,7 @@ export const metadata = {
     title: 'Laravel - Dashboard',
 }
 
-const Dashboard = () => {
+const MonitoringPengadaan = () => {
     return (
         <>
             <Header title="Monitoring Pekerjaan" />
@@ -21,4 +21,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default MonitoringPengadaan
