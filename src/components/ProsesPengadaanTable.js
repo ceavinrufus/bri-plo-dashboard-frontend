@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { DataTable } from './DataTable'
 import { prosesPengadaanColumns } from '@/data/Columns'
 import { AddDataSheet } from './AddDataSheet'
@@ -39,6 +39,7 @@ const GET_PENGADAANS = gql`
             tkdn_percentage
             catatan
             pic {
+                id
                 name
             }
         }

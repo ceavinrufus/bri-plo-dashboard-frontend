@@ -8,8 +8,24 @@ import {
 import { ChevronDown } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { DataTableFacetedFilter } from './ui/data-table-faceted-filter'
 
 const ProsesPengadaanTableToolbar = ({ table }) => {
+    const getUniqueValues = columnId => {
+        const uniqueValues = new Set()
+
+        table.getPreFilteredRowModel().rows.forEach(row => {
+            const value = row.getValue(columnId)
+            if (value) {
+                uniqueValues.add(value)
+            }
+        })
+        return Array.from(uniqueValues).map(value => ({
+            value,
+            label: value,
+        }))
+    }
+
     return (
         <div className="flex items-center py-4">
             <Input
@@ -22,6 +38,26 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
                 }
                 className="max-w-sm"
             />
+
+            {/* Filters */}
+            <div className="flex mx-2 gap-2">
+                <DataTableFacetedFilter
+                    column={table.getColumn('tim')}
+                    title="Tim"
+                    options={getUniqueValues('tim')}
+                />
+                <DataTableFacetedFilter
+                    column={table.getColumn('kode_user')}
+                    title="Kode User"
+                    options={getUniqueValues('kode_user')}
+                />
+                <DataTableFacetedFilter
+                    column={table.getColumn('metode')}
+                    title="Metode"
+                    options={getUniqueValues('metode')}
+                />
+            </div>
+
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="ml-auto">

@@ -76,6 +76,7 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
         nodin_alert_at: data.is_verification_complete
             ? null
             : generateNodinAlert(previousData, data),
+        pic_id: previousData.pic.id,
     }
 
     return transformedData
