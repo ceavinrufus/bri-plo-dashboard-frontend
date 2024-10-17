@@ -24,26 +24,7 @@ const GET_PENGADAANS = gql`
 
 const Dashboard = () => {
     const departments = ['bcp', 'igp', 'psr']
-    const [metrics, setMetrics] = useState({
-        bcp: {
-            costEfficiencyHPS: 0,
-            costEfficiencyAnggaran: 0,
-            tkdn: 0,
-            completedWorks: 0,
-        },
-        igp: {
-            costEfficiencyHPS: 0,
-            costEfficiencyAnggaran: 0,
-            tkdn: 0,
-            completedWorks: 0,
-        },
-        psr: {
-            costEfficiencyHPS: 0,
-            costEfficiencyAnggaran: 0,
-            tkdn: 0,
-            completedWorks: 0,
-        },
-    })
+    const [metrics, setMetrics] = useState(null)
 
     const calculateMetrics = data => {
         const totalHPS = data.reduce((sum, item) => sum + item.hps, 0)
@@ -60,9 +41,6 @@ const Dashboard = () => {
             item => item.nilai_spk !== null,
         ).length
         const totalWorks = data.length
-        const completedWorks = totalWorks
-            ? (totalCompletedWorks / totalWorks) * 100
-            : 0
 
         return {
             costEfficiencyHPS: totalHPS
@@ -72,7 +50,8 @@ const Dashboard = () => {
                 ? ((totalAnggaran - totalSPK) / totalAnggaran) * 100
                 : 0,
             tkdn: countTKDN ? totalTKDN / countTKDN : 0,
-            completedWorks,
+            totalCompletedWorks,
+            totalWorks,
         }
     }
 
@@ -99,31 +78,33 @@ const Dashboard = () => {
         <>
             <Header title="Dashboard" />
 
-            <div className="py-12">
-                <div className="mx-auto sm:px-6 lg:px-8">
-                    <Tabs
-                        orientation="vertical"
-                        defaultValue="bcp"
-                        className="space-y-4">
-                        <div className="w-full overflow-x-auto pb-2">
-                            <TabsList>
-                                <TabsTrigger value="bcp">BCP</TabsTrigger>
-                                <TabsTrigger value="igp">IGP</TabsTrigger>
-                                <TabsTrigger value="psr">PSR</TabsTrigger>
-                            </TabsList>
-                        </div>
-                        <TabsContent value="bcp" className="space-y-4">
-                            <DashboardMetrics metrics={metrics.bcp} />
-                        </TabsContent>
-                        <TabsContent value="igp" className="space-y-4">
-                            <DashboardMetrics metrics={metrics.igp} />
-                        </TabsContent>
-                        <TabsContent value="psr" className="space-y-4">
-                            <DashboardMetrics metrics={metrics.psr} />
-                        </TabsContent>
-                    </Tabs>
+            {metrics && (
+                <div className="py-12">
+                    <div className="mx-auto sm:px-6 lg:px-8">
+                        <Tabs
+                            orientation="vertical"
+                            defaultValue="bcp"
+                            className="space-y-4">
+                            <div className="w-full overflow-x-auto pb-2">
+                                <TabsList>
+                                    <TabsTrigger value="bcp">BCP</TabsTrigger>
+                                    <TabsTrigger value="igp">IGP</TabsTrigger>
+                                    <TabsTrigger value="psr">PSR</TabsTrigger>
+                                </TabsList>
+                            </div>
+                            <TabsContent value="bcp" className="space-y-4">
+                                <DashboardMetrics metrics={metrics.bcp} />
+                            </TabsContent>
+                            <TabsContent value="igp" className="space-y-4">
+                                <DashboardMetrics metrics={metrics.igp} />
+                            </TabsContent>
+                            <TabsContent value="psr" className="space-y-4">
+                                <DashboardMetrics metrics={metrics.psr} />
+                            </TabsContent>
+                        </Tabs>
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     )
 }

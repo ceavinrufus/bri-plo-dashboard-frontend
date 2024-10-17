@@ -18,10 +18,10 @@ import {
 const DashboardMetrics = ({ metrics }) => {
     // Data for the pie chart
     const pieData = [
-        { name: 'Completed', value: metrics.completedWorks },
+        { name: 'Completed', value: metrics.totalCompletedWorks },
         {
             name: 'Not Completed',
-            value: 100 - metrics.completedWorks,
+            value: metrics.totalWorks - metrics.totalCompletedWorks,
         },
     ]
 
@@ -144,7 +144,7 @@ const DashboardMetrics = ({ metrics }) => {
                                     verticalAlign="bottom"
                                     height={36}
                                     formatter={(value, entry, index) => (
-                                        <span>{`${value}: ${pieData[index].value.toFixed(2)}%`}</span>
+                                        <span>{`${value}: ${((pieData[index].value * 100) / metrics.totalWorks).toFixed(2)}%`}</span>
                                     )}
                                 />
                             </PieChart>
