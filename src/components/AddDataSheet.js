@@ -13,9 +13,7 @@ export function AddDataSheet() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="default" className="ml-auto">
-                    Add Data
-                </Button>
+                <Button variant="default">Add Data</Button>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
