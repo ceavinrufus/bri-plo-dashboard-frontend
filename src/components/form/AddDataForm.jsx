@@ -8,23 +8,29 @@ import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
 import { postPengadaanData } from '@/lib/actions'
-import { formatDateYMD, transformPengadaanDataForSubmit } from '@/lib/utils'
+import {
+    formatDateYMD,
+    isProgressAbove,
+    transformPengadaanDataForSubmit,
+} from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
 import { useContext, useEffect, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import { PengadaanContext } from '../context/PengadaanContext'
+import { useAuth } from '@/hooks/auth'
 
 export function AddDataForm() {
     const { addPengadaan } = useContext(PengadaanContext)
     const [isProcessing, setIsProcessing] = useState(false)
+    const { user } = useAuth({ middleware: 'auth' })
 
     const defaultValues = {
         kode_user: '',
         nodin_user: '',
         tanggal_nodin_user: formatDateYMD(new Date()),
         tim: 'ptt',
-        departemen: 'bcp',
+        departemen: user.departemen,
         perihal: '',
         nomor_spk: '',
         tanggal_spk: '',
@@ -36,6 +42,10 @@ export function AddDataForm() {
         tanggal_nodin_plo: undefined,
         proses_pengadaan: '',
         catatan: '',
+        pic: {
+            id: user.id,
+            name: user.name,
+        },
     }
 
     const form = useForm({
@@ -74,14 +84,16 @@ export function AddDataForm() {
             data,
         )
         try {
-            const response = await postPengadaanData(transformedData)
+            await postPengadaanData(transformedData)
 
             toast({
                 title: 'Success',
                 description: 'Data has been submitted successfully!',
                 status: 'success',
             })
-            addPengadaan(response.data)
+
+            console.log({ transformedData })
+            addPengadaan(transformedData)
         } catch (error) {
             toast({
                 title: 'Error',
@@ -216,13 +228,19 @@ export function AddDataForm() {
                             label="Anggaran"
                             placeholder="Nilai Anggaran"
                         />
-                        <CustomFormField
-                            fieldType={FormFieldType.NUMERIC}
-                            control={form.control}
-                            name="hps"
-                            label="HPS"
-                            placeholder="Nilai HPS"
-                        />
+                        {isProgressAbove(
+                            form.watch('metode'),
+                            form.watch('proses_pengadaan'),
+                            'Penyusunan & Penetapan HPS',
+                        ) && (
+                            <CustomFormField
+                                fieldType={FormFieldType.NUMERIC}
+                                control={form.control}
+                                name="hps"
+                                label="HPS"
+                                placeholder="Nilai HPS"
+                            />
+                        )}
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}
                             control={form.control}

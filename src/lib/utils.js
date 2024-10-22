@@ -1,3 +1,4 @@
+import { progress } from '@/data/ProgressSelection'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -77,6 +78,10 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
             ? null
             : generateNodinAlert(previousData, data),
         pic_id: previousData.pic.id,
+        pic: {
+            id: previousData.pic.id,
+            name: previousData.pic.name,
+        },
     }
 
     return transformedData
@@ -84,8 +89,29 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
 
 const emptyOrNullArray = array => {
     if (array.length === 0) {
-        return null
+        return []
     } else {
         return array
     }
+}
+
+export function isProgressAbove(method, progress1, progress2) {
+    if (!method || !progress1 || !progress2) {
+        return false
+    }
+
+    const stages = progress[method]
+
+    const index1 = stages.indexOf(progress1)
+    const index2 = stages.indexOf(progress2)
+
+    // Check if both progress steps exist in the stages
+    if (index1 === -1 || index2 === -1) {
+        throw new Error(
+            'One or both progress steps are not valid for the given method.',
+        )
+    }
+
+    // Return true if progress1 is above progress2
+    return index1 > index2
 }

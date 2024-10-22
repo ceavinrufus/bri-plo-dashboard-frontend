@@ -7,7 +7,11 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
-import { formatDateYMD, transformPengadaanDataForSubmit } from '@/lib/utils'
+import {
+    formatDateYMD,
+    isProgressAbove,
+    transformPengadaanDataForSubmit,
+} from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { updatePengadaanData } from '@/lib/actions'
 import { useContext, useEffect, useState } from 'react'
@@ -25,13 +29,13 @@ export function EditDataForm({ defaultValues }) {
             ...defaultValues,
             metode: defaultValues.metode || undefined,
             nodin_plo:
-                defaultValues.nodin_plos.length > 0
+                defaultValues.nodin_plos && defaultValues.nodin_plos.length > 0
                     ? defaultValues.nodin_plos[
                           defaultValues.nodin_plos.length - 1
                       ].nodin
                     : '',
             tanggal_nodin_plo:
-                defaultValues.nodin_plos.length > 0
+                defaultValues.nodin_plos && defaultValues.nodin_plos.length > 0
                     ? formatDateYMD(
                           defaultValues.nodin_plos[
                               defaultValues.nodin_plos.length - 1
@@ -39,6 +43,9 @@ export function EditDataForm({ defaultValues }) {
                       )
                     : '',
             catatan: defaultValues.catatan || '',
+            nomor_spk: defaultValues.nomor_spk || '',
+            proses_pengadaan: defaultValues.proses_pengadaan || '',
+            pelaksana_pekerjaan: defaultValues.pelaksana_pekerjaan || '',
             is_verification_complete:
                 defaultValues.is_verification_complete || false,
         },
@@ -76,17 +83,14 @@ export function EditDataForm({ defaultValues }) {
         )
 
         try {
-            const response = await updatePengadaanData(
-                defaultValues.id,
-                transformedData,
-            )
+            await updatePengadaanData(defaultValues.id, transformedData)
 
             toast({
                 title: 'Success',
                 description: 'Data has been edited successfully!',
                 status: 'success',
             })
-            updatePengadaan(defaultValues.id, response.data)
+            updatePengadaan(defaultValues.id, transformedData)
         } catch (error) {
             toast({
                 title: 'Error',
@@ -212,13 +216,19 @@ export function EditDataForm({ defaultValues }) {
                             label="Anggaran"
                             placeholder="Nilai Anggaran"
                         />
-                        <CustomFormField
-                            fieldType={FormFieldType.NUMERIC}
-                            control={form.control}
-                            name="hps"
-                            label="HPS"
-                            placeholder="Nilai HPS"
-                        />
+                        {isProgressAbove(
+                            form.watch('metode'),
+                            form.watch('proses_pengadaan'),
+                            'Penyusunan & Penetapan HPS',
+                        ) && (
+                            <CustomFormField
+                                fieldType={FormFieldType.NUMERIC}
+                                control={form.control}
+                                name="hps"
+                                label="HPS"
+                                placeholder="Nilai HPS"
+                            />
+                        )}
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}
                             control={form.control}
