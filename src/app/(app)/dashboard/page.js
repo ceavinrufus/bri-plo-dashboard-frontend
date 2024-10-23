@@ -31,7 +31,9 @@ const Dashboard = () => {
             (sum, item) => sum + item.tkdn_percentage,
             0,
         )
-        const countTKDN = data.length
+        const countTKDN = data.filter(
+            item => item.tkdn_percentage !== null,
+        ).length
 
         // Calculate completed works
         const totalCompletedWorks = data.filter(

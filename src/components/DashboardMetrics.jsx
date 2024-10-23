@@ -118,6 +118,9 @@ const DashboardMetrics = ({ metrics }) => {
                 <Card className="col-span-1 lg:col-span-3">
                     <CardHeader>
                         <CardTitle>Persentase Pekerjaan Selesai</CardTitle>
+                        <CardDescription>
+                            Total pekerjaan: {metrics.totalWorks}
+                        </CardDescription>
                     </CardHeader>
                     <CardContent className="">
                         <ResponsiveContainer width="100%" height={300}>
