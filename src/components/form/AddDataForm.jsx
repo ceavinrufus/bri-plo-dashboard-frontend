@@ -70,6 +70,10 @@ export function AddDataForm() {
             form.resetField('nilai_spk')
             form.resetField('anggaran')
             form.resetField('hps')
+            form.resetField('tanggal_permohonan_anggaran')
+            form.resetField('tanggal_permohonan_hps')
+            form.resetField('tanggal_terima_anggaran')
+            form.resetField('tanggal_terima_hps')
             form.resetField('tkdn_percentage')
         } else {
             form.resetField('nodin_plo')
@@ -92,8 +96,11 @@ export function AddDataForm() {
                 status: 'success',
             })
 
-            console.log({ transformedData })
-            addPengadaan(transformedData)
+            addPengadaan({
+                ...transformedData,
+                anggaran: JSON.parse(transformedData.anggaran),
+                hps: JSON.parse(transformedData.hps),
+            })
         } catch (error) {
             toast({
                 title: 'Error',
@@ -194,6 +201,62 @@ export function AddDataForm() {
                                 )}
                             </CustomFormField>
                         )}
+                        {form.watch('departemen') === 'bcp' && (
+                            <>
+                                <CustomFormField
+                                    fieldType={FormFieldType.DATE_PICKER}
+                                    control={form.control}
+                                    name="tanggal_permohonan_anggaran"
+                                    label="Tanggal Permohonan Anggaran"
+                                    placeholder="Tanggal Permohonan Anggaran"
+                                />
+                                <CustomFormField
+                                    fieldType={FormFieldType.DATE_PICKER}
+                                    control={form.control}
+                                    name="tanggal_terima_anggaran"
+                                    label="Tanggal Terima Anggaran"
+                                    placeholder="Tanggal Terima Anggaran"
+                                />
+                            </>
+                        )}
+                        <CustomFormField
+                            fieldType={FormFieldType.NUMERIC}
+                            control={form.control}
+                            name="anggaran"
+                            label="Anggaran"
+                            placeholder="Nilai Anggaran"
+                        />
+                        {form.watch('departemen') === 'bcp' && (
+                            <>
+                                <CustomFormField
+                                    fieldType={FormFieldType.DATE_PICKER}
+                                    control={form.control}
+                                    name="tanggal_permohonan_hps"
+                                    label="Tanggal Permohonan HPS"
+                                    placeholder="Tanggal Permohonan HPS"
+                                />
+                                <CustomFormField
+                                    fieldType={FormFieldType.DATE_PICKER}
+                                    control={form.control}
+                                    name="tanggal_terima_hps"
+                                    label="Tanggal Terima HPS"
+                                    placeholder="Tanggal Terima HPS"
+                                />
+                            </>
+                        )}
+                        {isProgressAbove(
+                            form.watch('metode'),
+                            form.watch('proses_pengadaan'),
+                            'Penyusunan & Penetapan HPS',
+                        ) && (
+                            <CustomFormField
+                                fieldType={FormFieldType.NUMERIC}
+                                control={form.control}
+                                name="hps"
+                                label="Nilai HPS"
+                                placeholder="Nilai HPS"
+                            />
+                        )}
                         <CustomFormField
                             fieldType={FormFieldType.INPUT}
                             control={form.control}
@@ -221,26 +284,6 @@ export function AddDataForm() {
                             label="Nilai SPK"
                             placeholder="Nilai SPK"
                         />
-                        <CustomFormField
-                            fieldType={FormFieldType.NUMERIC}
-                            control={form.control}
-                            name="anggaran"
-                            label="Anggaran"
-                            placeholder="Nilai Anggaran"
-                        />
-                        {isProgressAbove(
-                            form.watch('metode'),
-                            form.watch('proses_pengadaan'),
-                            'Penyusunan & Penetapan HPS',
-                        ) && (
-                            <CustomFormField
-                                fieldType={FormFieldType.NUMERIC}
-                                control={form.control}
-                                name="hps"
-                                label="HPS"
-                                placeholder="Nilai HPS"
-                            />
-                        )}
                         <CustomFormField
                             fieldType={FormFieldType.NUMERIC}
                             control={form.control}

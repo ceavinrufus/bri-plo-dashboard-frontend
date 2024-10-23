@@ -35,8 +35,16 @@ const GET_PENGADAANS = gql`
             tanggal_spk
             pelaksana_pekerjaan
             nilai_spk
-            anggaran
-            hps
+            anggaran {
+                amount
+                tanggal_permohonan
+                tanggal_terima
+            }
+            hps {
+                amount
+                tanggal_permohonan
+                tanggal_terima
+            }
             tkdn_percentage
             catatan
             pic {

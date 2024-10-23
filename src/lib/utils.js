@@ -49,11 +49,23 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
     const transformedData = {
         ...data,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
-        nilai_spk: data.nilai_spk ? parseInt(data.nilai_spk) : null,
-        anggaran: data.anggaran ? parseInt(data.anggaran) : null,
-        hps: data.hps ? parseInt(data.hps) : null,
+        nilai_spk: data.nilai_spk ? parseFloat(data.nilai_spk) : null,
+        anggaran: data.anggaran
+            ? JSON.stringify({
+                  amount: parseFloat(data.anggaran),
+                  tanggal_permohonan: data.tanggal_permohonan_anggaran,
+                  tanggal_terima: data.tanggal_terima_anggaran,
+              })
+            : null,
+        hps: data.hps
+            ? JSON.stringify({
+                  amount: parseFloat(data.hps),
+                  tanggal_permohonan: data.tanggal_permohonan_hps,
+                  tanggal_terima: data.tanggal_terima_hps,
+              })
+            : null,
         tkdn_percentage: data.tkdn_percentage
-            ? parseInt(data.tkdn_percentage)
+            ? parseFloat(data.tkdn_percentage)
             : null,
         verification_alert_at: data.is_verification_complete
             ? null
@@ -109,9 +121,7 @@ export function isProgressAbove(method, progress1, progress2) {
 
     // Check if both progress steps exist in the stages
     if (index1 === -1 || index2 === -1) {
-        throw new Error(
-            'One or both progress steps are not valid for the given method.',
-        )
+        return false
     }
 
     // Return true if progress1 is above progress2

@@ -373,9 +373,12 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="">{convertToRupiah(row.getValue('hps'))}</div>
+            <div className="">
+                {convertToRupiah(row.getValue('hps').amount)}
+            </div>
         ),
     },
+    // Anggaran
     {
         accessorKey: 'anggaran',
         header: ({ column }) => {
@@ -391,9 +394,12 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="">{convertToRupiah(row.getValue('anggaran'))}</div>
+            <div className="">
+                {convertToRupiah(row.getValue('anggaran').amount)}
+            </div>
         ),
     },
+    // Nilai SPK
     {
         accessorKey: 'nilai_spk',
         header: ({ column }) => {
@@ -412,6 +418,7 @@ export const prosesPengadaanColumns = [
             <div className="">{convertToRupiah(row.getValue('nilai_spk'))}</div>
         ),
     },
+    // TKDN Percentage
     {
         accessorKey: 'tkdn_percentage',
         header: ({ column }) => {
@@ -434,6 +441,7 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
+    // PDN Percentage
     {
         accessorKey: 'pdn_percentage',
         header: ({ column }) => {
@@ -457,6 +465,7 @@ export const prosesPengadaanColumns = [
             )
         },
     },
+    // Catatan
     {
         accessorKey: 'catatan',
         header: () => null, // No header for the shadow column
@@ -464,6 +473,7 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false, // Hides the column
     },
+    // Actions
     {
         id: 'actions',
         enableHiding: false,
