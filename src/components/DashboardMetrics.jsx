@@ -119,8 +119,8 @@ const DashboardMetrics = ({ metrics }) => {
                     <CardHeader>
                         <CardTitle>Persentase Pekerjaan Selesai</CardTitle>
                     </CardHeader>
-                    <CardContent className="pl-2">
-                        <ResponsiveContainer width="100%" height={250}>
+                    <CardContent className="">
+                        <ResponsiveContainer width="100%" height={300}>
                             <PieChart>
                                 <Pie
                                     data={pieData}

@@ -6,9 +6,6 @@ import client from '@/lib/apolloClient'
 import Header from '../Header'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DashboardMetrics from '@/components/DashboardMetrics'
-// export const metadata = {
-//     title: 'Laravel - Dashboard',
-// }
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
@@ -55,9 +52,21 @@ const Dashboard = () => {
         }
     }
 
+    const aggregateMetrics = allData => {
+        const aggregated = allData.reduce((acc, data) => {
+            Object.keys(data).forEach(key => {
+                acc[key] = (acc[key] || 0) + data[key]
+            })
+            return acc
+        }, {})
+        return aggregated
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             const newMetrics = {}
+            const allData = []
+
             for (const department of departments) {
                 const { data } = await client.query({
                     query: GET_PENGADAANS,
@@ -65,10 +74,14 @@ const Dashboard = () => {
                 })
 
                 if (data && data.pengadaans) {
-                    newMetrics[department] = calculateMetrics(data.pengadaans)
+                    const departmentMetrics = calculateMetrics(data.pengadaans)
+                    newMetrics[department] = departmentMetrics
+                    allData.push(departmentMetrics)
                 }
             }
-            setMetrics(newMetrics)
+
+            const allMetrics = aggregateMetrics(allData)
+            setMetrics({ ...newMetrics, all: allMetrics })
         }
 
         fetchData()
@@ -83,15 +96,19 @@ const Dashboard = () => {
                     <div className="mx-auto sm:px-6 lg:px-8">
                         <Tabs
                             orientation="vertical"
-                            defaultValue="bcp"
+                            defaultValue="all"
                             className="space-y-4">
                             <div className="w-full overflow-x-auto pb-2">
                                 <TabsList>
+                                    <TabsTrigger value="all">All</TabsTrigger>
                                     <TabsTrigger value="bcp">BCP</TabsTrigger>
                                     <TabsTrigger value="igp">IGP</TabsTrigger>
                                     <TabsTrigger value="psr">PSR</TabsTrigger>
                                 </TabsList>
                             </div>
+                            <TabsContent value="all" className="space-y-4">
+                                <DashboardMetrics metrics={metrics.all} />
+                            </TabsContent>
                             <TabsContent value="bcp" className="space-y-4">
                                 <DashboardMetrics metrics={metrics.bcp} />
                             </TabsContent>
