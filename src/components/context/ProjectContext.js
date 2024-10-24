@@ -27,17 +27,19 @@ export const ProjectProvider = ({ children }) => {
     }
 
     // Remove a project
-    const removeProject = id => {
+    const removeProject = kode => {
         setProjectData(prevData =>
-            prevData.filter(project => project.id !== id),
+            prevData.filter(project => project.kode !== kode),
         )
     }
 
     // Update an existing project
-    const updateProject = (id, updatedFields) => {
+    const updateProject = (kode, updatedFields) => {
         setProjectData(prevData =>
             prevData.map(project =>
-                project.id === id ? { ...project, ...updatedFields } : project,
+                project.kode === kode
+                    ? { ...project, ...updatedFields }
+                    : project,
             ),
         )
     }

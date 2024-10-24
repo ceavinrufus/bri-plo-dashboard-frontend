@@ -2,14 +2,15 @@ import { Button } from '@/components/ui/button'
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
 import { AddProjectForm } from './form/AddProjectForm'
+import { ProjectCollapsible } from './ProjectsCollapsible'
+import { Separator } from './ui/separator'
 
-export function ProjectSheet() {
+export function ProjectsSheet() {
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -17,12 +18,13 @@ export function ProjectSheet() {
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
-                    <SheetTitle>Add New Project</SheetTitle>
-                    <SheetDescription>
-                        Fill in the form below to add new data.
-                    </SheetDescription>
+                    <SheetTitle>Projects</SheetTitle>
                 </SheetHeader>
-                <AddProjectForm />
+                <div className="mt-6">
+                    <ProjectCollapsible />
+                    <Separator className="mt-6" />
+                    <AddProjectForm />
+                </div>
             </SheetContent>
         </Sheet>
     )

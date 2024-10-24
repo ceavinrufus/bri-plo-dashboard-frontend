@@ -10,7 +10,7 @@ import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { useAuth } from '@/hooks/auth'
 import * as XLSX from 'xlsx'
 import { Button } from './ui/button'
-import { ProjectSheet } from './ProjectSheet'
+import { ProjectsSheet } from './ProjectsSheet'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
@@ -192,7 +192,7 @@ const ProsesPengadaanTable = () => {
             <div className="flex">
                 <h1>Pengadaan Data for {user.departemen.toUpperCase()}</h1>
                 <div className="space-x-2 ml-auto">
-                    {user.departemen === 'bcp' && <ProjectSheet />}
+                    {user.departemen === 'bcp' && <ProjectsSheet />}
                     <AddDataSheet />
                     <Button
                         onClick={handleExport}

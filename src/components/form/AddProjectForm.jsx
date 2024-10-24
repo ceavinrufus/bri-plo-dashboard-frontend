@@ -58,6 +58,7 @@ export function AddProjectForm() {
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6 mt-6">
+                <h4 className="text-sm font-semibold">Add New Project</h4>
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
