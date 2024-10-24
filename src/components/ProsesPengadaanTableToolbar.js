@@ -42,6 +42,11 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
             {/* Filters */}
             <div className="flex mx-2 gap-2">
                 <DataTableFacetedFilter
+                    column={table.getColumn('proyek')}
+                    title="Proyek"
+                    options={getUniqueValues('proyek')}
+                />
+                <DataTableFacetedFilter
                     column={table.getColumn('tim')}
                     title="Tim"
                     options={getUniqueValues('tim')}

@@ -17,6 +17,7 @@ const GET_PENGADAANS = gql`
             id
             tim
             departemen
+            proyek
             kode_user
             perihal
             nodin_user
@@ -203,6 +204,8 @@ const ProsesPengadaanTable = () => {
                     columns={prosesPengadaanColumns}
                     defaultColumnVisibility={{
                         nodin_plos: false,
+                        departemen: false,
+                        proyek: user.departemen === 'bcp',
                         tanggal_nodin_plo: false,
                         nodin_plo: false,
                         tkdn_percentage: false,

@@ -26,6 +26,13 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false, // Hides the column
     },
+    {
+        accessorKey: 'departemen',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
     // Select
     {
         id: 'select',
@@ -51,7 +58,7 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false,
     },
-    // Kode User
+    // Tim
     {
         accessorKey: 'tim',
         header: ({ column }) => {
@@ -91,6 +98,31 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
+    // Proyek
+    {
+        accessorKey: 'proyek',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Proyek
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            return (
+                <div className="uppercase text-center">
+                    {row.getValue('proyek')}
+                </div>
+            )
+        },
+        enableSorting: true,
+        enableHiding: false, // Hides the column
+    },
     // Perihal
     {
         accessorKey: 'perihal',
@@ -109,6 +141,7 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => <div className="">{row.getValue('perihal')}</div>,
+        enableHiding: false, // Hides the column
     },
     // Nodin
     {
@@ -148,6 +181,7 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
+    // SLA
     {
         accessorKey: 'sla',
         header: ({ column }) => {
@@ -181,6 +215,7 @@ export const prosesPengadaanColumns = [
             )
         },
     },
+    // Metode
     {
         accessorKey: 'metode',
         header: ({ column }) => {
@@ -197,6 +232,7 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => <div className="">{row.getValue('metode')}</div>,
     },
+    // Is Verification Complete
     {
         accessorKey: 'is_verification_complete',
         header: ({ column }) => {
@@ -226,6 +262,7 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
+    // Proses Pengadaan
     {
         accessorKey: 'proses_pengadaan',
         header: ({ column }) => {
@@ -244,6 +281,7 @@ export const prosesPengadaanColumns = [
             <div className="">{row.getValue('proses_pengadaan')}</div>
         ),
     },
+    // Nomor SPK
     {
         accessorKey: 'nomor_spk',
         header: ({ column }) => {
@@ -260,6 +298,7 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => <div className="">{row.getValue('nomor_spk')}</div>,
     },
+    // Tanggal SPK
     {
         accessorKey: 'tanggal_spk',
         header: ({ column }) => {
@@ -278,6 +317,7 @@ export const prosesPengadaanColumns = [
             <div className="">{formatDateDMY(row.getValue('tanggal_spk'))}</div>
         ),
     },
+    // Pelaksana Pekerjaan
     {
         accessorKey: 'pelaksana_pekerjaan',
         header: ({ column }) => {
@@ -296,6 +336,7 @@ export const prosesPengadaanColumns = [
             <div className="">{row.getValue('pelaksana_pekerjaan')}</div>
         ),
     },
+    // PIC
     {
         accessorKey: 'pic',
         header: ({ column }) => {
@@ -312,6 +353,7 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => <div className="">{row.getValue('pic').name}</div>,
     },
+    // Tanggal Nodin PLO
     {
         accessorKey: 'tanggal_nodin_plo',
         header: ({ column }) => {
@@ -336,6 +378,7 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
+    // Nodin PLO
     {
         accessorKey: 'nodin_plo',
         header: ({ column }) => {
@@ -358,6 +401,7 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
+    // HPS
     {
         accessorKey: 'hps',
         header: ({ column }) => {
