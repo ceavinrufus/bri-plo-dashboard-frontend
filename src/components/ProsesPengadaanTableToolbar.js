@@ -56,6 +56,11 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
                     title="Metode"
                     options={getUniqueValues('metode')}
                 />
+                <DataTableFacetedFilter
+                    column={table.getColumn('proses_pengadaan')}
+                    title="Proses Pengadaan"
+                    options={getUniqueValues('proses_pengadaan')}
+                />
             </div>
 
             <DropdownMenu>

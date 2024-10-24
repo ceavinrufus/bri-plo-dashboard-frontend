@@ -18,6 +18,7 @@ import { useContext, useEffect, useState } from 'react'
 import { PengadaanContext } from '../context/PengadaanContext'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
+import divisiData from '@/data/Divisi'
 
 export function EditDataForm({ defaultValues }) {
     const { updatePengadaan } = useContext(PengadaanContext)
@@ -125,12 +126,16 @@ export function EditDataForm({ defaultValues }) {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6 mt-6">
                 <CustomFormField
-                    fieldType={FormFieldType.INPUT}
+                    fieldType={FormFieldType.SELECT}
                     control={form.control}
                     name="kode_user"
-                    label="Kode User"
-                    placeholder="Kode User"
-                />
+                    label="Kode User">
+                    {divisiData.map(data => (
+                        <SelectItem key={data.value} value={data.value}>
+                            {data.value} ({data.label})
+                        </SelectItem>
+                    ))}
+                </CustomFormField>
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
