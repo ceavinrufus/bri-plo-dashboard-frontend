@@ -92,15 +92,15 @@ export function AddDataForm() {
             data,
         )
         try {
-            await postPengadaanData(transformedData)
+            const response = await postPengadaanData(transformedData)
 
             toast({
                 title: 'Success',
                 description: 'Data has been submitted successfully!',
                 status: 'success',
             })
-
             addPengadaan({
+                id: response.data.id,
                 ...transformedData,
                 anggaran: JSON.parse(transformedData.anggaran),
                 hps: JSON.parse(transformedData.hps),

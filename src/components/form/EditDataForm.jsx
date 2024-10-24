@@ -46,12 +46,12 @@ export function EditDataForm({ defaultValues }) {
                       )
                     : '',
             tanggal_permohonan_anggaran:
-                defaultValues.anggaran.tanggal_permohonan,
-            tanggal_permohonan_hps: defaultValues.hps.tanggal_permohonan,
-            tanggal_terima_anggaran: defaultValues.anggaran.tanggal_terima,
-            tanggal_terima_hps: defaultValues.hps.tanggal_terima,
-            anggaran: defaultValues.anggaran.amount,
-            hps: defaultValues.hps.amount,
+                defaultValues.anggaran?.tanggal_permohonan,
+            tanggal_permohonan_hps: defaultValues.hps?.tanggal_permohonan,
+            tanggal_terima_anggaran: defaultValues.anggaran?.tanggal_terima,
+            tanggal_terima_hps: defaultValues.hps?.tanggal_terima,
+            anggaran: defaultValues.anggaran?.amount,
+            hps: defaultValues.hps?.amount,
             catatan: defaultValues.catatan || '',
             nomor_spk: defaultValues.nomor_spk || '',
             proses_pengadaan: defaultValues.proses_pengadaan || '',

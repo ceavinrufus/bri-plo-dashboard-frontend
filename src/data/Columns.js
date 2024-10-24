@@ -545,6 +545,7 @@ export const prosesPengadaanColumns = [
                             Salin nodin user
                         </DropdownMenuItem>
                         <DropdownMenuItem
+                            className="cursor-pointer"
                             onClick={async () => {
                                 try {
                                     await deletePengadaanData(pengadaan.id)

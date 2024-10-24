@@ -12,7 +12,6 @@ export const ProjectProvider = ({ children }) => {
         const loadData = async () => {
             try {
                 const response = await fetchProjectData()
-                console.log(response)
                 setProjectData(response.data)
             } catch (err) {
                 console.error(err)

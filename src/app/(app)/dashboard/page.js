@@ -28,10 +28,10 @@ const Dashboard = () => {
     const [metrics, setMetrics] = useState(null)
 
     const calculateMetrics = data => {
-        const totalHPS = data.reduce((sum, item) => sum + item.hps.amount, 0)
+        const totalHPS = data.reduce((sum, item) => sum + item.hps?.amount, 0)
         const totalSPK = data.reduce((sum, item) => sum + item.nilai_spk, 0)
         const totalAnggaran = data.reduce(
-            (sum, item) => sum + item.anggaran.amount,
+            (sum, item) => sum + item.anggaran?.amount,
             0,
         )
         const totalTKDN = data.reduce(
