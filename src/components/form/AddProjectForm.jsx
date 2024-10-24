@@ -13,7 +13,7 @@ import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import { ProjectContext } from '../context/ProjectContext'
 
-export function ProjectForm() {
+export function AddProjectForm() {
     const { addProject } = useContext(ProjectContext)
     const [isProcessing, setIsProcessing] = useState(false)
 

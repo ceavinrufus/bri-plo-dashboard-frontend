@@ -192,7 +192,7 @@ const ProsesPengadaanTable = () => {
             <div className="flex">
                 <h1>Pengadaan Data for {user.departemen.toUpperCase()}</h1>
                 <div className="space-x-2 ml-auto">
-                    <ProjectSheet />
+                    {user.departemen === 'bcp' && <ProjectSheet />}
                     <AddDataSheet />
                     <Button
                         onClick={handleExport}
