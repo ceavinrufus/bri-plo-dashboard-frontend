@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { ApolloProvider } from '@apollo/client'
 import client from '@/lib/apolloClient'
 import { PengadaanProvider } from '@/components/context/PengadaanContext'
+import { ProjectProvider } from '@/components/context/ProjectContext'
 
 const AppLayout = ({ children }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -23,7 +24,9 @@ const AppLayout = ({ children }) => {
 
             <ApolloProvider client={client}>
                 <PengadaanProvider>
-                    <div>{children}</div>
+                    <ProjectProvider>
+                        <div>{children}</div>
+                    </ProjectProvider>
                 </PengadaanProvider>
             </ApolloProvider>
             <Toaster />

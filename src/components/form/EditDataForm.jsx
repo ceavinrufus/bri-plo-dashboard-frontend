@@ -19,9 +19,11 @@ import { PengadaanContext } from '../context/PengadaanContext'
 import { ProgressPengadaanFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
 import divisiData from '@/data/Divisi'
+import { ProjectContext } from '../context/ProjectContext'
 
 export function EditDataForm({ defaultValues }) {
     const { updatePengadaan } = useContext(PengadaanContext)
+    const { projectData } = useContext(ProjectContext)
     const [isProcessing, setIsProcessing] = useState(false)
 
     const form = useForm({
@@ -125,6 +127,19 @@ export function EditDataForm({ defaultValues }) {
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6 mt-6">
+                {form.watch('departemen') === 'bcp' && (
+                    <CustomFormField
+                        fieldType={FormFieldType.SELECT}
+                        control={form.control}
+                        name="proyek"
+                        label="Proyek">
+                        {projectData.map(data => (
+                            <SelectItem key={data.kode} value={data.kode}>
+                                {data.kode} ({data.nama})
+                            </SelectItem>
+                        ))}
+                    </CustomFormField>
+                )}
                 <CustomFormField
                     fieldType={FormFieldType.SELECT}
                     control={form.control}
