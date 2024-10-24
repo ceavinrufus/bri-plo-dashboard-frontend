@@ -55,3 +55,10 @@ export const ProgressPengadaanFormValidation = z.object({
     tkdn_percentage: z.union([z.string(), z.number()]).nullable().optional(),
     catatan: z.string().nullable().optional(),
 })
+
+// Default values validation
+export const ProjectFormValidation = z.object({
+    kode: z.string().min(3, { message: 'Minimum 3 characters.' }),
+    nama: z.string().min(3, { message: 'Minimum 3 characters.' }),
+    jenis: z.string().min(3, { message: 'Minimum 3 characters.' }),
+})
