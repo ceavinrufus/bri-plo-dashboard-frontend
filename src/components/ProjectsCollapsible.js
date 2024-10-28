@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useContext, useState } from 'react'
-import { ChevronsUpDown, Pencil, X } from 'lucide-react'
+import { ChevronsUpDown, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -10,8 +10,9 @@ import {
     CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import { ProjectContext } from './context/ProjectContext'
-import { deleteProjectData, updateProjectData } from '@/lib/actions'
+import { deleteProjectData } from '@/lib/actions'
 import { toast } from '@/hooks/use-toast'
+import { ProjectEditDialog } from './ProjectEditDialog'
 
 export function ProjectCollapsible() {
     const { projectData } = useContext(ProjectContext)
@@ -35,7 +36,7 @@ export function ProjectCollapsible() {
                 <p>
                     {projectData[0].kode}: {projectData[0].nama}
                 </p>
-                <Toolbar kode={projectData[0].kode} />
+                <Toolbar data={projectData[0]} />
             </div>
             <CollapsibleContent className="space-y-2">
                 {projectData.slice(1).map(project => (
@@ -45,7 +46,7 @@ export function ProjectCollapsible() {
                         <p>
                             {project.kode}: {project.nama}
                         </p>
-                        <Toolbar kode={project.kode} />
+                        <Toolbar data={project} />
                     </div>
                 ))}
             </CollapsibleContent>
@@ -53,19 +54,19 @@ export function ProjectCollapsible() {
     )
 }
 
-const Toolbar = ({ kode }) => {
+const Toolbar = ({ data }) => {
     const { removeProject } = useContext(ProjectContext)
 
     const onDelete = async () => {
         try {
-            await deleteProjectData(kode)
+            await deleteProjectData(data.kode)
 
             toast({
                 title: 'Success',
                 description: 'Data has been deleted successfully!',
                 status: 'success',
             })
-            removeProject(kode)
+            removeProject(data.kode)
         } catch (error) {
             toast({
                 title: 'Error',
@@ -77,32 +78,9 @@ const Toolbar = ({ kode }) => {
         }
     }
 
-    // const onUpdate = async data => {
-    //     try {
-    //         const response = await updateProjectData()
-
-    //         toast({
-    //             title: 'Success',
-    //             description: 'Data has been submitted successfully!',
-    //             status: 'success',
-    //         })
-    //         updateProject(response.data)
-    //     } catch (error) {
-    //         toast({
-    //             title: 'Error',
-    //             description:
-    //                 error.response?.data?.message ||
-    //                 'An error occurred while submitting data.',
-    //             status: 'error',
-    //         })
-    //     }
-    // }
-
     return (
         <div className="flex items-center gap-2">
-            <Button className="py-1 px-2 m-0" variant="ghost">
-                <Pencil className="h-4 w-4" />
-            </Button>
+            <ProjectEditDialog data={data} />
             <Button
                 className="py-1 px-2 m-0"
                 variant="ghost"
