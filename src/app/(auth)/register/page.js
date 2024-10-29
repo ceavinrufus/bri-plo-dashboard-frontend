@@ -1,12 +1,13 @@
 'use client'
 
-import Button from '@/components/Button'
+import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
+import { PulseLoader } from 'react-spinners'
 
 const Page = () => {
     const { register } = useAuth({
@@ -14,6 +15,7 @@ const Page = () => {
         redirectIfAuthenticated: '/dashboard',
     })
 
+    const [isProcessing, setIsProcessing] = useState(false)
     const [name, setName] = useState('')
     const [pn, setPn] = useState('')
     const [email, setEmail] = useState('')
@@ -21,17 +23,24 @@ const Page = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [errors, setErrors] = useState([])
 
-    const submitForm = event => {
+    const submitForm = async event => {
         event.preventDefault()
+        setIsProcessing(true)
 
-        register({
-            name,
-            pn,
-            email,
-            password,
-            password_confirmation: passwordConfirmation,
-            setErrors,
-        })
+        try {
+            await register({
+                name,
+                pn,
+                email,
+                password,
+                password_confirmation: passwordConfirmation,
+                setErrors,
+            })
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsProcessing(false)
+        }
     }
 
     return (
@@ -131,7 +140,17 @@ const Page = () => {
                     Already registered?
                 </Link>
 
-                <Button className="ml-4">Register</Button>
+                <Button className="ml-4">
+                    {isProcessing ? (
+                        <PulseLoader
+                            size={8}
+                            color="#ffffff"
+                            speedMultiplier={0.5}
+                        />
+                    ) : (
+                        'Register'
+                    )}
+                </Button>
             </div>
         </form>
     )

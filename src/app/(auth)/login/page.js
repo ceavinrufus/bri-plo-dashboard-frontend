@@ -1,6 +1,5 @@
 'use client'
 
-import Button from '@/components/Button'
 import { Input } from '@/components/ui/input'
 import InputError from '@/components/InputError'
 import Label from '@/components/Label'
@@ -9,6 +8,8 @@ import { useAuth } from '@/hooks/auth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AuthSessionStatus from '@/app/(auth)/AuthSessionStatus'
+import { Button } from '@/components/ui/button'
+import { PulseLoader } from 'react-spinners'
 
 const Login = () => {
     const router = useRouter()
@@ -18,6 +19,7 @@ const Login = () => {
         redirectIfAuthenticated: '/dashboard',
     })
 
+    const [isProcessing, setIsProcessing] = useState(false)
     const [pn, setPn] = useState('')
     const [password, setPassword] = useState('')
     const [shouldRemember, setShouldRemember] = useState(false)
@@ -34,14 +36,21 @@ const Login = () => {
 
     const submitForm = async event => {
         event.preventDefault()
+        setIsProcessing(true)
 
-        login({
-            pn,
-            password,
-            remember: shouldRemember,
-            setErrors,
-            setStatus,
-        })
+        try {
+            await login({
+                pn,
+                password,
+                remember: shouldRemember,
+                setErrors,
+                setStatus,
+            })
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsProcessing(false)
+        }
     }
 
     return (
@@ -110,7 +119,17 @@ const Login = () => {
                         Forgot your password?
                     </Link>
 
-                    <Button className="ml-3">Login</Button>
+                    <Button className="ml-3">
+                        {isProcessing ? (
+                            <PulseLoader
+                                size={8}
+                                color="#ffffff"
+                                speedMultiplier={0.5}
+                            />
+                        ) : (
+                            'Login'
+                        )}
+                    </Button>
                 </div>
             </form>
         </>

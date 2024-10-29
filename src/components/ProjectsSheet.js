@@ -14,7 +14,7 @@ export function ProjectsSheet() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="default">Projects</Button>
+                <Button variant="outline">Projects</Button>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
