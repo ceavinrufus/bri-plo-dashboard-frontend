@@ -1,4 +1,4 @@
-const MonitoringPengadaan = () => {
+const MonitoringPekerjaan = () => {
     return (
         <div className="py-12">
             <div className="mx-auto sm:px-6 lg:px-8">
@@ -12,4 +12,4 @@ const MonitoringPengadaan = () => {
     )
 }
 
-export default MonitoringPengadaan
+export default MonitoringPekerjaan

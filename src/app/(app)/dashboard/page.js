@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { gql } from '@apollo/client'
 import client from '@/lib/apolloClient'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -27,25 +27,28 @@ const Dashboard = () => {
     const [metrics, setMetrics] = useState(null)
 
     const calculateMetrics = data => {
-        const totalHPS = data.reduce((sum, item) => sum + item.hps?.amount, 0)
-        const totalSPK = data.reduce((sum, item) => sum + item.nilai_spk, 0)
+        const totalHPS = data.reduce(
+            (sum, item) => sum + item.hps?.amount || 0,
+            0,
+        )
+        const totalSPK = data.reduce(
+            (sum, item) => sum + item.nilai_spk || 0,
+            0,
+        )
         const totalAnggaran = data.reduce(
-            (sum, item) => sum + item.anggaran?.amount,
+            (sum, item) => sum + item.anggaran?.amount || 0,
             0,
         )
         const totalTKDN = data.reduce(
-            (sum, item) => sum + item.tkdn_percentage,
+            (sum, item) => sum + (item.tkdn_percentage || 0),
             0,
         )
         const countTKDN = data.filter(
             item => item.tkdn_percentage !== null,
         ).length
-
-        // Calculate completed works
         const totalCompletedWorks = data.filter(
             item => item.nilai_spk !== null,
         ).length
-        const totalWorks = data.length
 
         return {
             costEfficiencyHPS: totalHPS
@@ -56,37 +59,39 @@ const Dashboard = () => {
                 : 0,
             tkdn: countTKDN ? totalTKDN / countTKDN : 0,
             totalCompletedWorks,
-            totalWorks,
+            totalWorks: data.length,
         }
     }
 
     const aggregateMetrics = allData => {
-        const aggregated = allData.reduce((acc, data) => {
+        return allData.reduce((acc, data) => {
             Object.keys(data).forEach(key => {
                 acc[key] = (acc[key] || 0) + data[key]
             })
             return acc
         }, {})
-        return aggregated
     }
 
     useEffect(() => {
         const fetchData = async () => {
+            const results = await Promise.all(
+                departments.map(department =>
+                    client.query({
+                        query: GET_PENGADAANS,
+                        variables: { departemen: department },
+                    }),
+                ),
+            )
+
             const newMetrics = {}
             const allData = []
 
-            for (const department of departments) {
-                const { data } = await client.query({
-                    query: GET_PENGADAANS,
-                    variables: { departemen: department },
-                })
-
-                if (data && data.pengadaans) {
-                    const departmentMetrics = calculateMetrics(data.pengadaans)
-                    newMetrics[department] = departmentMetrics
-                    allData.push(departmentMetrics)
-                }
-            }
+            results.forEach((result, index) => {
+                const departmentData = result.data?.pengadaans || []
+                const departmentMetrics = calculateMetrics(departmentData)
+                newMetrics[departments[index]] = departmentMetrics
+                allData.push(departmentMetrics)
+            })
 
             const allMetrics = aggregateMetrics(allData)
             setMetrics({ ...newMetrics, all: allMetrics })
@@ -95,7 +100,8 @@ const Dashboard = () => {
         fetchData()
     }, [])
 
-    if (!metrics) return
+    if (!metrics) return null
+
     return (
         <div className="py-12">
             <div className="mx-auto sm:px-6 lg:px-8">

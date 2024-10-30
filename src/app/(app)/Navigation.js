@@ -41,7 +41,7 @@ const Navigation = ({ user }) => {
                                 Proses Pengadaan
                             </NavLink>
                             <NavLink
-                                href="/monitoring-pengadaan"
+                                href="/monitoring-pekerjaan"
                                 active={
                                     usePathname() === '/monitoring-pekerjaan'
                                 }>
@@ -135,7 +135,7 @@ const Navigation = ({ user }) => {
                             Proses Pengadaan
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href="/monitoring-pengadaan"
+                            href="/monitoring-pekerjaan"
                             active={usePathname() === '/monitoring-pekerjaan'}>
                             Monitoring Pekerjaan
                         </ResponsiveNavLink>
