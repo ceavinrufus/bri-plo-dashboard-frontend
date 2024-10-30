@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { gql } from '@apollo/client'
 import client from '@/lib/apolloClient'
-import Header from '../Header'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DashboardMetrics from '@/components/DashboardMetrics'
 
@@ -96,42 +95,37 @@ const Dashboard = () => {
         fetchData()
     }, [])
 
+    if (!metrics) return
     return (
-        <>
-            <Header title="Dashboard" />
-
-            {metrics && (
-                <div className="py-12">
-                    <div className="mx-auto sm:px-6 lg:px-8">
-                        <Tabs
-                            orientation="vertical"
-                            defaultValue="all"
-                            className="space-y-4">
-                            <div className="w-full overflow-x-auto pb-2">
-                                <TabsList>
-                                    <TabsTrigger value="all">All</TabsTrigger>
-                                    <TabsTrigger value="bcp">BCP</TabsTrigger>
-                                    <TabsTrigger value="igp">IGP</TabsTrigger>
-                                    <TabsTrigger value="psr">PSR</TabsTrigger>
-                                </TabsList>
-                            </div>
-                            <TabsContent value="all" className="space-y-4">
-                                <DashboardMetrics metrics={metrics.all} />
-                            </TabsContent>
-                            <TabsContent value="bcp" className="space-y-4">
-                                <DashboardMetrics metrics={metrics.bcp} />
-                            </TabsContent>
-                            <TabsContent value="igp" className="space-y-4">
-                                <DashboardMetrics metrics={metrics.igp} />
-                            </TabsContent>
-                            <TabsContent value="psr" className="space-y-4">
-                                <DashboardMetrics metrics={metrics.psr} />
-                            </TabsContent>
-                        </Tabs>
+        <div className="py-12">
+            <div className="mx-auto sm:px-6 lg:px-8">
+                <Tabs
+                    orientation="vertical"
+                    defaultValue="all"
+                    className="space-y-4">
+                    <div className="w-full overflow-x-auto pb-2">
+                        <TabsList>
+                            <TabsTrigger value="all">All</TabsTrigger>
+                            <TabsTrigger value="bcp">BCP</TabsTrigger>
+                            <TabsTrigger value="igp">IGP</TabsTrigger>
+                            <TabsTrigger value="psr">PSR</TabsTrigger>
+                        </TabsList>
                     </div>
-                </div>
-            )}
-        </>
+                    <TabsContent value="all" className="space-y-4">
+                        <DashboardMetrics metrics={metrics.all} />
+                    </TabsContent>
+                    <TabsContent value="bcp" className="space-y-4">
+                        <DashboardMetrics metrics={metrics.bcp} />
+                    </TabsContent>
+                    <TabsContent value="igp" className="space-y-4">
+                        <DashboardMetrics metrics={metrics.igp} />
+                    </TabsContent>
+                    <TabsContent value="psr" className="space-y-4">
+                        <DashboardMetrics metrics={metrics.psr} />
+                    </TabsContent>
+                </Tabs>
+            </div>
+        </div>
     )
 }
 
