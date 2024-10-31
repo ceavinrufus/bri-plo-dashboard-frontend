@@ -7,11 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { SelectItem } from '../ui/select'
-import {
-    formatDateYMD,
-    isProgressAbove,
-    transformPengadaanDataForSubmit,
-} from '@/lib/utils'
+import { isProgressAbove, transformPengadaanDataForSubmit } from '@/lib/utils'
 import { progress } from '@/data/ProgressSelection'
 import { updatePengadaanData } from '@/lib/actions'
 import { useContext, useEffect, useState } from 'react'
@@ -20,6 +16,7 @@ import { ProgressPengadaanFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
 import divisiData from '@/data/Divisi'
 import { ProjectContext } from '../context/ProjectContext'
+import { NodinCollapsible } from '../NodinCollapsible'
 
 export function EditDataForm({ defaultValues }) {
     const { updatePengadaan } = useContext(PengadaanContext)
@@ -31,20 +28,22 @@ export function EditDataForm({ defaultValues }) {
         defaultValues: {
             ...defaultValues,
             metode: defaultValues.metode || undefined,
-            nodin_plo:
-                defaultValues.nodin_plos && defaultValues.nodin_plos.length > 0
-                    ? defaultValues.nodin_plos[
-                          defaultValues.nodin_plos.length - 1
-                      ].nodin
-                    : '',
-            tanggal_nodin_plo:
-                defaultValues.nodin_plos && defaultValues.nodin_plos.length > 0
-                    ? formatDateYMD(
-                          defaultValues.nodin_plos[
-                              defaultValues.nodin_plos.length - 1
-                          ].tanggal_nodin,
-                      )
-                    : '',
+            // nodin_plo:
+            //     defaultValues.nodin_plos && defaultValues.nodin_plos.length > 0
+            //         ? defaultValues.nodin_plos[
+            //               defaultValues.nodin_plos.length - 1
+            //           ].nodin
+            //         : '',
+            // tanggal_nodin_plo:
+            //     defaultValues.nodin_plos && defaultValues.nodin_plos.length > 0
+            //         ? formatDateYMD(
+            //               defaultValues.nodin_plos[
+            //                   defaultValues.nodin_plos.length - 1
+            //               ].tanggal_nodin,
+            //           )
+            //         : '',
+            nodin_plo: '',
+            tanggal_nodin_plo: '',
             tanggal_permohonan_anggaran:
                 defaultValues.anggaran?.tanggal_permohonan,
             tanggal_permohonan_hps: defaultValues.hps?.tanggal_permohonan,
@@ -311,18 +310,19 @@ export function EditDataForm({ defaultValues }) {
                 )}
                 {!isVerificationComplete && (
                     <>
+                        {/* <NodinCollapsible nodins={defaultValues.nodin_plos} /> */}
                         <CustomFormField
                             fieldType={FormFieldType.INPUT}
                             control={form.control}
                             name="nodin_plo"
-                            label="Nodin PLO"
+                            label="Nodin PLO Baru"
                             placeholder="Nodin PLO"
                         />
                         <CustomFormField
                             fieldType={FormFieldType.DATE_PICKER}
                             control={form.control}
                             name="tanggal_nodin_plo"
-                            label="Tanggal Nodin PLO"
+                            label="Tanggal Nodin PLO Baru"
                         />
                     </>
                 )}

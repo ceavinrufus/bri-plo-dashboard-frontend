@@ -181,9 +181,9 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
-    // SLA
+    // SLA Usulan User
     {
-        accessorKey: 'sla',
+        accessorKey: 'sla_usulan_user',
         header: ({ column }) => {
             return (
                 <Button
@@ -191,7 +191,7 @@ export const prosesPengadaanColumns = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }>
-                    SLA
+                    SLA Usulan User
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -204,6 +204,40 @@ export const prosesPengadaanColumns = [
             const diffWithToday = calculateDaysDifference(
                 new Date().toISOString().split('T')[0],
                 row.getValue('tanggal_nodin_user'),
+            )
+            return (
+                <div className="">
+                    {row.getValue('tanggal_spk')
+                        ? diff
+                        : `Ongoing (${diffWithToday} hari)`}{' '}
+                    {diff && row.getValue('tanggal_spk') ? 'hari' : ''}
+                </div>
+            )
+        },
+    },
+    // SLA Usulan User
+    {
+        accessorKey: 'sla_proses_pengadaan',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    SLA Proses Pengadaan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const diff = calculateDaysDifference(
+                row.getValue('tanggal_spk'),
+                row.getValue('tanggal_acuan'),
+            )
+            const diffWithToday = calculateDaysDifference(
+                new Date().toISOString().split('T')[0],
+                row.getValue('tanggal_acuan'),
             )
             return (
                 <div className="">
