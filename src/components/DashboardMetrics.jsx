@@ -14,6 +14,30 @@ import {
     Legend,
     Tooltip,
 } from 'recharts'
+import { cn } from '@/lib/utils'
+
+const MetricContent = ({ value, target }) => {
+    const textColorByValue = () => {
+        if (value > target) {
+            return 'text-green-600'
+        } else if (value < target) {
+            return 'text-red-500'
+        }
+    }
+
+    return (
+        <CardContent>
+            <div className={cn('text-2xl font-bold', textColorByValue())}>
+                {value}%
+            </div>
+            {target && (
+                <p className="text-xs text-muted-foreground">
+                    Target: {target}%
+                </p>
+            )}
+        </CardContent>
+    )
+}
 
 const DashboardMetrics = ({ metrics }) => {
     // Data for the pie chart
@@ -48,15 +72,10 @@ const DashboardMetrics = ({ metrics }) => {
                             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                         </svg>
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">
-                            {metrics.costEfficiencyHPS.toFixed(2)}%
-                        </div>
-                        <p className="text-xs text-muted-foreground">
-                            Insert Description Here... (Ex: +20.1% from last
-                            month)
-                        </p>
-                    </CardContent>
+                    <MetricContent
+                        value={metrics.costEfficiencyHPS.toFixed(2)}
+                        target={metrics.target}
+                    />
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -75,15 +94,10 @@ const DashboardMetrics = ({ metrics }) => {
                             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                         </svg>
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">
-                            {metrics.costEfficiencyAnggaran.toFixed(2)}%
-                        </div>
-                        <p className="text-xs text-muted-foreground">
-                            Insert Description Here... (Ex: +20.1% from last
-                            month)
-                        </p>
-                    </CardContent>
+                    <MetricContent
+                        value={metrics.costEfficiencyAnggaran.toFixed(2)}
+                        target={metrics.target}
+                    />
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -103,15 +117,10 @@ const DashboardMetrics = ({ metrics }) => {
                             <path d="M2 10h20" />
                         </svg>
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">
-                            {metrics.tkdn.toFixed(2)}%
-                        </div>
-                        <p className="text-xs text-muted-foreground">
-                            Insert Description Here... (Ex: +20.1% from last
-                            month)
-                        </p>
-                    </CardContent>
+                    <MetricContent
+                        value={metrics.tkdn.toFixed(2)}
+                        target={metrics.target}
+                    />
                 </Card>
             </div>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">

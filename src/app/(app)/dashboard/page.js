@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { gql } from '@apollo/client'
 import client from '@/lib/apolloClient'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DashboardMetrics from '@/components/DashboardMetrics'
+import { fetchDepartmentData } from '@/lib/actions'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
@@ -23,7 +24,6 @@ const GET_PENGADAANS = gql`
 `
 
 const Dashboard = () => {
-    const departments = ['bcp', 'igp', 'psr']
     const [metrics, setMetrics] = useState(null)
 
     const calculateMetrics = data => {
@@ -63,19 +63,22 @@ const Dashboard = () => {
         }
     }
 
-    const aggregateMetrics = allData => {
-        return allData.reduce((acc, data) => {
-            Object.keys(data).forEach(key => {
-                acc[key] = (acc[key] || 0) + data[key]
-            })
-            return acc
-        }, {})
-    }
-
     useEffect(() => {
         const fetchData = async () => {
+            const departmentsData = await fetchDepartmentData()
+            const departmentCodes = departmentsData.flatMap(
+                department => department.code,
+            )
+
+            const getTargetByCode = code => {
+                const targetObj = departmentsData.find(
+                    target => target.code === code,
+                )
+                return targetObj ? targetObj.target : null
+            }
+
             const results = await Promise.all(
-                departments.map(department =>
+                departmentCodes.map(department =>
                     client.query({
                         query: GET_PENGADAANS,
                         variables: { departemen: department },
@@ -89,11 +92,13 @@ const Dashboard = () => {
             results.forEach((result, index) => {
                 const departmentData = result.data?.pengadaans || []
                 const departmentMetrics = calculateMetrics(departmentData)
-                newMetrics[departments[index]] = departmentMetrics
-                allData.push(departmentMetrics)
+                newMetrics[departmentCodes[index]] = {
+                    ...departmentMetrics,
+                    target: getTargetByCode(departmentCodes[index]),
+                }
+                allData.push(...departmentData)
             })
-
-            const allMetrics = aggregateMetrics(allData)
+            const allMetrics = calculateMetrics(allData)
             setMetrics({ ...newMetrics, all: allMetrics })
         }
 

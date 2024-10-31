@@ -162,3 +162,83 @@ export const deletePengadaanData = async pengadaanId => {
         throw error
     }
 }
+
+// Define the function to fetch department data
+export const fetchDepartmentData = async () => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.get(`${backendUrl}/api/department`)
+
+        // Return the data from the response
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error fetching department data:', error)
+        throw error
+    }
+}
+
+// Define the function to post department data
+export const postDepartmentData = async data => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.post(
+            `${backendUrl}/api/department/store`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error posting department data:', error)
+        throw error
+    }
+}
+
+// Define the function to update department data
+export const updateDepartmentData = async (departmentCode, data) => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.put(
+            `${backendUrl}/api/department/update/${departmentCode}`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error updating department data:', error)
+        throw error
+    }
+}
+
+// Define the function to delete department data
+export const deleteDepartmentData = async departmentCode => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request to delete the department
+        const response = await axios.delete(
+            `${backendUrl}/api/department/delete/${departmentCode}`,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error deleting department data:', error)
+        throw error
+    }
+}
