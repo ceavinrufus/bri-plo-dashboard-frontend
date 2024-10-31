@@ -10,10 +10,27 @@ import {
     FormLabel,
     FormMessage,
 } from './ui/form'
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from '@/components/ui/command'
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover'
 import { Input } from './ui/input'
 import { Select, SelectContent, SelectTrigger, SelectValue } from './ui/select'
 import { Textarea } from './ui/textarea'
 import 'react-datepicker/dist/react-datepicker.css'
+import { Button } from './ui/button'
+import { cn } from '@/lib/utils'
+import { Check } from 'lucide-react'
+import { CaretSortIcon } from '@radix-ui/react-icons'
 
 export const FormFieldType = {
     INPUT: 'input',
@@ -21,6 +38,7 @@ export const FormFieldType = {
     CHECKBOX: 'checkbox',
     DATE_PICKER: 'datePicker',
     SELECT: 'select',
+    COMBOBOX: 'combobox',
     SKELETON: 'skeleton',
 }
 
@@ -148,6 +166,65 @@ const RenderInput = ({ field, props }) => {
                         </SelectContent>
                     </Select>
                 </FormControl>
+            )
+        case FormFieldType.COMBOBOX:
+            return (
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <FormControl>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                    'flex rounded-md border border-dark-500 bg-dark-400 col-span-3 justify-between px-3',
+                                    !field.value && 'text-muted-foreground',
+                                )}>
+                                <p className="overflow-hidden">
+                                    {field.value
+                                        ? props.options.find(
+                                              option =>
+                                                  option.value === field.value,
+                                          )?.label
+                                        : 'Select user'}
+                                </p>
+                                <CaretSortIcon className="h-4 w-4 opacity-50" />
+                            </Button>
+                        </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent
+                        onWheel={e => {
+                            e.stopPropagation()
+                        }}
+                        className="p-0">
+                        <Command>
+                            <CommandInput
+                                placeholder={props.placeholder}
+                                autoFocus={true}
+                            />
+                            <CommandList>
+                                <CommandEmpty>No options found.</CommandEmpty>
+                                <CommandGroup>
+                                    {props.options.map(option => (
+                                        <CommandItem
+                                            value={option.value}
+                                            key={option.label}
+                                            onSelect={field.onChange}>
+                                            <Check
+                                                className={cn(
+                                                    'mr-2 h-4 w-4',
+                                                    option.value === field.value
+                                                        ? 'opacity-100'
+                                                        : 'opacity-0',
+                                                )}
+                                            />
+                                            {option.label}
+                                        </CommandItem>
+                                    ))}
+                                </CommandGroup>
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover>
             )
         case FormFieldType.SKELETON:
             return props.renderSkeleton ? props.renderSkeleton(field) : null
