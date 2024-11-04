@@ -98,7 +98,12 @@ export function EditDataForm({ defaultValues }) {
         )
 
         try {
-            await updatePengadaanData(defaultValues.id, transformedData)
+            const response = await updatePengadaanData(
+                defaultValues.id,
+                transformedData,
+            )
+            transformedData.nodin_plos = response.data.nodin_plos
+            transformedData.nodin_users = response.data.nodin_users
 
             toast({
                 title: 'Success',

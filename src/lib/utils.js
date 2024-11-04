@@ -31,6 +31,11 @@ const generateNodinAlert = (defaultValues, data) => {
     if (!data.nodin_plo) {
         return null
     }
+    if (!defaultValues.nodin_plos || defaultValues.nodin_plos.length === 0) {
+        if (data.nodin_plo) {
+            return formatDateYMD(new Date(Date.now() + 86400000 * 14)) // 14 hari dalam milliseconds
+        }
+    }
 
     // Jika nodin_plos telah diubah dari nilai default-nya,
     // generate alert 14 hari setelah hari ini
