@@ -281,7 +281,9 @@ export const prosesPengadaanColumns = [
             )
 
             const slaLimit = slaDays[metode] || 0
-            const isOverSla = diff > slaLimit
+            const isOverSla = row.getValue('tanggal_spk')
+                ? diff > slaLimit
+                : diffWithToday > slaLimit
 
             return (
                 <div className={`${isOverSla ? 'text-red-500' : ''}`}>
