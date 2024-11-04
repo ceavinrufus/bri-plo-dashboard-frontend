@@ -1,16 +1,18 @@
 'use client'
 
-import React, { useContext } from 'react'
+import * as React from 'react'
+import { useContext } from 'react'
+import { gql, useQuery } from '@apollo/client'
+import * as XLSX from 'xlsx'
+import { Button } from './ui/button'
 import { DataTable } from './DataTable'
 import { prosesPengadaanColumns } from '@/data/Columns'
 import { AddDataSheet } from './AddDataSheet'
-import { gql, useQuery } from '@apollo/client'
-import client from '@/lib/apolloClient'
+import { ProjectsSheet } from './ProjectsSheet'
+import { ProsesPengadaanStats } from './ProsesPengadaanStats'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { useAuth } from '@/hooks/auth'
-import * as XLSX from 'xlsx'
-import { Button } from './ui/button'
-import { ProjectsSheet } from './ProjectsSheet'
+import client from '@/lib/apolloClient'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
@@ -60,32 +62,60 @@ const GET_PENGADAANS = gql`
     }
 `
 
+const calculateMetrics = data => {
+    const totalHPS = data.reduce(
+        (sum, item) => sum + (item.hps?.amount || 0),
+        0,
+    )
+    const totalSPK = data.reduce((sum, item) => sum + (item.nilai_spk || 0), 0)
+    const totalAnggaran = data.reduce(
+        (sum, item) => sum + (item.anggaran?.amount || 0),
+        0,
+    )
+    const totalTKDN = data.reduce(
+        (sum, item) => sum + (item.tkdn_percentage || 0),
+        0,
+    )
+    const countTKDN = data.filter(item => item.tkdn_percentage !== null).length
+    const totalCompletedWorks = data.filter(
+        item => item.nilai_spk !== null,
+    ).length
+
+    return {
+        costEfficiencyHPS: totalHPS
+            ? ((totalHPS - totalSPK) / totalHPS) * 100
+            : 0,
+        costEfficiencyAnggaran: totalAnggaran
+            ? ((totalAnggaran - totalSPK) / totalAnggaran) * 100
+            : 0,
+        tkdn: countTKDN ? totalTKDN / countTKDN : 0,
+        totalCompletedWorks,
+        totalWorks: data.length,
+    }
+}
+
 const ProsesPengadaanTable = () => {
     const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
     const { user } = useAuth({ middleware: 'auth' })
 
     if (!user) return null
 
-    const { loading, error } = useQuery(GET_PENGADAANS, {
+    const { loading, error, data } = useQuery(GET_PENGADAANS, {
         variables: { departemen: user.departemen },
         client,
-        onCompleted: data => {
-            const pengadaanData = data.pengadaans
-            setPengadaanData(pengadaanData)
-        },
+        onCompleted: data => setPengadaanData(data.pengadaans),
     })
+
+    const metrics = data ? calculateMetrics(data.pengadaans) : null
 
     const handleExport = () => {
         const exportData = []
-
         pengadaanData.forEach(item => {
             let maxLength = Math.max(
                 item.nodin_plos.length,
                 item.nodin_users.length,
             )
-            if (maxLength === 0) {
-                maxLength = 1
-            }
+            maxLength = maxLength === 0 ? 1 : maxLength
 
             for (let i = 0; i < maxLength; i++) {
                 const nodinPlo = item.nodin_plos[i] || {}
@@ -144,6 +174,7 @@ const ProsesPengadaanTable = () => {
             <div className="flex">
                 <h1>Pengadaan Data for {user.departemen.toUpperCase()}</h1>
                 <div className="space-x-2 ml-auto">
+                    <ProsesPengadaanStats metrics={metrics} />
                     {user.departemen === 'bcp' && <ProjectsSheet />}
                     <AddDataSheet />
                     <Button
