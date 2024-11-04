@@ -12,13 +12,20 @@ import { Button } from '@/components/ui/button'
 import { calculateDaysDifference, convertToRupiah } from '@/utils'
 import { EditDataSheet } from '@/components/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
-import { formatDateDMY } from '@/lib/utils'
+import { formatDateDMY, getLatestDate } from '@/lib/utils'
 import { deletePengadaanData } from '@/lib/actions'
 import { useContext } from 'react'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { toast } from '@/hooks/use-toast'
 
 export const prosesPengadaanColumns = [
+    {
+        accessorKey: 'nodin_users',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
     {
         accessorKey: 'nodin_plos',
         header: () => null, // No header for the shadow column
@@ -143,7 +150,7 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => <div className="">{row.getValue('perihal')}</div>,
         enableHiding: false, // Hides the column
     },
-    // Nodin
+    // Nodin User
     {
         accessorKey: 'nodin_user',
         header: ({ column }) => {
@@ -158,9 +165,15 @@ export const prosesPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="">{row.getValue('nodin_user')}</div>,
+        cell: ({ row }) => (
+            <div className="">
+                {row.getValue('nodin_users').map(nodin_user => (
+                    <p key={nodin_user.nodin}>{nodin_user.nodin}</p>
+                ))}
+            </div>
+        ),
     },
-    // Tanggal Nodin
+    // Tanggal Nodin User
     {
         accessorKey: 'tanggal_nodin_user',
         header: ({ column }) => {
@@ -177,7 +190,11 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">
-                {formatDateDMY(row.getValue('tanggal_nodin_user'))}
+                {row.getValue('nodin_users').map(nodin_user => (
+                    <p key={nodin_user.tanggal_nodin}>
+                        {formatDateDMY(nodin_user.tanggal_nodin)}
+                    </p>
+                ))}
             </div>
         ),
     },
@@ -197,13 +214,16 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => {
+            const tanggalNodinUser = row
+                .getValue('nodin_users')
+                .map(nodin_user => nodin_user.tanggal_nodin)
             const diff = calculateDaysDifference(
                 row.getValue('tanggal_spk'),
-                row.getValue('tanggal_nodin_user'),
+                getLatestDate(tanggalNodinUser),
             )
             const diffWithToday = calculateDaysDifference(
                 new Date().toISOString().split('T')[0],
-                row.getValue('tanggal_nodin_user'),
+                getLatestDate(tanggalNodinUser),
             )
             return (
                 <div className="">

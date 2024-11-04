@@ -72,6 +72,22 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
             : previousData.verification_alert_at
               ? previousData.verification_alert_at
               : formatDateYMD(new Date(Date.now() + 86400000)), // Add 1 day in milliseconds
+        nodin_users: emptyOrNullArray([
+            ...(previousData.nodin_users ? previousData.nodin_users : []),
+            ...(!previousData.nodin_users ||
+            previousData.nodin_users.length === 0 ||
+            previousData.nodin_users[previousData.nodin_users.length - 1]
+                .nodin !== data.nodin_user
+                ? data.nodin_user
+                    ? [
+                          {
+                              nodin: data.nodin_user,
+                              tanggal_nodin: data.tanggal_nodin_user,
+                          },
+                      ]
+                    : []
+                : []),
+        ]),
         nodin_plos: emptyOrNullArray([
             ...(previousData.nodin_plos ? previousData.nodin_plos : []),
             ...(!previousData.nodin_plos ||
@@ -126,4 +142,22 @@ export function isProgressAbove(method, progress1, progress2) {
 
     // Return true if progress1 is above progress2
     return index1 > index2
+}
+
+export function getLatestDate(dates) {
+    if (!Array.isArray(dates) || dates.length === 0) {
+        return null
+    }
+
+    const validDates = dates
+        .map(date => new Date(date))
+        .filter(date => !isNaN(date))
+
+    if (validDates.length === 0) {
+        return null
+    }
+
+    const latestDate = new Date(Math.max(...validDates))
+
+    return latestDate
 }

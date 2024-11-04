@@ -42,6 +42,8 @@ export function EditDataForm({ defaultValues }) {
             //               ].tanggal_nodin,
             //           )
             //         : '',
+            nodin_user: '',
+            tanggal_nodin_user: '',
             nodin_plo: '',
             tanggal_nodin_plo: '',
             tanggal_permohonan_anggaran:

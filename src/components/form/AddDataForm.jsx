@@ -31,6 +31,7 @@ export function AddDataForm() {
     const defaultValues = {
         proyek: '',
         kode_user: '',
+        nodin_users: null,
         nodin_user: '',
         tanggal_nodin_user: formatDateYMD(new Date()),
         tim: 'ptt',
@@ -41,8 +42,8 @@ export function AddDataForm() {
         pelaksana_pekerjaan: '',
         metode: undefined,
         is_verification_complete: false,
-        nodin_plo: '',
         nodin_plos: null,
+        nodin_plo: '',
         tanggal_nodin_plo: undefined,
         proses_pengadaan: '',
         catatan: '',

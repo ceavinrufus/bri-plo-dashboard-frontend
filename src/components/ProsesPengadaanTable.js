@@ -21,8 +21,11 @@ const GET_PENGADAANS = gql`
             proyek
             kode_user
             perihal
-            nodin_user
-            tanggal_nodin_user
+            nodin_users {
+                id
+                nodin
+                tanggal_nodin
+            }
             metode
             is_verification_complete
             proses_pengadaan
