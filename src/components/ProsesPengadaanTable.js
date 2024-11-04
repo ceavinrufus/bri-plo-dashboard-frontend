@@ -79,105 +79,54 @@ const ProsesPengadaanTable = () => {
         const exportData = []
 
         pengadaanData.forEach(item => {
-            // Jika ada beberapa nodin_plos, buat baris baru untuk setiap nodin_plos
-            if (item.nodin_plos.length > 1) {
-                item.nodin_plos.forEach(nodin => {
-                    if (nodin.id === item.nodin_plos[0].id) {
-                        exportData.push({
-                            id: item.id,
-                            tim: item.tim,
-                            departemen: item.departemen,
-                            kode_user: item.kode_user,
-                            proyek: item.proyek,
-                            perihal: item.perihal,
-                            nodin_user: item.nodin_user,
-                            tanggal_nodin_user: item.tanggal_nodin_user,
-                            metode: item.metode,
-                            is_verification_complete:
-                                item.is_verification_complete ? 'YES' : 'NO',
-                            proses_pengadaan: item.proses_pengadaan,
-                            nomor_spk: item.nomor_spk,
-                            tanggal_spk: item.tanggal_spk,
-                            pelaksana_pekerjaan: item.pelaksana_pekerjaan,
-                            nilai_spk: item.nilai_spk,
-                            anggaran: item.anggaran?.amount,
-                            hps: item.hps?.amount,
-                            tanggal_permohonan_anggaran:
-                                item.anggaran?.tanggal_permohonan,
-                            tanggal_permohonan_hps:
-                                item.hps?.tanggal_permohonan,
-                            tanggal_terima_anggaran:
-                                item.anggaran?.tanggal_terima,
-                            tanggal_terima_hps: item.hps?.tanggal_terima,
-                            tkdn_percentage: item.tkdn_percentage,
-                            catatan: item.catatan,
-                            pic_name: item.pic.name,
-                            nodin_plo: nodin.nodin,
-                            tanggal_nodin_plo: nodin.tanggal_nodin,
-                        })
-                    } else {
-                        exportData.push({
-                            id: '',
-                            tim: '',
-                            departemen: '',
-                            kode_user: '',
-                            proyek: '',
-                            perihal: '',
-                            nodin_user: '',
-                            tanggal_nodin_user: '',
-                            metode: '',
-                            is_verification_complete: '',
-                            proses_pengadaan: '',
-                            nomor_spk: '',
-                            tanggal_spk: '',
-                            pelaksana_pekerjaan: '',
-                            nilai_spk: '',
-                            anggaran: '',
-                            hps: '',
-                            tanggal_permohonan_anggaran: '',
-                            tanggal_permohonan_hps: '',
-                            tanggal_terima_anggaran: '',
-                            tanggal_terima_hps: '',
-                            tkdn_percentage: '',
-                            catatan: '',
-                            pic_name: '',
-                            nodin_plo: nodin.nodin,
-                            tanggal_nodin_plo: nodin.tanggal_nodin,
-                        })
-                    }
-                })
-            } else {
-                // Jika tidak ada nodin_plos, tambahkan item asli tanpa nodin_plos
+            let maxLength = Math.max(
+                item.nodin_plos.length,
+                item.nodin_users.length,
+            )
+            if (maxLength === 0) {
+                maxLength = 1
+            }
+
+            for (let i = 0; i < maxLength; i++) {
+                const nodinPlo = item.nodin_plos[i] || {}
+                const nodinUser = item.nodin_users[i] || {}
+
                 exportData.push({
-                    id: item.id,
-                    tim: item.tim,
-                    departemen: item.departemen,
-                    kode_user: item.kode_user,
-                    proyek: item.proyek,
-                    perihal: item.perihal,
-                    nodin_user: item.nodin_user,
-                    tanggal_nodin_user: item.tanggal_nodin_user,
-                    metode: item.metode,
-                    is_verification_complete: item.is_verification_complete
-                        ? 'YES'
-                        : 'NO',
-                    proses_pengadaan: item.proses_pengadaan,
-                    nomor_spk: item.nomor_spk,
-                    tanggal_spk: item.tanggal_spk,
-                    pelaksana_pekerjaan: item.pelaksana_pekerjaan,
-                    nilai_spk: item.nilai_spk,
-                    anggaran: item.anggaran?.amount,
-                    hps: item.hps?.amount,
+                    id: i === 0 ? item.id : '',
+                    tim: i === 0 ? item.tim : '',
+                    departemen: i === 0 ? item.departemen : '',
+                    kode_user: i === 0 ? item.kode_user : '',
+                    proyek: i === 0 ? item.proyek : '',
+                    perihal: i === 0 ? item.perihal : '',
+                    nodin_user: nodinUser.nodin || '',
+                    tanggal_nodin_user: nodinUser.tanggal_nodin || '',
+                    metode: i === 0 ? item.metode : '',
+                    is_verification_complete:
+                        i === 0
+                            ? item.is_verification_complete
+                                ? 'YES'
+                                : 'NO'
+                            : '',
+                    proses_pengadaan: i === 0 ? item.proses_pengadaan : '',
+                    nomor_spk: i === 0 ? item.nomor_spk : '',
+                    tanggal_spk: i === 0 ? item.tanggal_spk : '',
+                    pelaksana_pekerjaan:
+                        i === 0 ? item.pelaksana_pekerjaan : '',
+                    nilai_spk: i === 0 ? item.nilai_spk : '',
+                    anggaran: i === 0 ? item.anggaran?.amount : '',
+                    hps: i === 0 ? item.hps?.amount : '',
                     tanggal_permohonan_anggaran:
-                        item.anggaran?.tanggal_permohonan,
-                    tanggal_permohonan_hps: item.hps?.tanggal_permohonan,
-                    tanggal_terima_anggaran: item.anggaran?.tanggal_terima,
-                    tanggal_terima_hps: item.hps?.tanggal_terima,
-                    tkdn_percentage: item.tkdn_percentage,
-                    catatan: item.catatan,
-                    pic_name: item.pic.name,
-                    nodin_plo: item.nodin_plos[0]?.nodin || '',
-                    tanggal_nodin_plo: item.nodin_plos[0]?.tanggal_nodin || '',
+                        i === 0 ? item.anggaran?.tanggal_permohonan : '',
+                    tanggal_permohonan_hps:
+                        i === 0 ? item.hps?.tanggal_permohonan : '',
+                    tanggal_terima_anggaran:
+                        i === 0 ? item.anggaran?.tanggal_terima : '',
+                    tanggal_terima_hps: i === 0 ? item.hps?.tanggal_terima : '',
+                    tkdn_percentage: i === 0 ? item.tkdn_percentage : '',
+                    catatan: i === 0 ? item.catatan : '',
+                    pic_name: i === 0 ? item.pic.name : '',
+                    nodin_plo: nodinPlo.nodin || '',
+                    tanggal_nodin_plo: nodinPlo.tanggal_nodin || '',
                 })
             }
         })
