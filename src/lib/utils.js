@@ -54,6 +54,7 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
     const transformedData = {
         ...data,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
+        tanggal_acuan: formatDateYMD(data.tanggal_acuan),
         nilai_spk: data.nilai_spk ? parseFloat(data.nilai_spk) : null,
         anggaran: data.anggaran
             ? JSON.stringify({

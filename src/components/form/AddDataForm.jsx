@@ -39,6 +39,7 @@ export function AddDataForm() {
         perihal: '',
         nomor_spk: '',
         tanggal_spk: '',
+        tanggal_acuan: '',
         pelaksana_pekerjaan: '',
         metode: undefined,
         is_verification_complete: false,
@@ -71,6 +72,7 @@ export function AddDataForm() {
             form.resetField('proses_pengadaan')
             form.resetField('nomor_spk')
             form.resetField('tanggal_spk')
+            form.resetField('tanggal_acuan')
             form.resetField('pelaksana_pekerjaan')
             form.resetField('nilai_spk')
             form.resetField('anggaran')
@@ -219,6 +221,23 @@ export function AddDataForm() {
                                     ),
                                 )}
                             </CustomFormField>
+                        )}
+                        {isProgressAbove(
+                            form.watch('metode'),
+                            form.watch('proses_pengadaan'),
+                            'Izin Pengadaan',
+                        ) && (
+                            <CustomFormField
+                                fieldType={FormFieldType.DATE_PICKER}
+                                control={form.control}
+                                name="tanggal_acuan"
+                                label={`Tanggal ${form.watch(
+                                    'proses_pengadaan',
+                                )}`}
+                                placeholder={`Tanggal ${form.watch(
+                                    'proses_pengadaan',
+                                )}`}
+                            />
                         )}
                         {form.watch('departemen') === 'bcp' && (
                             <>

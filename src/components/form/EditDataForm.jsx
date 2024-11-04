@@ -75,6 +75,7 @@ export function EditDataForm({ defaultValues }) {
             form.resetField('proses_pengadaan')
             form.resetField('nomor_spk')
             form.resetField('tanggal_spk')
+            form.resetField('tanggal_acuan')
             form.resetField('pelaksana_pekerjaan')
             form.resetField('nilai_spk')
             form.resetField('anggaran')
@@ -222,6 +223,23 @@ export function EditDataForm({ defaultValues }) {
                                     ),
                                 )}
                             </CustomFormField>
+                        )}
+                        {isProgressAbove(
+                            form.watch('metode'),
+                            form.watch('proses_pengadaan'),
+                            'Izin Pengadaan',
+                        ) && (
+                            <CustomFormField
+                                fieldType={FormFieldType.DATE_PICKER}
+                                control={form.control}
+                                name="tanggal_acuan"
+                                label={`Tanggal ${form.watch(
+                                    'proses_pengadaan',
+                                )}`}
+                                placeholder={`Tanggal ${form.watch(
+                                    'proses_pengadaan',
+                                )}`}
+                            />
                         )}
                         {form.watch('departemen') === 'bcp' && (
                             <>

@@ -141,6 +141,7 @@ const ProsesPengadaanTable = () => {
                     proses_pengadaan: i === 0 ? item.proses_pengadaan : '',
                     nomor_spk: i === 0 ? item.nomor_spk : '',
                     tanggal_spk: i === 0 ? item.tanggal_spk : '',
+                    tanggal_acuan: i === 0 ? item.tanggal_acuan : '',
                     pelaksana_pekerjaan:
                         i === 0 ? item.pelaksana_pekerjaan : '',
                     nilai_spk: i === 0 ? item.nilai_spk : '',

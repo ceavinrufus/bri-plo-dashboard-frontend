@@ -25,17 +25,10 @@ export const ProgressPengadaanFormValidation = z.object({
     nodin_plo: z.string().nullable().optional(),
     tanggal_nodin_plo: z.union([z.string(), z.date()]).nullable().optional(),
     proses_pengadaan: z.string().nullable().optional(),
+    tanggal_acuan: z.union([z.string(), z.date()]).nullable().optional(),
     nomor_spk: z.string().nullable().optional(),
-    tanggal_spk: z
-        .union([z.string(), z.date()])
-        .nullable()
-        .nullable()
-        .optional(),
-    nilai_spk: z
-        .union([z.string(), z.number()])
-        .nullable()
-        .nullable()
-        .optional(),
+    tanggal_spk: z.union([z.string(), z.date()]).nullable().optional(),
+    nilai_spk: z.union([z.string(), z.number()]).nullable().optional(),
     pelaksana_pekerjaan: z.string().nullable().optional(),
     tanggal_permohonan_anggaran: z
         .union([z.string(), z.date()])
