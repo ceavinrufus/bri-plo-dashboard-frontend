@@ -40,6 +40,7 @@ const GET_PENGADAANS = gql`
             }
             nomor_spk
             tanggal_spk
+            tanggal_acuan
             pelaksana_pekerjaan
             nilai_spk
             anggaran {
@@ -192,8 +193,10 @@ const ProsesPengadaanTable = () => {
                     data={pengadaanData}
                     columns={prosesPengadaanColumns}
                     defaultColumnVisibility={{
+                        nodin_users: false,
                         nodin_plos: false,
                         departemen: false,
+                        tanggal_acuan: false,
                         proyek: user.departemen === 'bcp',
                         tanggal_nodin_plo: false,
                         nodin_plo: false,

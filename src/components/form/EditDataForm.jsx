@@ -161,14 +161,14 @@ export function EditDataForm({ defaultValues }) {
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
                     name="nodin_user"
-                    label="Nodin User"
+                    label="Nodin User Baru"
                     placeholder="Nodin User"
                 />
                 <CustomFormField
                     fieldType={FormFieldType.DATE_PICKER}
                     control={form.control}
                     name="tanggal_nodin_user"
-                    label="Tanggal Nodin User"
+                    label="Tanggal Nodin User Baru"
                 />
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
