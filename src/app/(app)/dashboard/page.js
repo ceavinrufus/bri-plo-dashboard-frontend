@@ -6,6 +6,7 @@ import client from '@/lib/apolloClient'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DashboardMetrics from '@/components/DashboardMetrics'
 import { fetchDepartmentData } from '@/lib/actions'
+import DashboardGraph from '@/components/DashboardGraph'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
@@ -124,15 +125,19 @@ const Dashboard = () => {
                     </div>
                     <TabsContent value="all" className="space-y-4">
                         <DashboardMetrics metrics={metrics.all} />
+                        <DashboardGraph metrics={metrics.all} />
                     </TabsContent>
                     <TabsContent value="bcp" className="space-y-4">
                         <DashboardMetrics metrics={metrics.bcp} />
+                        <DashboardGraph metrics={metrics.bcp} />
                     </TabsContent>
                     <TabsContent value="igp" className="space-y-4">
                         <DashboardMetrics metrics={metrics.igp} />
+                        <DashboardGraph metrics={metrics.igp} />
                     </TabsContent>
                     <TabsContent value="psr" className="space-y-4">
                         <DashboardMetrics metrics={metrics.psr} />
+                        <DashboardGraph metrics={metrics.psr} />
                     </TabsContent>
                 </Tabs>
             </div>
