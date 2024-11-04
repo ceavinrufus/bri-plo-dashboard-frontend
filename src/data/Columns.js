@@ -9,7 +9,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { calculateDaysDifference, convertToRupiah } from '@/utils'
+import {
+    calculateDaysDifference,
+    calculateWorkingDaysDifference,
+    convertToRupiah,
+} from '@/utils'
 import { EditDataSheet } from '@/components/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY, getLatestDate } from '@/lib/utils'
@@ -225,15 +229,16 @@ export const prosesPengadaanColumns = [
                 .getValue('nodin_users')
                 .map(nodin_user => nodin_user.tanggal_nodin)
             const diff = calculateDaysDifference(
-                row.getValue('tanggal_spk'),
                 getLatestDate(tanggalNodinUser),
+                row.getValue('tanggal_spk'),
             )
             const diffWithToday = calculateDaysDifference(
-                new Date().toISOString().split('T')[0],
                 getLatestDate(tanggalNodinUser),
+                new Date().toISOString().split('T')[0],
             )
             return (
-                <div className="">
+                <div
+                    className={`${!row.getValue('tanggal_spk') && diff > 16 ? 'text-red-500' : ''}`}>
                     {row.getValue('tanggal_spk')
                         ? diff
                         : `Ongoing (${diffWithToday} hari)`}{' '}
@@ -258,16 +263,28 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => {
-            const diff = calculateDaysDifference(
+            const metode = row.getValue('metode')
+            const slaDays = {
+                'Penunjukkan Langsung': 9,
+                Lelang: 30,
+                'Pemilihan Langsung': 28,
+                Seleksi: 28,
+            }
+
+            const diff = calculateWorkingDaysDifference(
+                row.getValue('tanggal_acuan'),
                 row.getValue('tanggal_spk'),
-                row.getValue('tanggal_acuan'),
             )
-            const diffWithToday = calculateDaysDifference(
+            const diffWithToday = calculateWorkingDaysDifference(
+                row.getValue('tanggal_acuan'),
                 new Date().toISOString().split('T')[0],
-                row.getValue('tanggal_acuan'),
             )
+
+            const slaLimit = slaDays[metode] || 0
+            const isOverSla = diff > slaLimit
+
             return (
-                <div className="">
+                <div className={`${isOverSla ? 'text-red-500' : ''}`}>
                     {row.getValue('tanggal_spk')
                         ? diff
                         : `Ongoing (${diffWithToday} hari)`}{' '}
