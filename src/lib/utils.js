@@ -167,3 +167,42 @@ export function getLatestDate(dates) {
 
     return latestDate
 }
+
+export const calculateMetrics = data => {
+    const totalHPS = data.reduce((sum, item) => sum + item.hps?.amount || 0, 0)
+    const totalSPK = data.reduce((sum, item) => sum + item.nilai_spk || 0, 0)
+    const totalAnggaran = data.reduce(
+        (sum, item) => sum + item.anggaran?.amount || 0,
+        0,
+    )
+    const totalTKDN = data.reduce(
+        (sum, item) => sum + (item.tkdn_percentage || 0),
+        0,
+    )
+    const countTKDN = data.filter(item => item.tkdn_percentage !== null).length
+    const totalCompletedWorks = data.filter(
+        item => item.nilai_spk !== null,
+    ).length
+
+    // Count each proses_pengadaan
+    const prosesPengadaanCounts = data.reduce((counts, item) => {
+        const status = item.proses_pengadaan
+        if (status !== 'Selesai') {
+            counts[status] = (counts[status] || 0) + 1
+        }
+        return counts
+    }, {})
+
+    return {
+        costEfficiencyHPS: totalHPS
+            ? ((totalHPS - totalSPK) / totalHPS) * 100
+            : 0,
+        costEfficiencyAnggaran: totalAnggaran
+            ? ((totalAnggaran - totalSPK) / totalAnggaran) * 100
+            : 0,
+        tkdn: countTKDN ? totalTKDN / countTKDN : 0,
+        totalCompletedWorks,
+        totalWorks: data.length,
+        prosesPengadaanCounts,
+    }
+}

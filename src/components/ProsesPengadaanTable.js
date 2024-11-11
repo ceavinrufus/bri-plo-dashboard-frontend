@@ -13,6 +13,7 @@ import { ProsesPengadaanStats } from './ProsesPengadaanStats'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { useAuth } from '@/hooks/auth'
 import client from '@/lib/apolloClient'
+import { calculateMetrics } from '@/lib/utils'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
@@ -62,38 +63,6 @@ const GET_PENGADAANS = gql`
         }
     }
 `
-
-const calculateMetrics = data => {
-    const totalHPS = data.reduce(
-        (sum, item) => sum + (item.hps?.amount || 0),
-        0,
-    )
-    const totalSPK = data.reduce((sum, item) => sum + (item.nilai_spk || 0), 0)
-    const totalAnggaran = data.reduce(
-        (sum, item) => sum + (item.anggaran?.amount || 0),
-        0,
-    )
-    const totalTKDN = data.reduce(
-        (sum, item) => sum + (item.tkdn_percentage || 0),
-        0,
-    )
-    const countTKDN = data.filter(item => item.tkdn_percentage !== null).length
-    const totalCompletedWorks = data.filter(
-        item => item.nilai_spk !== null,
-    ).length
-
-    return {
-        costEfficiencyHPS: totalHPS
-            ? ((totalHPS - totalSPK) / totalHPS) * 100
-            : 0,
-        costEfficiencyAnggaran: totalAnggaran
-            ? ((totalAnggaran - totalSPK) / totalAnggaran) * 100
-            : 0,
-        tkdn: countTKDN ? totalTKDN / countTKDN : 0,
-        totalCompletedWorks,
-        totalWorks: data.length,
-    }
-}
 
 const ProsesPengadaanTable = () => {
     const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
