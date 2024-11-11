@@ -98,6 +98,7 @@ const calculateMetrics = data => {
 const ProsesPengadaanTable = () => {
     const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
     const { user } = useAuth({ middleware: 'auth' })
+    const [filteredData, setFilteredData] = React.useState([])
 
     if (!user) return null
 
@@ -107,7 +108,7 @@ const ProsesPengadaanTable = () => {
         onCompleted: data => setPengadaanData(data.pengadaans),
     })
 
-    const metrics = data ? calculateMetrics(data.pengadaans) : null
+    const metrics = calculateMetrics(filteredData)
 
     const handleExport = () => {
         const exportData = []
@@ -176,7 +177,9 @@ const ProsesPengadaanTable = () => {
             <div className="flex">
                 <h1>Pengadaan Data for {user.departemen.toUpperCase()}</h1>
                 <div className="space-x-2 ml-auto">
+                    {/* Stats */}
                     <ProsesPengadaanStats metrics={metrics} />
+
                     {user.departemen === 'bcp' && <ProjectsSheet />}
                     <AddDataSheet />
                     <Button
@@ -207,6 +210,7 @@ const ProsesPengadaanTable = () => {
                         anggaran: false,
                         nilai_spk: false,
                     }}
+                    onDataFilter={setFilteredData}
                 />
             )}
         </div>

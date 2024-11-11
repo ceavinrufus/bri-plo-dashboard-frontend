@@ -23,7 +23,12 @@ import {
 import { cn } from '@/lib/utils'
 import ProsesPengadaanTableToolbar from './ProsesPengadaanTableToolbar'
 
-export function DataTable({ data, columns, defaultColumnVisibility }) {
+export function DataTable({
+    data,
+    columns,
+    defaultColumnVisibility,
+    onDataFilter,
+}) {
     const [sorting, setSorting] = React.useState([])
     const [columnFilters, setColumnFilters] = React.useState([])
     const [columnVisibility, setColumnVisibility] = React.useState(
@@ -72,6 +77,13 @@ export function DataTable({ data, columns, defaultColumnVisibility }) {
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues(),
     })
+
+    React.useEffect(() => {
+        const filteredData = table
+            .getFilteredRowModel()
+            .rows.map(row => row.original)
+        onDataFilter(filteredData) // Send filtered data back to the parent
+    }, [table.getFilteredRowModel().rows, onDataFilter])
 
     return (
         <div className="w-full">
