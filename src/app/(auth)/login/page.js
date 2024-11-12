@@ -14,12 +14,11 @@ import { PulseLoader } from 'react-spinners'
 const Login = () => {
     const router = useRouter()
 
-    const { login } = useAuth({
+    const { login, isLoading } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [isProcessing, setIsProcessing] = useState(false)
     const [pn, setPn] = useState('')
     const [password, setPassword] = useState('')
     const [shouldRemember, setShouldRemember] = useState(false)
@@ -36,7 +35,6 @@ const Login = () => {
 
     const submitForm = async event => {
         event.preventDefault()
-        setIsProcessing(true)
 
         try {
             await login({
@@ -48,8 +46,6 @@ const Login = () => {
             })
         } catch (error) {
             console.log(error)
-        } finally {
-            setIsProcessing(false)
         }
     }
 
@@ -119,8 +115,8 @@ const Login = () => {
                         Forgot your password?
                     </Link>
 
-                    <Button className="ml-3">
-                        {isProcessing ? (
+                    <Button className="ml-3" disabled={isLoading}>
+                        {isLoading ? (
                             <PulseLoader
                                 size={8}
                                 color="#ffffff"

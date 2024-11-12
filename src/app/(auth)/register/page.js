@@ -11,20 +11,17 @@ import { PulseLoader } from 'react-spinners'
 import {
     Select,
     SelectContent,
-    SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
 
 const Page = () => {
-    const { register } = useAuth({
+    const { register, isLoading } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [isProcessing, setIsProcessing] = useState(false)
     const [name, setName] = useState('')
     const [pn, setPn] = useState('')
     const [email, setEmail] = useState('')
@@ -35,7 +32,6 @@ const Page = () => {
 
     const submitForm = async event => {
         event.preventDefault()
-        setIsProcessing(true)
 
         try {
             await register({
@@ -49,8 +45,6 @@ const Page = () => {
             })
         } catch (error) {
             console.error(error)
-        } finally {
-            setIsProcessing(false)
         }
     }
 
@@ -171,8 +165,8 @@ const Page = () => {
                     Already registered?
                 </Link>
 
-                <Button className="ml-4">
-                    {isProcessing ? (
+                <Button className="ml-4" disabled={isLoading}>
+                    {isLoading ? (
                         <PulseLoader
                             size={8}
                             color="#ffffff"

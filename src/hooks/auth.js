@@ -1,11 +1,12 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
     const params = useParams()
+    const [isLoading, setIsLoading] = useState(false)
 
     const {
         data: user,
@@ -25,6 +26,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
     const register = async ({ setErrors, ...props }) => {
+        setIsLoading(true)
         await csrf()
 
         setErrors([])
@@ -37,9 +39,11 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
                 setErrors(error.response.data.errors)
             })
+            .finally(() => setIsLoading(false))
     }
 
     const login = async ({ setErrors, setStatus, ...props }) => {
+        setIsLoading(true)
         await csrf()
 
         setErrors([])
@@ -53,6 +57,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
                 setErrors(error.response.data.errors)
             })
+            .finally(() => setIsLoading(false))
     }
 
     const forgotPassword = async ({ setErrors, setStatus, email }) => {
@@ -116,6 +121,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
     return {
         user,
+        isLoading,
         register,
         login,
         forgotPassword,
