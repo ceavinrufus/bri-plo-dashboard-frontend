@@ -656,3 +656,260 @@ export const prosesPengadaanColumns = [
         },
     },
 ]
+
+export const monitoringDokumenSPKColumns = [
+    // Select
+    {
+        id: 'select',
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && 'indeterminate')
+                }
+                onCheckedChange={value =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={value => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    // Perihal
+    {
+        accessorKey: 'perihal',
+        header: ({ column }) => (
+            <div className="w-72 md:w-96">
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Perihal
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        ),
+        cell: ({ row }) => <div>{row.getValue('perihal')}</div>,
+        enableHiding: false,
+    },
+    // Nomor SPK
+    {
+        accessorKey: 'nomor_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_spk')}</div>,
+    },
+    // Tanggal SPK
+    {
+        accessorKey: 'tanggal_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_spk'))}</div>
+        ),
+    },
+    // Nama Vendor
+    {
+        accessorKey: 'nama_vendor',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nama Vendor
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nama_vendor')}</div>,
+    },
+    // PIC
+    {
+        accessorKey: 'pic',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic').name}</div>,
+    },
+    // SLA SPK Sejak Terbit
+    {
+        accessorKey: 'sla_spk_sejak_terbit',
+        header: 'SLA SPK Sejak Terbit',
+        cell: ({ row }) => <div>{row.getValue('sla_spk_sejak_terbit')}</div>,
+    },
+    // SLA SPK Sejak Diambil
+    {
+        accessorKey: 'sla_spk_sejak_diambil',
+        header: 'SLA SPK Sejak Diambil',
+        cell: ({ row }) => <div>{row.getValue('sla_spk_sejak_diambil')}</div>,
+    },
+    // Tanggal
+    {
+        accessorKey: 'tanggal',
+        header: 'Tanggal',
+        cell: ({ row }) => <div>{formatDateDMY(row.getValue('tanggal'))}</div>,
+    },
+    // Jangka Waktu
+    {
+        accessorKey: 'jangka_waktu',
+        header: 'Jangka Waktu',
+        cell: ({ row }) => <div>{row.getValue('jangka_waktu')}</div>,
+    },
+    // Tim
+    {
+        accessorKey: 'tim',
+        header: 'Tim',
+        cell: ({ row }) => <div>{row.getValue('tim')}</div>,
+    },
+    // Nilai SPK
+    {
+        accessorKey: 'nilai_spk',
+        header: 'Nilai SPK',
+        cell: ({ row }) => <div>{row.getValue('nilai_spk')}</div>,
+    },
+    // Identitas Vendor
+    {
+        accessorKey: 'identitas_vendor',
+        header: 'Identitas Vendor',
+        cell: ({ row }) => <div>{row.getValue('identitas_vendor')}</div>,
+    },
+    // Info Vendor
+    {
+        accessorKey: 'info_vendor',
+        header: 'Info Vendor',
+        cell: ({ row }) => <div>{row.getValue('info_vendor')}</div>,
+    },
+    // Tanggal Pengambilan
+    {
+        accessorKey: 'tanggal_pengambilan',
+        header: 'Tanggal Pengambilan',
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_pengambilan'))}</div>
+        ),
+    },
+    // Identitas Pengambil
+    {
+        accessorKey: 'identitas_pengambil',
+        header: 'Identitas Pengambil',
+        cell: ({ row }) => <div>{row.getValue('identitas_pengambil')}</div>,
+    },
+    // Tanggal Pengembalian
+    {
+        accessorKey: 'tanggal_pengembalian',
+        header: 'Tanggal Pengembalian',
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_pengembalian'))}</div>
+        ),
+    },
+    // Tanggal Jatuh Tempo
+    {
+        accessorKey: 'tanggal_jatuh_tempo',
+        header: 'Tanggal Jatuh Tempo',
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_jatuh_tempo'))}</div>
+        ),
+    },
+    // Catatan
+    {
+        accessorKey: 'catatan',
+        header: 'Catatan',
+        cell: ({ row }) => <div>{row.getValue('catatan')}</div>,
+        enableSorting: false,
+    },
+    // Form TKDN
+    {
+        accessorKey: 'form_tkdn',
+        header: 'Form TKDN',
+        cell: ({ row }) => <div>{row.getValue('form_tkdn')}</div>,
+    },
+    // Actions
+    {
+        id: 'actions',
+        enableHiding: false,
+        cell: ({ row }) => {
+            const pengadaan = row.original
+            const { removePengadaan } = useContext(PengadaanContext)
+
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                            onClick={() =>
+                                navigator.clipboard.writeText(
+                                    pengadaan.nodin_user,
+                                )
+                            }>
+                            Salin nodin user
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="cursor-pointer"
+                            onClick={async () => {
+                                try {
+                                    await deletePengadaanData(pengadaan.id)
+
+                                    toast({
+                                        title: 'Success',
+                                        description:
+                                            'Data has been deleted successfully!',
+                                        status: 'success',
+                                    })
+                                    removePengadaan(pengadaan.id)
+                                } catch (error) {
+                                    toast({
+                                        title: 'Error',
+                                        description:
+                                            error.response?.data?.message ||
+                                            'An error occurred while deleting data.',
+                                        status: 'error',
+                                    })
+                                }
+                            }}>
+                            Delete data pengadaan
+                        </DropdownMenuItem>
+                        <EditDataSheet defaultValues={pengadaan} />
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )
+        },
+    },
+]

@@ -8,6 +8,15 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 import { PulseLoader } from 'react-spinners'
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
 
 const Page = () => {
     const { register } = useAuth({
@@ -20,6 +29,7 @@ const Page = () => {
     const [pn, setPn] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [department, setDepartment] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [errors, setErrors] = useState([])
 
@@ -33,6 +43,7 @@ const Page = () => {
                 pn,
                 email,
                 password,
+                departemen: department,
                 password_confirmation: passwordConfirmation,
                 setErrors,
             })
@@ -131,6 +142,26 @@ const Page = () => {
                     messages={errors.password_confirmation}
                     className="mt-2"
                 />
+            </div>
+
+            {/* Department */}
+            <div className="mt-4">
+                <Label htmlFor="department">Department</Label>
+
+                <Select
+                    onValueChange={value => setDepartment(value)}
+                    defaultValue={department}>
+                    <SelectTrigger className="mt-1 w-full flex rounded-md border border-dark-500 bg-dark-400 col-span-3">
+                        <SelectValue placeholder="Departemen" />
+                    </SelectTrigger>
+                    <SelectContent className="">
+                        <SelectItem value="bcp">BCP</SelectItem>
+                        <SelectItem value="igp">IGP</SelectItem>
+                        <SelectItem value="psr">PSR</SelectItem>
+                    </SelectContent>
+                </Select>
+
+                <InputError messages={errors.department} className="mt-2" />
             </div>
 
             <div className="flex items-center justify-end mt-4">
