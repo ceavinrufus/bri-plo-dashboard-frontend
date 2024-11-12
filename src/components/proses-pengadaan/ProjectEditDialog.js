@@ -7,7 +7,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import { EditProjectForm } from './form/EditProjectForm'
+import { EditProjectForm } from '../form/EditProjectForm'
 
 export function ProjectEditDialog({ data }) {
     return (

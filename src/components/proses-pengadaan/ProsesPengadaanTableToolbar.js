@@ -8,7 +8,7 @@ import {
 import { ChevronDown } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { DataTableFacetedFilter } from './ui/data-table-faceted-filter'
+import { DataTableFacetedFilter } from '../ui/data-table-faceted-filter'
 
 const ProsesPengadaanTableToolbar = ({ table }) => {
     const getUniqueValues = columnId => {

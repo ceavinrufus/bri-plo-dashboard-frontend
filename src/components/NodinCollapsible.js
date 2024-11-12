@@ -12,7 +12,7 @@ import {
 import { ProjectContext } from './context/ProjectContext'
 import { deleteProjectData } from '@/lib/actions'
 import { toast } from '@/hooks/use-toast'
-import { ProjectEditDialog } from './ProjectEditDialog'
+import { ProjectEditDialog } from './proses-pengadaan/ProjectEditDialog'
 
 export function NodinCollapsible({ nodins }) {
     const { projectData } = useContext(ProjectContext)

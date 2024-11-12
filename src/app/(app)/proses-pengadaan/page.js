@@ -1,4 +1,4 @@
-import ProsesPengadaanTable from '@/components/ProsesPengadaanTable'
+import ProsesPengadaanTable from '@/components/proses-pengadaan/ProsesPengadaanTable'
 
 const ProsesPengadaan = () => {
     return (

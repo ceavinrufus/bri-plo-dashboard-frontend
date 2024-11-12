@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react'
 import { gql } from '@apollo/client'
 import client from '@/lib/apolloClient'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import DashboardMetrics from '@/components/DashboardMetrics'
+import DashboardMetrics from '@/components/graph/DashboardMetrics'
 import { fetchDepartmentData } from '@/lib/actions'
-import DashboardGraph from '@/components/DashboardGraph'
+import DashboardGraph from '@/components/graph/DashboardGraph'
 import { calculateMetrics } from '@/lib/utils'
 
 const GET_PENGADAANS = gql`

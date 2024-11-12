@@ -11,9 +11,9 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import TotalWorksPieChart from './graph/TotalWorksPieChart'
-import ProsesPengadaanBarChart from './graph/ProsesPengadaanBarChart'
-import DashboardGraph from './DashboardGraph'
+import TotalWorksPieChart from '../graph/TotalWorksPieChart'
+import ProsesPengadaanBarChart from '../graph/ProsesPengadaanBarChart'
+import DashboardGraph from '../graph/DashboardGraph'
 
 export function ProsesPengadaanStats({ metrics }) {
     return (

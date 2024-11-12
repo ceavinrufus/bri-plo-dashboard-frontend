@@ -7,7 +7,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
-import { AddDataForm } from './form/AddDataForm'
+import { AddDataForm } from '../form/AddDataForm'
 
 export function AddDataSheet() {
     return (

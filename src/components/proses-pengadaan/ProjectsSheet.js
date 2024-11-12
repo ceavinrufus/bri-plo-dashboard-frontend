@@ -6,9 +6,9 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
-import { AddProjectForm } from './form/AddProjectForm'
+import { AddProjectForm } from '../form/AddProjectForm'
 import { ProjectCollapsible } from './ProjectsCollapsible'
-import { Separator } from './ui/separator'
+import { Separator } from '../ui/separator'
 
 export function ProjectsSheet() {
     return (

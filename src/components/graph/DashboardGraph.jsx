@@ -6,8 +6,8 @@ import {
     CardTitle,
     CardDescription,
 } from '@/components/ui/card'
-import TotalWorksPieChart from './graph/TotalWorksPieChart'
-import ProsesPengadaanBarChart from './graph/ProsesPengadaanBarChart'
+import TotalWorksPieChart from './TotalWorksPieChart'
+import ProsesPengadaanBarChart from './ProsesPengadaanBarChart'
 
 const DashboardGraph = ({ metrics }) => {
     return (

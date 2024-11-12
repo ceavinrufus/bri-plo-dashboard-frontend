@@ -21,7 +21,7 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
-import ProsesPengadaanTableToolbar from './ProsesPengadaanTableToolbar'
+import ProsesPengadaanTableToolbar from './proses-pengadaan/ProsesPengadaanTableToolbar'
 
 export function DataTable({
     data,

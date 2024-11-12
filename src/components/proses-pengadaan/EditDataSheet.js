@@ -6,7 +6,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
-import { EditDataForm } from './form/EditDataForm'
+import { EditDataForm } from '../form/EditDataForm'
 
 export function EditDataSheet({ defaultValues }) {
     return (

@@ -14,7 +14,7 @@ import {
     calculateWorkingDaysDifference,
     convertToRupiah,
 } from '@/utils'
-import { EditDataSheet } from '@/components/EditDataSheet'
+import { EditDataSheet } from '@/components/proses-pengadaan/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY, getLatestDate } from '@/lib/utils'
 import { deletePengadaanData } from '@/lib/actions'
