@@ -18,9 +18,14 @@ const MetricContent = ({ value, target }) => {
                 {value}%
             </div>
             {target && (
-                <p className="text-xs text-muted-foreground">
-                    Target: {target}%
-                </p>
+                <>
+                    <p className="text-xs text-muted-foreground">
+                        Target: {target}%
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                        Rasio dengan target: {(value / target).toFixed(2)}%
+                    </p>
+                </>
             )}
         </CardContent>
     )
@@ -91,10 +96,7 @@ const DashboardMetrics = ({ metrics }) => {
                         <path d="M2 10h20" />
                     </svg>
                 </CardHeader>
-                <MetricContent
-                    value={metrics.tkdn.toFixed(2)}
-                    target={metrics.target}
-                />
+                <MetricContent value={metrics.tkdn.toFixed(2)} />
             </Card>
         </div>
     )

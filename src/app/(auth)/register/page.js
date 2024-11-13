@@ -140,7 +140,7 @@ const Page = () => {
 
             {/* Department */}
             <div className="mt-4">
-                <Label htmlFor="department">Department</Label>
+                <Label htmlFor="department">Departemen</Label>
 
                 <Select
                     onValueChange={value => setDepartment(value)}

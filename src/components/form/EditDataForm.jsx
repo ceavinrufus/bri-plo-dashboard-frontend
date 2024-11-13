@@ -148,16 +148,13 @@ export function EditDataForm({ defaultValues }) {
                     </CustomFormField>
                 )}
                 <CustomFormField
-                    fieldType={FormFieldType.SELECT}
+                    fieldType={FormFieldType.COMBOBOX}
                     control={form.control}
                     name="kode_user"
-                    label="Kode User">
-                    {divisiData.map(data => (
-                        <SelectItem key={data.value} value={data.value}>
-                            {data.value} ({data.label})
-                        </SelectItem>
-                    ))}
-                </CustomFormField>
+                    placeholder="Select user"
+                    options={divisiData}
+                    label="Kode User"
+                />
                 <CustomFormField
                     fieldType={FormFieldType.INPUT}
                     control={form.control}
