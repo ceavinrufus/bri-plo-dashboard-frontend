@@ -42,15 +42,15 @@ const MonitoringDokumenSPKTable = () => {
                     <AddDataSheet />
                 </div>
             </div>
-            {false ? (
+            {/* {false ? (
                 <p>Error:</p>
-            ) : (
-                <DataTable
-                    data={mockData}
-                    columns={monitoringDokumenSPKColumns}
-                    onDataFilter={setFilteredData}
-                />
-            )}
+            ) : ( */}
+            <DataTable
+                data={mockData}
+                columns={monitoringDokumenSPKColumns}
+                onDataFilter={setFilteredData}
+            />
+            {/* )} */}
         </div>
     )
 }

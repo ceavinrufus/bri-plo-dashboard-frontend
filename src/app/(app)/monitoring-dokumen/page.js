@@ -25,12 +25,14 @@ const MonitoringDokumen = () => {
                             <TabsContent value="spk" className="space-y-4">
                                 <MonitoringDokumenSPKTable />
                             </TabsContent>
-                            <TabsContent
-                                value="jaminan"
-                                className="space-y-4"></TabsContent>
+                            <TabsContent value="jaminan" className="space-y-4">
+                                Jaminan
+                            </TabsContent>
                             <TabsContent
                                 value="perjanjian"
-                                className="space-y-4"></TabsContent>
+                                className="space-y-4">
+                                Perjanjian
+                            </TabsContent>
                         </Tabs>
                     </div>
                 </div>
