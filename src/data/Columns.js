@@ -249,9 +249,12 @@ export const prosesPengadaanColumns = [
                 getLatestDate(tanggalNodinUser),
                 new Date().toISOString().split('T')[0],
             )
+            const isOverSla = row.getValue('tanggal_spk')
+                ? diff > 16
+                : diffWithToday > 16
+
             return (
-                <div
-                    className={`${!row.getValue('tanggal_spk') && diff > 16 ? 'text-red-500' : ''}`}>
+                <div className={`${isOverSla ? 'text-red-500' : ''}`}>
                     {row.getValue('tanggal_spk')
                         ? diff
                         : `Ongoing (${diffWithToday} hari)`}{' '}
@@ -283,13 +286,18 @@ export const prosesPengadaanColumns = [
                 'Pemilihan Langsung': 28,
                 Seleksi: 28,
             }
+            const tanggalNodinUser = row
+                .getValue('nodin_users')
+                .map(nodin_user => nodin_user.tanggal_nodin)
 
             const diff = calculateWorkingDaysDifference(
-                row.getValue('tanggal_acuan'),
+                row.getValue('tanggal_acuan') ||
+                    getLatestDate(tanggalNodinUser),
                 row.getValue('tanggal_spk'),
             )
             const diffWithToday = calculateWorkingDaysDifference(
-                row.getValue('tanggal_acuan'),
+                row.getValue('tanggal_acuan') ||
+                    getLatestDate(tanggalNodinUser),
                 new Date().toISOString().split('T')[0],
             )
 

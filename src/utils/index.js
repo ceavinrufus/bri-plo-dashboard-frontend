@@ -15,7 +15,7 @@ export const calculateWorkingDaysDifference = (startDate, endDate) => {
     let currentDate = new Date(startDate)
     const end = new Date(endDate)
 
-    while (currentDate <= end) {
+    while (currentDate < end) {
         const dayOfWeek = currentDate.getDay()
         if (dayOfWeek !== 0 && dayOfWeek !== 6) {
             // Skip weekends

@@ -6,8 +6,8 @@ export const ProgressPengadaanFormValidation = z.object({
         .string()
         .min(3, { message: 'Minimum 3 characters.' })
         .max(3, { message: 'Maximum 3 characters.' }),
-    nodin_user: z.string().nullable().optional(),
-    tanggal_nodin_user: z.union([z.string(), z.date()]).nullable().optional(),
+    nodin_user: z.string(),
+    tanggal_nodin_user: z.union([z.string(), z.date()]),
     tim: z.string(),
     departemen: z.enum(['bcp', 'igp', 'psr']),
     proyek: z.string().nullable().optional(),

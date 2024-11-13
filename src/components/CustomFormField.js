@@ -179,7 +179,7 @@ const RenderInput = ({ field, props }) => {
                                     'flex rounded-md border border-dark-500 bg-dark-400 col-span-3 justify-between px-3',
                                     !field.value && 'text-muted-foreground',
                                 )}>
-                                <p className="overflow-hidden">
+                                <p className="overflow-hidden font-normal">
                                     {field.value
                                         ? props.options.find(
                                               option =>
