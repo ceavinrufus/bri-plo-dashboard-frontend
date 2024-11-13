@@ -36,9 +36,9 @@ const MonitoringDokumenSPKTable = () => {
 
     return (
         <div>
-            <div className="flex">
-                <h1>Monitoring Dokumen SPK</h1>
-                <div className="space-x-2 ml-auto">
+            <div className="flex flex-col md:flex-row">
+                <h1 className="mb-4 md:mb-0">Monitoring Dokumen SPK</h1>
+                <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet />
                 </div>
             </div>

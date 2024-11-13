@@ -27,7 +27,7 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
     }
 
     return (
-        <div className="flex items-center py-4">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-2 py-4">
             <div className="flex items-center gap-2">
                 <Input
                     placeholder="Search pengadaan..."
@@ -52,18 +52,20 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
             </div>
 
             {/* Filters */}
-            <div className="flex mx-2 gap-2">
+            <div className="flex flex-wrap lg:mx-2 gap-2">
                 <DataTableFacetedFilter
                     column={table.getColumn('proyek')}
                     title="Proyek"
                     options={getUniqueValues('proyek')}
                 />
                 <DataTableFacetedFilter
+                    className="hidden lg:flex"
                     column={table.getColumn('tim')}
                     title="Tim"
                     options={getUniqueValues('tim')}
                 />
                 <DataTableFacetedFilter
+                    className="hidden lg:flex"
                     column={table.getColumn('kode_user')}
                     title="Kode User"
                     options={getUniqueValues('kode_user')}

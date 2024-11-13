@@ -143,9 +143,11 @@ const ProsesPengadaanTable = () => {
 
     return (
         <div>
-            <div className="flex">
-                <h1>Pengadaan Data for {user.departemen.toUpperCase()}</h1>
-                <div className="space-x-2 ml-auto">
+            <div className="flex flex-col md:flex-row">
+                <h1 className="mb-4 md:mb-0">
+                    Pengadaan Data for {user.departemen.toUpperCase()}
+                </h1>
+                <div className="flex gap-2 ml-auto flex-wrap">
                     {/* Stats */}
                     <ProsesPengadaanStats metrics={metrics} />
 
@@ -162,25 +164,59 @@ const ProsesPengadaanTable = () => {
             {error ? (
                 <p>Error: {error.message}</p>
             ) : (
-                <DataTable
-                    data={pengadaanData}
-                    columns={prosesPengadaanColumns}
-                    defaultColumnVisibility={{
-                        nodin_users: false,
-                        nodin_plos: false,
-                        departemen: false,
-                        tanggal_acuan: false,
-                        proyek: user.departemen === 'bcp',
-                        tanggal_nodin_plo: false,
-                        nodin_plo: false,
-                        tkdn_percentage: false,
-                        pdn_percentage: false,
-                        hps: false,
-                        anggaran: false,
-                        nilai_spk: false,
-                    }}
-                    onDataFilter={setFilteredData}
-                />
+                <>
+                    <div className="hidden lg:block">
+                        <DataTable
+                            data={pengadaanData}
+                            columns={prosesPengadaanColumns}
+                            defaultColumnVisibility={{
+                                nodin_users: false,
+                                nodin_plos: false,
+                                departemen: false,
+                                tanggal_acuan: false,
+                                proyek: user.departemen === 'bcp',
+                                tanggal_nodin_plo: false,
+                                nodin_plo: false,
+                                tkdn_percentage: false,
+                                pdn_percentage: false,
+                                hps: false,
+                                anggaran: false,
+                                nilai_spk: false,
+                            }}
+                            onDataFilter={setFilteredData}
+                        />
+                    </div>
+                    <div className="lg:hidden">
+                        <DataTable
+                            data={pengadaanData}
+                            columns={prosesPengadaanColumns}
+                            defaultColumnVisibility={{
+                                nodin_users: false,
+                                nodin_plos: false,
+                                departemen: false,
+                                tanggal_acuan: false,
+                                tim: false,
+                                kode_user: false,
+                                proyek: user.departemen === 'bcp',
+                                nodin_user: false,
+                                tanggal_nodin_user: false,
+                                sla_usulan_user: false,
+                                sla_proses_pengadaan: false,
+                                is_verification_complete: false,
+                                tanggal_spk: false,
+                                pelaksana_pekerjaan: false,
+                                tanggal_nodin_plo: false,
+                                nodin_plo: false,
+                                tkdn_percentage: false,
+                                pdn_percentage: false,
+                                hps: false,
+                                anggaran: false,
+                                nilai_spk: false,
+                            }}
+                            onDataFilter={setFilteredData}
+                        />
+                    </div>
+                </>
             )}
         </div>
     )

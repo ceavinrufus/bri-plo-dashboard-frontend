@@ -23,6 +23,7 @@ import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { toast } from '@/hooks/use-toast'
 
 export const prosesPengadaanColumns = [
+    // Nodin Users
     {
         accessorKey: 'nodin_users',
         header: () => null, // No header for the shadow column
@@ -30,6 +31,7 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false, // Hides the column
     },
+    // Nodin PLOs
     {
         accessorKey: 'nodin_plos',
         header: () => null, // No header for the shadow column
@@ -37,6 +39,7 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false, // Hides the column
     },
+    // Departemen
     {
         accessorKey: 'departemen',
         header: () => null, // No header for the shadow column
@@ -44,6 +47,7 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false, // Hides the column
     },
+    // Tanggal Acuan
     {
         accessorKey: 'tanggal_acuan',
         header: () => null, // No header for the shadow column
@@ -256,7 +260,7 @@ export const prosesPengadaanColumns = [
             )
         },
     },
-    // SLA Usulan User
+    // SLA Proses Pengadaan
     {
         accessorKey: 'sla_proses_pengadaan',
         header: ({ column }) => {

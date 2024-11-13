@@ -20,7 +20,12 @@ import {
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 
-export function DataTableFacetedFilter({ column, title, options }) {
+export function DataTableFacetedFilter({
+    column,
+    title,
+    options,
+    className = '',
+}) {
     if (!options) return
     if (options.length == 0) return
 
@@ -33,7 +38,7 @@ export function DataTableFacetedFilter({ column, title, options }) {
                 <Button
                     variant="outline"
                     size="sm"
-                    className="h-8 border-dashed">
+                    className={cn('h-8 border-dashed', className)}>
                     <PlusCircledIcon className="mr-2 h-4 w-4" />
                     {title}
                     {selectedValues?.size > 0 && (
