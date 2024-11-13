@@ -94,6 +94,9 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="uppercase text-center">{row.getValue('tim')}</div>
         ),
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
     },
     // Kode User
     {
@@ -115,6 +118,9 @@ export const prosesPengadaanColumns = [
                 {row.getValue('kode_user')}
             </div>
         ),
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
     },
     // Proyek
     {
@@ -140,6 +146,9 @@ export const prosesPengadaanColumns = [
         },
         enableSorting: true,
         enableHiding: false, // Hides the column
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
     },
     // Perihal
     {
@@ -311,6 +320,9 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => <div className="">{row.getValue('metode')}</div>,
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
     },
     // Is Verification Complete
     {
@@ -360,6 +372,9 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">{row.getValue('proses_pengadaan')}</div>
         ),
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
     },
     // Nomor SPK
     {
@@ -837,6 +852,9 @@ export const monitoringDokumenSPKColumns = [
             </Button>
         ),
         cell: ({ row }) => <div>{row.getValue('tim')}</div>,
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
     },
     // Nilai SPK
     {

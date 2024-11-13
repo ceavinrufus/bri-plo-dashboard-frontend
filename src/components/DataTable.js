@@ -37,34 +37,15 @@ export function DataTable({
     const [rowSelection, setRowSelection] = React.useState({})
     const [selectedColumnId, setSelectedColumnId] = React.useState('')
 
-    // Define custom filter functions for array filters (OR operation)
-    const filterFns = {
-        arrIncludesSome: (row, columnId, filterValue) => {
-            const value = row.getValue(columnId)
-            return filterValue.some(val => value === val)
-        },
-    }
-
-    // Modify columns to use the custom filter function
-    const columnsWithOrFilter = React.useMemo(
-        () =>
-            columns.map(column => ({
-                ...column,
-                filterFn: 'arrIncludesSome',
-            })),
-        [columns],
-    )
-
     const table = useReactTable({
         data,
-        columns: columnsWithOrFilter,
+        columns,
         state: {
             sorting,
             columnVisibility,
             rowSelection,
             columnFilters,
         },
-        filterFns,
         enableRowSelection: true,
         onRowSelectionChange: setRowSelection,
         onSortingChange: setSorting,

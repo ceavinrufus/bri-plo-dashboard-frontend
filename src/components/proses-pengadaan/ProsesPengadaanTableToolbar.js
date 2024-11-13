@@ -28,16 +28,28 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
 
     return (
         <div className="flex items-center py-4">
-            <Input
-                placeholder="Search pengadaan..."
-                value={table.getColumn('perihal')?.getFilterValue() ?? ''}
-                onChange={event =>
-                    table
-                        .getColumn('perihal')
-                        ?.setFilterValue(event.target.value)
-                }
-                className="max-w-sm"
-            />
+            <div className="flex items-center gap-2">
+                <Input
+                    placeholder="Search pengadaan..."
+                    value={table.getColumn('perihal')?.getFilterValue() ?? ''}
+                    onChange={event =>
+                        table
+                            .getColumn('perihal')
+                            ?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                />
+                <Input
+                    placeholder="Search nomor SPK..."
+                    value={table.getColumn('nomor_spk')?.getFilterValue() ?? ''}
+                    onChange={event =>
+                        table
+                            .getColumn('nomor_spk')
+                            ?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                />
+            </div>
 
             {/* Filters */}
             <div className="flex mx-2 gap-2">
