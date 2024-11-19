@@ -1010,6 +1010,40 @@ export const monitoringDokumenSPKColumns = [
         ),
         cell: ({ row }) => <div>{row.getValue('form_tkdn')}</div>,
     },
+    // Tanggal Penyerahan Dokumen
+    {
+        accessorKey: 'tanggal_penyerahan_dokumen',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Penyerahan Dokumen
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {formatDateDMY(row.getValue('tanggal_penyerahan_dokumen'))}
+            </div>
+        ),
+    },
+    // Penerima Dokumen
+    {
+        accessorKey: 'penerima_dokumen',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Penerima Dokumen
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('penerima_dokumen')}</div>,
+    },
     // Actions
     {
         id: 'actions',

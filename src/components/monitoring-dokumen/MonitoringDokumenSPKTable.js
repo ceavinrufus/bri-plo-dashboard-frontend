@@ -1,38 +1,58 @@
 'use client'
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { AddDataSheet } from '../proses-pengadaan/AddDataSheet'
 import { monitoringDokumenSPKColumns } from '@/data/Columns'
 import { DataTable } from '../DataTable'
+import { DokumenContext } from '../context/DokumenContext'
+import { useAuth } from '@/hooks/auth'
+import { gql, useQuery } from '@apollo/client'
+import client from '@/lib/apolloClient'
 
-// Mock data
-const mockData = [
-    {
-        perihal:
-            'Pengadaan CCTV untuk Ruang Audit Standard & Quality Deveolpment Division Gedung BRI 2 Lantai 25',
-        nomor_spk: '4200003551-PLO/IGP/PTT/01/2024',
-        tanggal_spk: '2023-11-01',
-        nama_vendor: 'Koperasi Swakarya BRI',
-        pic: { name: 'Ceavin Rufus' },
-        sla_spk_sejak_terbit: 'CLEAR',
-        sla_spk_sejak_diambil: 'CLEAR',
-        tanggal: '2023-11-02',
-        jangka_waktu: '30 hari',
-        tim: 'IT Procurement Team',
-        nilai_spk: 'Rp 49.700.000',
-        identitas_vendor: 'Hari (087772367861)',
-        info_vendor: '',
-        tanggal_pengambilan: '2023-11-05',
-        identitas_pengambil: 'Aditia Santara (081283205120)',
-        tanggal_pengembalian: '2023-11-10',
-        tanggal_jatuh_tempo: '2023-12-01',
-        catatan: '',
-        form_tkdn: 'DONE',
-    },
-]
+const GET_DOKUMENS = gql`
+    query GetDokumens {
+        dokumens {
+            sla_spk_sejak_diambil
+            pic {
+                id
+                name
+            }
+            id
+            identitas_pengambil
+            identitas_vendor
+            info_vendor
+            jangka_waktu
+            nama_vendor
+            nilai_spk
+            nomor_spk
+            penerima_dokumen
+            perihal
+            sla_spk_sejak_terbit
+            tanggal
+            tanggal_jatuh_tempo
+            tanggal_pengambilan
+            tanggal_pengembalian
+            tanggal_penyerahan_dokumen
+            tanggal_spk
+            tim
+        }
+    }
+`
 
 const MonitoringDokumenSPKTable = () => {
+    const { dokumenData, setDokumenData } = useContext(DokumenContext)
+    const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
+
+    if (!user) return null
+
+    const { loading, error, data } = useQuery(GET_DOKUMENS, {
+        variables: { departemen: user.departemen },
+        client,
+        onCompleted: data => setDokumenData(data.dokumens),
+    })
+
+    if (loading) return <div>Loading...</div>
 
     return (
         <div>
@@ -42,15 +62,15 @@ const MonitoringDokumenSPKTable = () => {
                     <AddDataSheet />
                 </div>
             </div>
-            {/* {false ? (
-                <p>Error:</p>
-            ) : ( */}
-            <DataTable
-                data={mockData}
-                columns={monitoringDokumenSPKColumns}
-                onDataFilter={setFilteredData}
-            />
-            {/* )} */}
+            {error ? (
+                <p>Error: {error.message}</p>
+            ) : (
+                <DataTable
+                    data={dokumenData}
+                    columns={monitoringDokumenSPKColumns}
+                    onDataFilter={setFilteredData}
+                />
+            )}
         </div>
     )
 }
