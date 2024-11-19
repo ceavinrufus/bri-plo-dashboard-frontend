@@ -181,14 +181,18 @@ export const calculateMetrics = data => {
     )
     const countTKDN = data.filter(item => item.tkdn_percentage !== null).length
     const totalCompletedWorks = data.filter(
-        item => item.nilai_spk !== null,
+        item => item.proses_pengadaan === 'Selesai',
     ).length
 
     // Count each proses_pengadaan
     const prosesPengadaanCounts = data.reduce((counts, item) => {
         const status = item.proses_pengadaan
         if (status !== 'Selesai') {
-            counts[status] = (counts[status] || 0) + 1
+            if (status === null) {
+                counts['Verifikasi Awal'] = (counts['Verifikasi Awal'] || 0) + 1
+            } else {
+                counts[status] = (counts[status] || 0) + 1
+            }
         }
         return counts
     }, {})
