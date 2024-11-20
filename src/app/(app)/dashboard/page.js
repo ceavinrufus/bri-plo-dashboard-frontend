@@ -13,7 +13,9 @@ const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String!) {
         pengadaans(departemen: $departemen) {
             id
-            nilai_spk
+            spk {
+                amount
+            }
             anggaran {
                 amount
             }

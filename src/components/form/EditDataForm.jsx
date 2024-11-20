@@ -115,6 +115,7 @@ export function EditDataForm({ defaultValues }) {
                 ...transformedData,
                 anggaran: JSON.parse(transformedData.anggaran),
                 hps: JSON.parse(transformedData.hps),
+                spk: JSON.parse(transformedData.spk),
             })
         } catch (error) {
             toast({

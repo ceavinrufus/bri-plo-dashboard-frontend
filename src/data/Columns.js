@@ -552,7 +552,7 @@ export const prosesPengadaanColumns = [
     },
     // Nilai SPK
     {
-        accessorKey: 'nilai_spk',
+        accessorKey: 'spk',
         header: ({ column }) => {
             return (
                 <Button
@@ -566,7 +566,9 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => (
-            <div className="">{convertToRupiah(row.getValue('nilai_spk'))}</div>
+            <div className="">
+                {convertToRupiah(row.getValue('spk').amount)}
+            </div>
         ),
     },
     // TKDN Percentage
@@ -870,7 +872,7 @@ export const monitoringDokumenSPKColumns = [
     },
     // Nilai SPK
     {
-        accessorKey: 'nilai_spk',
+        accessorKey: 'spk',
         header: ({ column }) => (
             <Button
                 variant="ghost"
@@ -881,7 +883,9 @@ export const monitoringDokumenSPKColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('nilai_spk')}</div>,
+        cell: ({ row }) => (
+            <div>{convertToRupiah(row.getValue('spk').amount)}</div>
+        ),
     },
     // Identitas Vendor
     {

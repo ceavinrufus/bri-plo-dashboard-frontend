@@ -43,7 +43,9 @@ const GET_PENGADAANS = gql`
             tanggal_spk
             tanggal_acuan
             pelaksana_pekerjaan
-            nilai_spk
+            spk {
+                amount
+            }
             anggaran {
                 amount
                 tanggal_permohonan
@@ -114,7 +116,7 @@ const ProsesPengadaanTable = () => {
                     tanggal_acuan: i === 0 ? item.tanggal_acuan : '',
                     pelaksana_pekerjaan:
                         i === 0 ? item.pelaksana_pekerjaan : '',
-                    nilai_spk: i === 0 ? item.nilai_spk : '',
+                    nilai_spk: i === 0 ? item.spk.amount : '',
                     anggaran: i === 0 ? item.anggaran?.amount : '',
                     hps: i === 0 ? item.hps?.amount : '',
                     tanggal_permohonan_anggaran:

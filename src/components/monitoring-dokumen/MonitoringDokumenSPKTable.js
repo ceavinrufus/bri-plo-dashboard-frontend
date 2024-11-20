@@ -23,7 +23,9 @@ const GET_DOKUMENS = gql`
             info_vendor
             jangka_waktu
             nama_vendor
-            nilai_spk
+            spk {
+                amount
+            }
             nomor_spk
             penerima_dokumen
             perihal

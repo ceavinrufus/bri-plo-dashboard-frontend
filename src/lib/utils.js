@@ -55,7 +55,13 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
         ...data,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
         tanggal_acuan: formatDateYMD(data.tanggal_acuan),
-        nilai_spk: data.nilai_spk ? parseFloat(data.nilai_spk) : null,
+        spk: data.nilai_spk
+            ? JSON.stringify({
+                  amount: parseFloat(data.nilai_spk),
+                  tanggal_permohonan: data.tanggal_permohonan_anggaran,
+                  tanggal_terima: data.tanggal_terima_anggaran,
+              })
+            : null,
         anggaran: data.anggaran
             ? JSON.stringify({
                   amount: parseFloat(data.anggaran),
@@ -170,7 +176,7 @@ export function getLatestDate(dates) {
 
 export const calculateMetrics = data => {
     const totalHPS = data.reduce((sum, item) => sum + item.hps?.amount || 0, 0)
-    const totalSPK = data.reduce((sum, item) => sum + item.nilai_spk || 0, 0)
+    const totalSPK = data.reduce((sum, item) => sum + item.spk?.amount || 0, 0)
     const totalAnggaran = data.reduce(
         (sum, item) => sum + item.anggaran?.amount || 0,
         0,

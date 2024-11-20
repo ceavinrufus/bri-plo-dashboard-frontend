@@ -76,3 +76,17 @@ export const progress = {
         'Selesai',
     ],
 }
+export const progressRental = {
+    Sewa: [
+        'Menerima Rekomendasi dari DNR',
+        'Proses Evaluasi Data di Rental Group',
+        'Negosiasi',
+        'Izin Prinsip Putusan',
+        'Membuat Surat Persetujuan Sewa Ke User',
+        'Membuat Perjanjian Sewa',
+        'Menunggu Invoice Tagihan',
+        'Menyurati Tim Payment Untuk Pembayaran',
+        'Selesai',
+    ],
+    Beli: [],
+}
