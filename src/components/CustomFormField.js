@@ -157,7 +157,7 @@ const RenderInput = ({ field, props }) => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}>
                         <FormControl>
-                            <SelectTrigger className="flex rounded-md border border-dark-500 bg-dark-400 col-span-3">
+                            <SelectTrigger className="flex h-[38px] rounded-md border border-dark-500 bg-dark-400 col-span-3">
                                 <SelectValue placeholder={props.placeholder} />
                             </SelectTrigger>
                         </FormControl>
@@ -234,14 +234,19 @@ const RenderInput = ({ field, props }) => {
 }
 
 const CustomFormField = props => {
-    const { control, name, label } = props
+    const { control, name, label, isLabelInline = true } = props
 
     return (
         <FormField
             control={control}
             name={name}
             render={({ field }) => (
-                <FormItem className="grid grid-cols-4 items-center gap-4">
+                <FormItem
+                    className={cn(
+                        isLabelInline
+                            ? 'grid grid-cols-4 items-center gap-4'
+                            : '',
+                    )}>
                     {props.fieldType !== FormFieldType.CHECKBOX && label && (
                         <FormLabel className="shad-input-label">
                             {label}

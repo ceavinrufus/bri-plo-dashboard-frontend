@@ -45,14 +45,20 @@ const GET_PENGADAANS = gql`
             pelaksana_pekerjaan
             spk {
                 amount
+                currency
+                rate
             }
             anggaran {
                 amount
+                currency
+                rate
                 tanggal_permohonan
                 tanggal_terima
             }
             hps {
                 amount
+                currency
+                rate
                 tanggal_permohonan
                 tanggal_terima
             }

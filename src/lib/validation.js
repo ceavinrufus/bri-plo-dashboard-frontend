@@ -29,6 +29,8 @@ export const ProgressPengadaanFormValidation = z.object({
     nomor_spk: z.string().nullable().optional(),
     tanggal_spk: z.union([z.string(), z.date()]).nullable().optional(),
     nilai_spk: z.union([z.string(), z.number()]).nullable().optional(),
+    spk_currency: z.string().nullable().optional(),
+    spk_rate: z.union([z.string(), z.number()]).nullable().optional(),
     pelaksana_pekerjaan: z.string().nullable().optional(),
     tanggal_permohonan_anggaran: z
         .union([z.string(), z.date()])
@@ -44,7 +46,11 @@ export const ProgressPengadaanFormValidation = z.object({
         .optional(),
     tanggal_terima_hps: z.union([z.string(), z.date()]).nullable().optional(),
     anggaran: z.union([z.string(), z.number()]).nullable().optional(),
+    anggaran_currency: z.string().nullable().optional(),
+    anggaran_rate: z.union([z.string(), z.number()]).nullable().optional(),
     hps: z.union([z.string(), z.number()]).nullable().optional(),
+    hps_currency: z.string().nullable().optional(),
+    hps_rate: z.union([z.string(), z.number()]).nullable().optional(),
     tkdn_percentage: z.union([z.string(), z.number()]).nullable().optional(),
     catatan: z.string().nullable().optional(),
 })

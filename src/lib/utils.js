@@ -57,21 +57,25 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
         tanggal_acuan: formatDateYMD(data.tanggal_acuan),
         spk: data.nilai_spk
             ? JSON.stringify({
+                  rate: parseFloat(data.spk_rate),
                   amount: parseFloat(data.nilai_spk),
-                  tanggal_permohonan: data.tanggal_permohonan_anggaran,
-                  tanggal_terima: data.tanggal_terima_anggaran,
+                  currency: data.spk_currency,
               })
             : null,
         anggaran: data.anggaran
             ? JSON.stringify({
+                  rate: parseFloat(data.anggaran_rate),
                   amount: parseFloat(data.anggaran),
+                  currency: data.anggaran_currency,
                   tanggal_permohonan: data.tanggal_permohonan_anggaran,
                   tanggal_terima: data.tanggal_terima_anggaran,
               })
             : null,
         hps: data.hps
             ? JSON.stringify({
+                  rate: parseFloat(data.hps_rate),
                   amount: parseFloat(data.hps),
+                  currency: data.hps_currency,
                   tanggal_permohonan: data.tanggal_permohonan_hps,
                   tanggal_terima: data.tanggal_terima_hps,
               })
