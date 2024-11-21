@@ -179,10 +179,16 @@ export function getLatestDate(dates) {
 }
 
 export const calculateMetrics = data => {
-    const totalHPS = data.reduce((sum, item) => sum + item.hps?.amount || 0, 0)
-    const totalSPK = data.reduce((sum, item) => sum + item.spk?.amount || 0, 0)
+    const totalHPS = data.reduce(
+        (sum, item) => sum + item.hps?.amount * item.hps?.rate || 0,
+        0,
+    )
+    const totalSPK = data.reduce(
+        (sum, item) => sum + item.spk?.amount * item.spk?.rate || 0,
+        0,
+    )
     const totalAnggaran = data.reduce(
-        (sum, item) => sum + item.anggaran?.amount || 0,
+        (sum, item) => sum + item.anggaran?.amount * item.anggaran?.rate || 0,
         0,
     )
     const totalTKDN = data.reduce(

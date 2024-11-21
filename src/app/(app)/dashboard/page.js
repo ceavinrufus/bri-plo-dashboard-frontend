@@ -14,12 +14,15 @@ const GET_PENGADAANS = gql`
         pengadaans(departemen: $departemen) {
             id
             spk {
+                rate
                 amount
             }
             anggaran {
+                rate
                 amount
             }
             hps {
+                rate
                 amount
             }
             proses_pengadaan
