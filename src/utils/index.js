@@ -27,11 +27,11 @@ export const calculateWorkingDaysDifference = (startDate, endDate) => {
     return count
 }
 
-export function convertToRupiah(amount) {
-    return amount
+export function convertToCurrencyString(amount, currency) {
+    return amount && currency
         ? amount.toLocaleString('id-ID', {
               style: 'currency',
-              currency: 'IDR',
+              currency: currency,
               minimumFractionDigits: 0, // No decimals
               maximumFractionDigits: 0,
           })

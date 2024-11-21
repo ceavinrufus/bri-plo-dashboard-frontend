@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import {
     calculateDaysDifference,
     calculateWorkingDaysDifference,
-    convertToRupiah,
+    convertToCurrencyString,
 } from '@/utils'
 import { EditDataSheet } from '@/components/proses-pengadaan/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
@@ -525,7 +525,10 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">
-                {convertToRupiah(row.getValue('hps').amount)}
+                {convertToCurrencyString(
+                    row.getValue('hps').amount,
+                    row.getValue('hps').currency,
+                )}
             </div>
         ),
     },
@@ -546,7 +549,10 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">
-                {convertToRupiah(row.getValue('anggaran').amount)}
+                {convertToCurrencyString(
+                    row.getValue('anggaran').amount,
+                    row.getValue('anggaran').currency,
+                )}
             </div>
         ),
     },
@@ -567,7 +573,10 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">
-                {convertToRupiah(row.getValue('spk').amount)}
+                {convertToCurrencyString(
+                    row.getValue('spk').amount,
+                    row.getValue('spk').currency,
+                )}
             </div>
         ),
     },
@@ -884,7 +893,12 @@ export const monitoringDokumenSPKColumns = [
             </Button>
         ),
         cell: ({ row }) => (
-            <div>{convertToRupiah(row.getValue('spk').amount)}</div>
+            <div>
+                {convertToCurrencyString(
+                    row.getValue('spk').amount,
+                    row.getValue('spk').currency,
+                )}
+            </div>
         ),
     },
     // Identitas Vendor
