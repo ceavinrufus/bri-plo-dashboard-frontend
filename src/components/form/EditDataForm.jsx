@@ -46,11 +46,6 @@ export function EditDataForm({ defaultValues }) {
             tanggal_nodin_user: '',
             nodin_plo: '',
             tanggal_nodin_plo: '',
-            tanggal_permohonan_anggaran:
-                defaultValues.anggaran?.tanggal_permohonan,
-            tanggal_permohonan_hps: defaultValues.hps?.tanggal_permohonan,
-            tanggal_terima_anggaran: defaultValues.anggaran?.tanggal_terima,
-            tanggal_terima_hps: defaultValues.hps?.tanggal_terima,
             anggaran_investasi: defaultValues.anggaran_investasi?.amount,
             anggaran_eksploitasi: defaultValues.anggaran_eksploitasi?.amount,
             anggaran_currency: defaultValues.anggaran_investasi?.currency,
@@ -91,10 +86,6 @@ export function EditDataForm({ defaultValues }) {
             form.resetField('anggaran_investasi')
             form.resetField('anggaran_eksploitasi')
             form.resetField('hps')
-            form.resetField('tanggal_permohonan_anggaran')
-            form.resetField('tanggal_permohonan_hps')
-            form.resetField('tanggal_terima_anggaran')
-            form.resetField('tanggal_terima_hps')
             form.resetField('tkdn_percentage')
         } else {
             form.resetField('nodin_plo')
@@ -134,7 +125,7 @@ export function EditDataForm({ defaultValues }) {
                 ),
                 hps: JSON.parse(transformedData.hps),
                 spk_investasi: JSON.parse(transformedData.spk_investasi),
-                spk: JSON.parse(transformedData.spk),
+                spk_eksploitasi: JSON.parse(transformedData.spk_eksploitasi),
             })
         } catch (error) {
             toast({
@@ -258,24 +249,6 @@ export function EditDataForm({ defaultValues }) {
                                 )}`}
                             />
                         )}
-                        {form.watch('departemen') === 'bcp' && (
-                            <>
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_permohonan_anggaran"
-                                    label="Tanggal Permohonan Anggaran"
-                                    placeholder="Tanggal Permohonan Anggaran"
-                                />
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_terima_anggaran"
-                                    label="Tanggal Terima Anggaran"
-                                    placeholder="Tanggal Terima Anggaran"
-                                />
-                            </>
-                        )}
                         {/* Anggaran Investasi */}
                         <div className="grid grid-cols-4 items-center gap-1">
                             <FormLabel className="shad-input-label">
@@ -348,24 +321,6 @@ export function EditDataForm({ defaultValues }) {
                                 placeholder="Rate to IDR"
                             />
                         </div>
-                        {form.watch('departemen') === 'bcp' && (
-                            <>
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_permohonan_hps"
-                                    label="Tanggal Permohonan HPS"
-                                    placeholder="Tanggal Permohonan HPS"
-                                />
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_terima_hps"
-                                    label="Tanggal Terima HPS"
-                                    placeholder="Tanggal Terima HPS"
-                                />
-                            </>
-                        )}
                         {isProgressAbove(
                             form.watch('metode'),
                             form.watch('proses_pengadaan'),

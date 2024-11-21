@@ -57,22 +57,16 @@ const GET_PENGADAANS = gql`
                 amount
                 currency
                 rate
-                tanggal_permohonan
-                tanggal_terima
             }
             anggaran_eksploitasi {
                 amount
                 currency
                 rate
-                tanggal_permohonan
-                tanggal_terima
             }
             hps {
                 amount
                 currency
                 rate
-                tanggal_permohonan
-                tanggal_terima
             }
             tkdn_percentage
             catatan
@@ -143,13 +137,6 @@ const ProsesPengadaanTable = () => {
                     anggaran_eksploitasi:
                         i === 0 ? item.anggaran_eksploitasi?.amount : '',
                     hps: i === 0 ? item.hps?.amount : '',
-                    tanggal_permohonan_anggaran:
-                        i === 0 ? item.anggaran?.tanggal_permohonan : '',
-                    tanggal_permohonan_hps:
-                        i === 0 ? item.hps?.tanggal_permohonan : '',
-                    tanggal_terima_anggaran:
-                        i === 0 ? item.anggaran?.tanggal_terima : '',
-                    tanggal_terima_hps: i === 0 ? item.hps?.tanggal_terima : '',
                     tkdn_percentage: i === 0 ? item.tkdn_percentage : '',
                     catatan: i === 0 ? item.catatan : '',
                     pic_name: i === 0 ? item.pic.name : '',

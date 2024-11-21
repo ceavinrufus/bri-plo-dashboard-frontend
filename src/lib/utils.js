@@ -74,8 +74,6 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                   rate: parseFloat(data.anggaran_rate),
                   amount: parseFloat(data.anggaran_investasi),
                   currency: data.anggaran_currency,
-                  tanggal_permohonan: data.tanggal_permohonan_anggaran,
-                  tanggal_terima: data.tanggal_terima_anggaran,
               })
             : null,
         anggaran_eksploitasi: data.anggaran_eksploitasi
@@ -83,8 +81,6 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                   rate: parseFloat(data.anggaran_rate),
                   amount: parseFloat(data.anggaran_eksploitasi),
                   currency: data.anggaran_currency,
-                  tanggal_permohonan: data.tanggal_permohonan_anggaran,
-                  tanggal_terima: data.tanggal_terima_anggaran,
               })
             : null,
         hps: data.hps
@@ -92,8 +88,6 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                   rate: parseFloat(data.hps_rate),
                   amount: parseFloat(data.hps),
                   currency: data.hps_currency,
-                  tanggal_permohonan: data.tanggal_permohonan_hps,
-                  tanggal_terima: data.tanggal_terima_hps,
               })
             : null,
         tkdn_percentage: data.tkdn_percentage

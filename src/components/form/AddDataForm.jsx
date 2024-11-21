@@ -79,10 +79,6 @@ export function AddDataForm() {
             form.resetField('anggaran_investasi')
             form.resetField('anggaran_eksploitasi')
             form.resetField('hps')
-            form.resetField('tanggal_permohonan_anggaran')
-            form.resetField('tanggal_permohonan_hps')
-            form.resetField('tanggal_terima_anggaran')
-            form.resetField('tanggal_terima_hps')
             form.resetField('tkdn_percentage')
         } else {
             form.resetField('nodin_plo')
@@ -248,24 +244,6 @@ export function AddDataForm() {
                                 )}`}
                             />
                         )}
-                        {form.watch('departemen') === 'bcp' && (
-                            <>
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_permohonan_anggaran"
-                                    label="Tanggal Permohonan Anggaran"
-                                    placeholder="Tanggal Permohonan Anggaran"
-                                />
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_terima_anggaran"
-                                    label="Tanggal Terima Anggaran"
-                                    placeholder="Tanggal Terima Anggaran"
-                                />
-                            </>
-                        )}
                         {/* Anggaran Investasi */}
                         <div className="grid grid-cols-4 items-center gap-1">
                             <FormLabel className="shad-input-label">
@@ -338,24 +316,6 @@ export function AddDataForm() {
                                 placeholder="Rate to IDR"
                             />
                         </div>
-                        {form.watch('departemen') === 'bcp' && (
-                            <>
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_permohonan_hps"
-                                    label="Tanggal Permohonan HPS"
-                                    placeholder="Tanggal Permohonan HPS"
-                                />
-                                <CustomFormField
-                                    fieldType={FormFieldType.DATE_PICKER}
-                                    control={form.control}
-                                    name="tanggal_terima_hps"
-                                    label="Tanggal Terima HPS"
-                                    placeholder="Tanggal Terima HPS"
-                                />
-                            </>
-                        )}
                         {isProgressAbove(
                             form.watch('metode'),
                             form.watch('proses_pengadaan'),
