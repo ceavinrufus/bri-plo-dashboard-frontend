@@ -176,7 +176,7 @@ const RenderInput = ({ field, props }) => {
                                 variant="outline"
                                 role="combobox"
                                 className={cn(
-                                    'flex rounded-md border border-dark-500 bg-dark-400 col-span-3 justify-between px-3',
+                                    'w-full flex rounded-md border border-dark-500 bg-dark-400 col-span-3 justify-between px-3',
                                     !field.value && 'text-muted-foreground',
                                 )}>
                                 <p className="overflow-hidden font-normal">

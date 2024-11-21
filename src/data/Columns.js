@@ -587,8 +587,8 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('hps').amount,
-                    row.getValue('hps').currency,
+                    row.getValue('hps')?.amount,
+                    row.getValue('hps')?.currency,
                 )}
             </div>
         ),
@@ -611,9 +611,10 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('anggaran_investasi').amount +
-                        row.getValue('anggaran_eksploitasi').amount,
-                    row.getValue('anggaran_investasi').currency,
+                    row.getValue('anggaran_investasi')?.amount +
+                        row.getValue('anggaran_eksploitasi')?.amount,
+                    row.getValue('anggaran_investasi')?.currency ||
+                        row.getValue('anggaran_eksploitasi')?.currency,
                 )}
             </div>
         ),
@@ -635,10 +636,11 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">
-                {convertToCurrencyString(
-                    row.getValue('anggaran_investasi').amount,
-                    row.getValue('anggaran_investasi').currency,
-                )}
+                {row.getValue('anggaran_investasi') &&
+                    convertToCurrencyString(
+                        row.getValue('anggaran_investasi')?.amount,
+                        row.getValue('anggaran_investasi')?.currency,
+                    )}
             </div>
         ),
     },
@@ -660,8 +662,8 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('anggaran_eksploitasi').amount,
-                    row.getValue('anggaran_eksploitasi').currency,
+                    row.getValue('anggaran_eksploitasi')?.amount,
+                    row.getValue('anggaran_eksploitasi')?.currency,
                 )}
             </div>
         ),
@@ -684,9 +686,10 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('spk_investasi').amount +
-                        row.getValue('spk_eksploitasi').amount,
-                    row.getValue('spk_investasi').currency,
+                    row.getValue('spk_investasi')?.amount +
+                        row.getValue('spk_eksploitasi')?.amount,
+                    row.getValue('spk_investasi')?.currency ||
+                        row.getValue('spk_eksploitasi')?.currency,
                 )}
             </div>
         ),
@@ -709,8 +712,8 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('spk_investasi').amount,
-                    row.getValue('spk_investasi').currency,
+                    row.getValue('spk_investasi')?.amount,
+                    row.getValue('spk_investasi')?.currency,
                 )}
             </div>
         ),
@@ -733,8 +736,8 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('spk_eksploitasi').amount,
-                    row.getValue('spk_eksploitasi').currency,
+                    row.getValue('spk_eksploitasi')?.amount,
+                    row.getValue('spk_eksploitasi')?.currency,
                 )}
             </div>
         ),

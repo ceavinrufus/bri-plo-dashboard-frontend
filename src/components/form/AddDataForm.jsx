@@ -21,6 +21,7 @@ import { PengadaanContext } from '../context/PengadaanContext'
 import { useAuth } from '@/hooks/auth'
 import divisiData from '@/data/Divisi'
 import { ProjectContext } from '../context/ProjectContext'
+import currencies from '@/data/Currency'
 
 export function AddDataForm() {
     const { addPengadaan } = useContext(PengadaanContext)
@@ -258,19 +259,17 @@ export function AddDataForm() {
                                 placeholder="Nilai Anggaran Investasi"
                             />
                             <CustomFormField
-                                fieldType={FormFieldType.SELECT}
+                                fieldType={FormFieldType.COMBOBOX}
                                 control={form.control}
                                 isLabelInline={false}
                                 name="anggaran_currency"
-                                label="Currency"
                                 placeholder={
                                     form.watch('anggaran_currency') ||
                                     'Select Currency'
-                                }>
-                                <SelectItem value="IDR">IDR</SelectItem>
-                                <SelectItem value="USD">USD</SelectItem>
-                                <SelectItem value="EUR">EUR</SelectItem>
-                            </CustomFormField>
+                                }
+                                options={currencies}
+                                label="Currency"
+                            />
                             <CustomFormField
                                 fieldType={FormFieldType.NUMERIC}
                                 control={form.control}
@@ -294,19 +293,17 @@ export function AddDataForm() {
                                 placeholder="Nilai Anggaran Eksploitasi"
                             />
                             <CustomFormField
-                                fieldType={FormFieldType.SELECT}
+                                fieldType={FormFieldType.COMBOBOX}
                                 control={form.control}
                                 isLabelInline={false}
                                 name="anggaran_currency"
-                                label="Currency"
                                 placeholder={
                                     form.watch('anggaran_currency') ||
                                     'Select Currency'
-                                }>
-                                <SelectItem value="IDR">IDR</SelectItem>
-                                <SelectItem value="USD">USD</SelectItem>
-                                <SelectItem value="EUR">EUR</SelectItem>
-                            </CustomFormField>
+                                }
+                                options={currencies}
+                                label="Currency"
+                            />
                             <CustomFormField
                                 fieldType={FormFieldType.NUMERIC}
                                 control={form.control}
@@ -334,16 +331,17 @@ export function AddDataForm() {
                                     placeholder="Nilai HPS"
                                 />
                                 <CustomFormField
-                                    fieldType={FormFieldType.SELECT}
+                                    fieldType={FormFieldType.COMBOBOX}
                                     control={form.control}
                                     isLabelInline={false}
                                     name="hps_currency"
+                                    placeholder={
+                                        form.watch('hps_currency') ||
+                                        'Select Currency'
+                                    }
+                                    options={currencies}
                                     label="Currency"
-                                    placeholder="Select Currency">
-                                    <SelectItem value="IDR">IDR</SelectItem>
-                                    <SelectItem value="USD">USD</SelectItem>
-                                    <SelectItem value="EUR">EUR</SelectItem>
-                                </CustomFormField>
+                                />
                                 <CustomFormField
                                     fieldType={FormFieldType.NUMERIC}
                                     control={form.control}
@@ -388,19 +386,17 @@ export function AddDataForm() {
                                 placeholder="Nilai SPK Investasi"
                             />
                             <CustomFormField
-                                fieldType={FormFieldType.SELECT}
+                                fieldType={FormFieldType.COMBOBOX}
                                 control={form.control}
                                 isLabelInline={false}
                                 name="spk_currency"
-                                label="Currency"
                                 placeholder={
                                     form.watch('spk_currency') ||
                                     'Select Currency'
-                                }>
-                                <SelectItem value="IDR">IDR</SelectItem>
-                                <SelectItem value="USD">USD</SelectItem>
-                                <SelectItem value="EUR">EUR</SelectItem>
-                            </CustomFormField>
+                                }
+                                options={currencies}
+                                label="Currency"
+                            />
                             <CustomFormField
                                 fieldType={FormFieldType.NUMERIC}
                                 control={form.control}
@@ -424,19 +420,17 @@ export function AddDataForm() {
                                 placeholder="Nilai SPK Eksploitasi"
                             />
                             <CustomFormField
-                                fieldType={FormFieldType.SELECT}
+                                fieldType={FormFieldType.COMBOBOX}
                                 control={form.control}
                                 isLabelInline={false}
                                 name="spk_currency"
-                                label="Currency"
                                 placeholder={
                                     form.watch('spk_currency') ||
                                     'Select Currency'
-                                }>
-                                <SelectItem value="IDR">IDR</SelectItem>
-                                <SelectItem value="USD">USD</SelectItem>
-                                <SelectItem value="EUR">EUR</SelectItem>
-                            </CustomFormField>
+                                }
+                                options={currencies}
+                                label="Currency"
+                            />
                             <CustomFormField
                                 fieldType={FormFieldType.NUMERIC}
                                 control={form.control}
