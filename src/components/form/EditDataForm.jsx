@@ -51,15 +51,17 @@ export function EditDataForm({ defaultValues }) {
             tanggal_permohonan_hps: defaultValues.hps?.tanggal_permohonan,
             tanggal_terima_anggaran: defaultValues.anggaran?.tanggal_terima,
             tanggal_terima_hps: defaultValues.hps?.tanggal_terima,
-            anggaran: defaultValues.anggaran?.amount,
-            anggaran_currency: defaultValues.anggaran?.currency,
-            anggaran_rate: defaultValues.anggaran?.rate,
+            anggaran_investasi: defaultValues.anggaran_investasi?.amount,
+            anggaran_eksploitasi: defaultValues.anggaran_eksploitasi?.amount,
+            anggaran_currency: defaultValues.anggaran_investasi?.currency,
+            anggaran_rate: defaultValues.anggaran_investasi?.rate,
             hps: defaultValues.hps?.amount,
             hps_currency: defaultValues.hps?.currency,
             hps_rate: defaultValues.hps?.rate,
-            nilai_spk: defaultValues.spk?.amount,
-            spk_currency: defaultValues.spk?.currency,
-            spk_rate: defaultValues.spk?.rate,
+            nilai_spk_investasi: defaultValues.spk_investasi?.amount,
+            nilai_spk_eksploitasi: defaultValues.spk_eksploitasi?.amount,
+            spk_currency: defaultValues.spk_investasi?.currency,
+            spk_rate: defaultValues.spk_investasi?.rate,
             catatan: defaultValues.catatan || '',
             nomor_spk: defaultValues.nomor_spk || '',
             proses_pengadaan: defaultValues.proses_pengadaan || '',
@@ -84,8 +86,10 @@ export function EditDataForm({ defaultValues }) {
             form.resetField('tanggal_spk')
             form.resetField('tanggal_acuan')
             form.resetField('pelaksana_pekerjaan')
-            form.resetField('nilai_spk')
-            form.resetField('anggaran')
+            form.resetField('nilai_spk_investasi')
+            form.resetField('nilai_spk_eksploitasi')
+            form.resetField('anggaran_investasi')
+            form.resetField('anggaran_eksploitasi')
             form.resetField('hps')
             form.resetField('tanggal_permohonan_anggaran')
             form.resetField('tanggal_permohonan_hps')
@@ -122,8 +126,14 @@ export function EditDataForm({ defaultValues }) {
             })
             updatePengadaan(defaultValues.id, {
                 ...transformedData,
-                anggaran: JSON.parse(transformedData.anggaran),
+                anggaran_investasi: JSON.parse(
+                    transformedData.anggaran_investasi,
+                ),
+                anggaran_eksploitasi: JSON.parse(
+                    transformedData.anggaran_eksploitasi,
+                ),
                 hps: JSON.parse(transformedData.hps),
+                spk_investasi: JSON.parse(transformedData.spk_investasi),
                 spk: JSON.parse(transformedData.spk),
             })
         } catch (error) {
@@ -266,17 +276,18 @@ export function EditDataForm({ defaultValues }) {
                                 />
                             </>
                         )}
+                        {/* Anggaran Investasi */}
                         <div className="grid grid-cols-4 items-center gap-1">
                             <FormLabel className="shad-input-label">
-                                Anggaran
+                                Anggaran Investasi
                             </FormLabel>
                             <CustomFormField
                                 fieldType={FormFieldType.NUMERIC}
                                 control={form.control}
                                 isLabelInline={false}
-                                name="anggaran"
-                                label="Anggaran"
-                                placeholder="Nilai Anggaran"
+                                name="anggaran_investasi"
+                                label="Nilai"
+                                placeholder="Nilai Anggaran Investasi"
                             />
                             <CustomFormField
                                 fieldType={FormFieldType.SELECT}
@@ -284,7 +295,46 @@ export function EditDataForm({ defaultValues }) {
                                 isLabelInline={false}
                                 name="anggaran_currency"
                                 label="Currency"
-                                placeholder="Select Currency">
+                                placeholder={
+                                    form.watch('anggaran_currency') ||
+                                    'Select Currency'
+                                }>
+                                <SelectItem value="IDR">IDR</SelectItem>
+                                <SelectItem value="USD">USD</SelectItem>
+                                <SelectItem value="EUR">EUR</SelectItem>
+                            </CustomFormField>
+                            <CustomFormField
+                                fieldType={FormFieldType.NUMERIC}
+                                control={form.control}
+                                isLabelInline={false}
+                                name="anggaran_rate"
+                                label="Rate to IDR"
+                                placeholder="Rate to IDR"
+                            />
+                        </div>
+                        {/* Anggaran Eksploitasi */}
+                        <div className="grid grid-cols-4 items-center gap-1">
+                            <FormLabel className="shad-input-label">
+                                Anggaran Eksploitasi
+                            </FormLabel>
+                            <CustomFormField
+                                fieldType={FormFieldType.NUMERIC}
+                                control={form.control}
+                                isLabelInline={false}
+                                name="anggaran_eksploitasi"
+                                label="Nilai"
+                                placeholder="Nilai Anggaran Eksploitasi"
+                            />
+                            <CustomFormField
+                                fieldType={FormFieldType.SELECT}
+                                control={form.control}
+                                isLabelInline={false}
+                                name="anggaran_currency"
+                                label="Currency"
+                                placeholder={
+                                    form.watch('anggaran_currency') ||
+                                    'Select Currency'
+                                }>
                                 <SelectItem value="IDR">IDR</SelectItem>
                                 <SelectItem value="USD">USD</SelectItem>
                                 <SelectItem value="EUR">EUR</SelectItem>
@@ -374,17 +424,18 @@ export function EditDataForm({ defaultValues }) {
                             label="Pelaksana Pekerjaan"
                             placeholder="Pelaksana Pekerjaan"
                         />
+                        {/* SPK Investasi */}
                         <div className="grid grid-cols-4 items-center gap-1">
                             <FormLabel className="shad-input-label">
-                                SPK
+                                SPK Investasi
                             </FormLabel>
                             <CustomFormField
                                 fieldType={FormFieldType.NUMERIC}
                                 control={form.control}
                                 isLabelInline={false}
-                                name="nilai_spk"
-                                label="Nilai SPK"
-                                placeholder="Nilai SPK"
+                                name="nilai_spk_investasi"
+                                label="Nilai"
+                                placeholder="Nilai SPK Investasi"
                             />
                             <CustomFormField
                                 fieldType={FormFieldType.SELECT}
@@ -392,7 +443,46 @@ export function EditDataForm({ defaultValues }) {
                                 isLabelInline={false}
                                 name="spk_currency"
                                 label="Currency"
-                                placeholder="Select Currency">
+                                placeholder={
+                                    form.watch('spk_currency') ||
+                                    'Select Currency'
+                                }>
+                                <SelectItem value="IDR">IDR</SelectItem>
+                                <SelectItem value="USD">USD</SelectItem>
+                                <SelectItem value="EUR">EUR</SelectItem>
+                            </CustomFormField>
+                            <CustomFormField
+                                fieldType={FormFieldType.NUMERIC}
+                                control={form.control}
+                                isLabelInline={false}
+                                name="spk_rate"
+                                label="Rate to IDR"
+                                placeholder="Rate to IDR"
+                            />
+                        </div>
+                        {/* SPK Eksploitasi */}
+                        <div className="grid grid-cols-4 items-center gap-1">
+                            <FormLabel className="shad-input-label">
+                                SPK Eksploitasi
+                            </FormLabel>
+                            <CustomFormField
+                                fieldType={FormFieldType.NUMERIC}
+                                control={form.control}
+                                isLabelInline={false}
+                                name="nilai_spk_eksploitasi"
+                                label="Nilai"
+                                placeholder="Nilai SPK Eksploitasi"
+                            />
+                            <CustomFormField
+                                fieldType={FormFieldType.SELECT}
+                                control={form.control}
+                                isLabelInline={false}
+                                name="spk_currency"
+                                label="Currency"
+                                placeholder={
+                                    form.watch('spk_currency') ||
+                                    'Select Currency'
+                                }>
                                 <SelectItem value="IDR">IDR</SelectItem>
                                 <SelectItem value="USD">USD</SelectItem>
                                 <SelectItem value="EUR">EUR</SelectItem>

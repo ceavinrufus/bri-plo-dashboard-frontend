@@ -28,7 +28,14 @@ export const ProgressPengadaanFormValidation = z.object({
     tanggal_acuan: z.union([z.string(), z.date()]).nullable().optional(),
     nomor_spk: z.string().nullable().optional(),
     tanggal_spk: z.union([z.string(), z.date()]).nullable().optional(),
-    nilai_spk: z.union([z.string(), z.number()]).nullable().optional(),
+    nilai_spk_investasi: z
+        .union([z.string(), z.number()])
+        .nullable()
+        .optional(),
+    nilai_spk_eksploitasi: z
+        .union([z.string(), z.number()])
+        .nullable()
+        .optional(),
     spk_currency: z.string().nullable().optional(),
     spk_rate: z.union([z.string(), z.number()]).nullable().optional(),
     pelaksana_pekerjaan: z.string().nullable().optional(),
@@ -45,7 +52,11 @@ export const ProgressPengadaanFormValidation = z.object({
         .nullable()
         .optional(),
     tanggal_terima_hps: z.union([z.string(), z.date()]).nullable().optional(),
-    anggaran: z.union([z.string(), z.number()]).nullable().optional(),
+    anggaran_investasi: z.union([z.string(), z.number()]).nullable().optional(),
+    anggaran_eksploitasi: z
+        .union([z.string(), z.number()])
+        .nullable()
+        .optional(),
     anggaran_currency: z.string().nullable().optional(),
     anggaran_rate: z.union([z.string(), z.number()]).nullable().optional(),
     hps: z.union([z.string(), z.number()]).nullable().optional(),

@@ -43,12 +43,24 @@ const GET_PENGADAANS = gql`
             tanggal_spk
             tanggal_acuan
             pelaksana_pekerjaan
-            spk {
+            spk_investasi {
                 amount
                 currency
                 rate
             }
-            anggaran {
+            spk_eksploitasi {
+                amount
+                currency
+                rate
+            }
+            anggaran_investasi {
+                amount
+                currency
+                rate
+                tanggal_permohonan
+                tanggal_terima
+            }
+            anggaran_eksploitasi {
                 amount
                 currency
                 rate
@@ -122,8 +134,14 @@ const ProsesPengadaanTable = () => {
                     tanggal_acuan: i === 0 ? item.tanggal_acuan : '',
                     pelaksana_pekerjaan:
                         i === 0 ? item.pelaksana_pekerjaan : '',
-                    nilai_spk: i === 0 ? item.spk.amount : '',
-                    anggaran: i === 0 ? item.anggaran?.amount : '',
+                    nilai_spk_investasi:
+                        i === 0 ? item.spk_investasi.amount : '',
+                    nilai_spk_eksploitasi:
+                        i === 0 ? item.spk_eksploitasi.amount : '',
+                    anggaran_investasi:
+                        i === 0 ? item.anggaran_investasi?.amount : '',
+                    anggaran_eksploitasi:
+                        i === 0 ? item.anggaran_eksploitasi?.amount : '',
                     hps: i === 0 ? item.hps?.amount : '',
                     tanggal_permohonan_anggaran:
                         i === 0 ? item.anggaran?.tanggal_permohonan : '',
@@ -187,9 +205,6 @@ const ProsesPengadaanTable = () => {
                                 nodin_plo: false,
                                 tkdn_percentage: false,
                                 pdn_percentage: false,
-                                hps: false,
-                                anggaran: false,
-                                nilai_spk: false,
                             }}
                             onDataFilter={setFilteredData}
                         />
@@ -217,9 +232,6 @@ const ProsesPengadaanTable = () => {
                                 nodin_plo: false,
                                 tkdn_percentage: false,
                                 pdn_percentage: false,
-                                hps: false,
-                                anggaran: false,
-                                nilai_spk: false,
                             }}
                             onDataFilter={setFilteredData}
                         />

@@ -55,17 +55,33 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
         ...data,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
         tanggal_acuan: formatDateYMD(data.tanggal_acuan),
-        spk: data.nilai_spk
+        spk_investasi: data.nilai_spk_investasi
             ? JSON.stringify({
                   rate: parseFloat(data.spk_rate),
-                  amount: parseFloat(data.nilai_spk),
+                  amount: parseFloat(data.nilai_spk_investasi),
                   currency: data.spk_currency,
               })
             : null,
-        anggaran: data.anggaran
+        spk_eksploitasi: data.nilai_spk_eksploitasi
+            ? JSON.stringify({
+                  rate: parseFloat(data.spk_rate),
+                  amount: parseFloat(data.nilai_spk_eksploitasi),
+                  currency: data.spk_currency,
+              })
+            : null,
+        anggaran_investasi: data.anggaran_investasi
             ? JSON.stringify({
                   rate: parseFloat(data.anggaran_rate),
-                  amount: parseFloat(data.anggaran),
+                  amount: parseFloat(data.anggaran_investasi),
+                  currency: data.anggaran_currency,
+                  tanggal_permohonan: data.tanggal_permohonan_anggaran,
+                  tanggal_terima: data.tanggal_terima_anggaran,
+              })
+            : null,
+        anggaran_eksploitasi: data.anggaran_eksploitasi
+            ? JSON.stringify({
+                  rate: parseFloat(data.anggaran_rate),
+                  amount: parseFloat(data.anggaran_eksploitasi),
                   currency: data.anggaran_currency,
                   tanggal_permohonan: data.tanggal_permohonan_anggaran,
                   tanggal_terima: data.tanggal_terima_anggaran,
@@ -183,14 +199,33 @@ export const calculateMetrics = data => {
         (sum, item) => sum + item.hps?.amount * item.hps?.rate || 0,
         0,
     )
-    const totalSPK = data.reduce(
-        (sum, item) => sum + item.spk?.amount * item.spk?.rate || 0,
+    const totalSPKInvestasi = data.reduce(
+        (sum, item) =>
+            sum + item.spk_investasi?.amount * item.spk_investasi?.rate || 0,
         0,
     )
-    const totalAnggaran = data.reduce(
-        (sum, item) => sum + item.anggaran?.amount * item.anggaran?.rate || 0,
+    const totalSPKEksploitasi = data.reduce(
+        (sum, item) =>
+            sum + item.spk_eksploitasi?.amount * item.spk_eksploitasi?.rate ||
+            0,
         0,
     )
+    const totalSPK = totalSPKInvestasi + totalSPKEksploitasi
+    const totalAnggaranInvestasi = data.reduce(
+        (sum, item) =>
+            sum +
+                item.anggaran_investasi?.amount *
+                    item.anggaran_investasi?.rate || 0,
+        0,
+    )
+    const totalAnggaranEskploitasi = data.reduce(
+        (sum, item) =>
+            sum +
+                item.anggaran_eksploitasi?.amount *
+                    item.anggaran_eksploitasi?.rate || 0,
+        0,
+    )
+    const totalAnggaran = totalAnggaranInvestasi + totalAnggaranEskploitasi
     const totalTKDN = data.reduce(
         (sum, item) => sum + (item.tkdn_percentage || 0),
         0,

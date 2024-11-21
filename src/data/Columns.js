@@ -611,8 +611,57 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('anggaran').amount,
-                    row.getValue('anggaran').currency,
+                    row.getValue('anggaran_investasi').amount +
+                        row.getValue('anggaran_eksploitasi').amount,
+                    row.getValue('anggaran_investasi').currency,
+                )}
+            </div>
+        ),
+    },
+    // Anggaran Investasi
+    {
+        accessorKey: 'anggaran_investasi',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Anggaran Investasi
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {convertToCurrencyString(
+                    row.getValue('anggaran_investasi').amount,
+                    row.getValue('anggaran_investasi').currency,
+                )}
+            </div>
+        ),
+    },
+    // Anggaran Eksploitasi
+    {
+        accessorKey: 'anggaran_eksploitasi',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Anggaran Eksploitasi
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {convertToCurrencyString(
+                    row.getValue('anggaran_eksploitasi').amount,
+                    row.getValue('anggaran_eksploitasi').currency,
                 )}
             </div>
         ),
@@ -635,8 +684,57 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => (
             <div className="">
                 {convertToCurrencyString(
-                    row.getValue('spk').amount,
-                    row.getValue('spk').currency,
+                    row.getValue('spk_investasi').amount +
+                        row.getValue('spk_eksploitasi').amount,
+                    row.getValue('spk_investasi').currency,
+                )}
+            </div>
+        ),
+    },
+    // Nilai SPK Investasi
+    {
+        accessorKey: 'spk_investasi',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Nilai SPK Investasi
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {convertToCurrencyString(
+                    row.getValue('spk_investasi').amount,
+                    row.getValue('spk_investasi').currency,
+                )}
+            </div>
+        ),
+    },
+    // Nilai SPK Eksploitasi
+    {
+        accessorKey: 'spk_eksploitasi',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Nilai SPK Eksploitasi
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {convertToCurrencyString(
+                    row.getValue('spk_eksploitasi').amount,
+                    row.getValue('spk_eksploitasi').currency,
                 )}
             </div>
         ),
