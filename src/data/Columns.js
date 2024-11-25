@@ -21,6 +21,7 @@ import { deletePengadaanData } from '@/lib/actions'
 import { useContext } from 'react'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { toast } from '@/hooks/use-toast'
+import { ProsesPengadaanLogSheet } from '@/components/proses-pengadaan/ProsesPengadaanLogSheet'
 
 const prosesPengadaanActions =
     // Actions
@@ -76,6 +77,7 @@ const prosesPengadaanActions =
                             Delete data pengadaan
                         </DropdownMenuItem>
                         <EditDataSheet defaultValues={pengadaan} />
+                        <ProsesPengadaanLogSheet defaultValues={pengadaan} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

@@ -32,6 +32,11 @@ const GET_PENGADAANS = gql`
             metode
             is_verification_complete
             proses_pengadaan
+            pengadaan_log {
+                stage
+                tanggal
+                document
+            }
             verification_alert_at
             nodin_alert_at
             nodin_plos {
