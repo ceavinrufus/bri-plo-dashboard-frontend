@@ -30,7 +30,7 @@ const GET_PENGADAANS = gql`
                 tanggal_nodin
             }
             metode
-            is_verification_complete
+            verification_completed_at
             proses_pengadaan
             pengadaan_log {
                 stage
@@ -121,9 +121,9 @@ const ProsesPengadaanTable = () => {
                     nodin_user: nodinUser.nodin || '',
                     tanggal_nodin_user: nodinUser.tanggal_nodin || '',
                     metode: i === 0 ? item.metode : '',
-                    is_verification_complete:
+                    verification_completed_at:
                         i === 0
-                            ? item.is_verification_complete
+                            ? item.verification_completed_at
                                 ? 'YES'
                                 : 'NO'
                             : '',

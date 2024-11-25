@@ -92,6 +92,12 @@ const PengadaanForm = ({ form, onSubmit, defaultValues, children }) => {
             {isVerificationComplete && (
                 <>
                     <CustomFormField
+                        fieldType={FormFieldType.DATE_PICKER}
+                        control={form.control}
+                        name="verification_completed_at"
+                        label="Tanggal Dokumen Lengkap"
+                    />
+                    <CustomFormField
                         fieldType={FormFieldType.TEXTAREA}
                         control={form.control}
                         name="catatan"

@@ -34,6 +34,7 @@ export function AddDataForm() {
         pelaksana_pekerjaan: '',
         metode: undefined,
         is_verification_complete: false,
+        verification_completed_at: '',
         nodin_plos: null,
         nodin_plo: '',
         tanggal_nodin_plo: undefined,

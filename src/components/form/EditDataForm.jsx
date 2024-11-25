@@ -55,8 +55,9 @@ export function EditDataForm({ defaultValues }) {
             nomor_spk: defaultValues.nomor_spk || '',
             proses_pengadaan: defaultValues.proses_pengadaan || '',
             pelaksana_pekerjaan: defaultValues.pelaksana_pekerjaan || '',
-            is_verification_complete:
-                defaultValues.is_verification_complete || false,
+            is_verification_complete: defaultValues.verification_completed_at
+                ? true
+                : false,
         },
     })
 

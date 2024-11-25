@@ -409,14 +409,14 @@ export const prosesPengadaanColumns = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === 'asc')
                     }>
-                    Verified?
+                    Dokumen Lengkap?
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
         cell: ({ row }) => (
             <div className="flex items-center gap-2">
-                {row.getValue('is_verification_complete') ? (
+                {row.getValue('verification_completed_at') ? (
                     <p>YES</p>
                 ) : (
                     <p>NO</p>
@@ -426,6 +426,27 @@ export const prosesPengadaanColumns = [
                         {row.getValue('catatan')}
                     </InformationTooltip>
                 )}
+            </div>
+        ),
+    },
+    // Tanggal Dokumen Lengkap
+    {
+        accessorKey: 'verification_completed_at',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Tanggal Dokumen Lengkap
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="flex items-center gap-2">
+                {row.getValue('verification_completed_at')}
             </div>
         ),
     },

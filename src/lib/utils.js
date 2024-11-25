@@ -115,7 +115,7 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
         tkdn_percentage: data.tkdn_percentage
             ? parseFloat(data.tkdn_percentage)
             : null,
-        verification_alert_at: data.is_verification_complete
+        verification_alert_at: data.verification_completed_at
             ? null
             : previousData.verification_alert_at
               ? previousData.verification_alert_at
@@ -152,7 +152,7 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                     : []
                 : []),
         ]),
-        nodin_alert_at: data.is_verification_complete
+        nodin_alert_at: data.verification_completed_at
             ? null
             : generateNodinAlert(previousData, data),
         pic_id: previousData.pic.id,

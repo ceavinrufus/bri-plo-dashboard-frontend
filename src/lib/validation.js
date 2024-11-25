@@ -21,7 +21,10 @@ export const ProgressPengadaanFormValidation = z.object({
         ])
         .nullable()
         .optional(),
-    is_verification_complete: z.boolean().nullable().optional(),
+    verification_completed_at: z
+        .union([z.string(), z.date()])
+        .nullable()
+        .optional(),
     nodin_plo: z.string().nullable().optional(),
     tanggal_nodin_plo: z.union([z.string(), z.date()]).nullable().optional(),
     proses_pengadaan: z.string().nullable().optional(),

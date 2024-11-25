@@ -109,17 +109,20 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
                                     // }
                                 >
                                     {column.id === 'is_verification_complete'
-                                        ? 'Verified?'
-                                        : column.id
-                                              .split('_')
-                                              .join(' ')
-                                              .replace(/\bspk\b/g, 'SPK')
-                                              .replace(/\bsla\b/g, 'SLA')
-                                              .replace(/\bplo\b/g, 'PLO')
-                                              .replace(/\bhps\b/g, 'HPS')
-                                              .replace(/\bpic\b/g, 'PIC')
-                                              .replace(/\btkdn\b/g, 'TKDN')
-                                              .replace(/\bpdn\b/g, 'PDN')}
+                                        ? 'Dokumen Lengkap?'
+                                        : column.id ===
+                                            'verification_completed_at'
+                                          ? 'Tanggal Dokumen Lengkap'
+                                          : column.id
+                                                .split('_')
+                                                .join(' ')
+                                                .replace(/\bspk\b/g, 'SPK')
+                                                .replace(/\bsla\b/g, 'SLA')
+                                                .replace(/\bplo\b/g, 'PLO')
+                                                .replace(/\bhps\b/g, 'HPS')
+                                                .replace(/\bpic\b/g, 'PIC')
+                                                .replace(/\btkdn\b/g, 'TKDN')
+                                                .replace(/\bpdn\b/g, 'PDN')}
                                 </DropdownMenuCheckboxItem>
                             )
                         })}
