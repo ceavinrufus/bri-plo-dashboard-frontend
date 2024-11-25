@@ -326,6 +326,42 @@ export const prosesPengadaanColumns = [
             )
         },
     },
+    // SLA Dokumen Lengkap
+    {
+        accessorKey: 'sla_dokumen_lengkap',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    SLA Dokumen Lengkap
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const diff = calculateDaysDifference(
+                row.getValue('verification_completed_at'),
+                row.getValue('tanggal_spk'),
+            )
+            const diffWithToday = calculateDaysDifference(
+                row.getValue('verification_completed_at'),
+                new Date().toISOString().split('T')[0],
+            )
+            const isOverSla = false
+
+            return (
+                <div className={`${isOverSla ? 'text-red-500' : ''}`}>
+                    {row.getValue('tanggal_spk')
+                        ? diff
+                        : `Ongoing (${diffWithToday} hari)`}{' '}
+                    {diff && row.getValue('tanggal_spk') ? 'hari' : ''}
+                </div>
+            )
+        },
+    },
     // SLA Proses Pengadaan
     {
         accessorKey: 'sla_proses_pengadaan',
