@@ -69,6 +69,28 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                   currency: data.spk_currency,
               })
             : null,
+        pengadaan_log: (() => {
+            const newMethod = data.metode
+            const oldMethod = previousData.metode
+            const newStages =
+                newMethod && progress[newMethod] ? progress[newMethod] : []
+
+            if (newMethod !== oldMethod) {
+                // Method has changed, map stages with conditional merging
+                return newStages.map(stage => {
+                    // Find the matching stage from old stages
+                    const oldStageData = previousData.pengadaan_log?.find(
+                        log => log.stage === stage,
+                    )
+                    return oldStageData
+                        ? { ...oldStageData } // Retain old data
+                        : { stage, tanggal: undefined, document: undefined } // New data
+                })
+            } else {
+                // Method has not changed, retain existing log
+                return previousData.pengadaan_log || []
+            }
+        })(),
         anggaran_investasi: data.anggaran_investasi
             ? JSON.stringify({
                   rate: parseFloat(data.anggaran_rate),
