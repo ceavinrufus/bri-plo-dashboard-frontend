@@ -144,10 +144,8 @@ const PengadaanForm = ({ form, onSubmit, defaultValues, children }) => {
                             fieldType={FormFieldType.DATE_PICKER}
                             control={form.control}
                             name="tanggal_acuan"
-                            label={`Tanggal ${form.watch('proses_pengadaan')}`}
-                            placeholder={`Tanggal ${form.watch(
-                                'proses_pengadaan',
-                            )}`}
+                            label={`Tanggal SPPH`}
+                            placeholder={`Tanggal SPPH`}
                         />
                     )}
                     {/* Anggaran Investasi */}
