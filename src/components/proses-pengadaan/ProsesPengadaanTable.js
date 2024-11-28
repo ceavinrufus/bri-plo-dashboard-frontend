@@ -29,6 +29,11 @@ const GET_PENGADAANS = gql`
                 nodin
                 tanggal_nodin
             }
+            nodin_ip_pengadaans {
+                id
+                nodin
+                tanggal_nodin
+            }
             metode
             verification_completed_at
             proses_pengadaan
@@ -191,7 +196,10 @@ const ProsesPengadaanTable = () => {
                                 nodin_users: false,
                                 nodin_plos: false,
                                 departemen: false,
+                                nodin_ip_pengaaaan: false,
+                                tanggal_nodin_ip_pengadaan: false,
                                 tanggal_acuan: false,
+                                tanggal_spph: false,
                                 proyek: user.departemen === 'bcp',
                                 tanggal_nodin_plo: false,
                                 nodin_plo: false,
@@ -210,11 +218,14 @@ const ProsesPengadaanTable = () => {
                                 nodin_plos: false,
                                 departemen: false,
                                 tanggal_acuan: false,
+                                tanggal_spph: false,
                                 tim: false,
                                 kode_user: false,
                                 proyek: user.departemen === 'bcp',
                                 nodin_user: false,
                                 tanggal_nodin_user: false,
+                                nodin_ip_pengaaaan: false,
+                                tanggal_nodin_ip_pengadaan: false,
                                 sla_usulan_user: false,
                                 sla_proses_pengadaan: false,
                                 is_verification_complete: false,

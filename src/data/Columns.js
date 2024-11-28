@@ -101,6 +101,14 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false, // Hides the column
     },
+    // Nodin PLOs
+    {
+        accessorKey: 'nodin_ip_pengadaans',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
     // Departemen
     {
         accessorKey: 'departemen',
@@ -285,6 +293,54 @@ export const prosesPengadaanColumns = [
             </div>
         ),
     },
+    // Nodin IP Pengadaan
+    {
+        accessorKey: 'nodin_ip_pengadaan',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Nodin IP Pengadaan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {row.getValue('nodin_ip_pengadaans').map(nodin_user => (
+                    <p key={nodin_user.nodin}>{nodin_user.nodin}</p>
+                ))}
+            </div>
+        ),
+    },
+    // Tanggal Nodin IP Pengadaan
+    {
+        accessorKey: 'tanggal_nodin_ip_pengadaan',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Tanggal Nodin User
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="">
+                {row.getValue('nodin_ip_pengadaans').map(nodin_ip_pengadaan => (
+                    <p key={nodin_ip_pengadaan.tanggal_nodin}>
+                        {formatDateDMY(nodin_ip_pengadaan.tanggal_nodin)}
+                    </p>
+                ))}
+            </div>
+        ),
+    },
     // SLA Usulan User
     {
         accessorKey: 'sla_usulan_user',
@@ -414,6 +470,27 @@ export const prosesPengadaanColumns = [
                 </div>
             )
         },
+    },
+    // Tanggal SPPH
+    {
+        accessorKey: 'tanggal_spph',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Tanggal SPPH
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => (
+            <div className="flex items-center gap-2">
+                {row.getValue('tanggal_acuan')}
+            </div>
+        ),
     },
     // Metode
     {
