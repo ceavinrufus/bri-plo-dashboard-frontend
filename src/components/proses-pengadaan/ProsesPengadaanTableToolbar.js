@@ -88,7 +88,7 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
                         Columns <ChevronDown className="ml-2 h-4 w-4" />
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent className="h-96 overflow-auto" align="end">
                     {table
                         .getAllColumns()
                         .filter(column => column.getCanHide())
@@ -116,6 +116,8 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
                                           : column.id
                                                 .split('_')
                                                 .join(' ')
+                                                .replace(/\bip\b/g, 'IP')
+                                                .replace(/\bspph\b/g, 'SPPH')
                                                 .replace(/\bspk\b/g, 'SPK')
                                                 .replace(/\bsla\b/g, 'SLA')
                                                 .replace(/\bplo\b/g, 'PLO')
