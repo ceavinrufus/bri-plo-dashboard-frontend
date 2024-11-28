@@ -140,13 +140,29 @@ const PengadaanForm = ({ form, onSubmit, defaultValues, children }) => {
                         form.watch('proses_pengadaan'),
                         'Izin Pengadaan',
                     ) && (
-                        <CustomFormField
-                            fieldType={FormFieldType.DATE_PICKER}
-                            control={form.control}
-                            name="tanggal_acuan"
-                            label={`Tanggal SPPH`}
-                            placeholder={`Tanggal SPPH`}
-                        />
+                        <>
+                            <CustomFormField
+                                fieldType={FormFieldType.DATE_PICKER}
+                                control={form.control}
+                                name="tanggal_acuan"
+                                label={`Tanggal SPPH`}
+                                placeholder={`Tanggal SPPH`}
+                            />
+                            <CustomFormField
+                                fieldType={FormFieldType.INPUT}
+                                control={form.control}
+                                name="nodin_ip_pengadaan"
+                                label={`Nodin IP Pengadaan`}
+                                placeholder={`Nodin IP Pengadaan`}
+                            />
+                            <CustomFormField
+                                fieldType={FormFieldType.DATE_PICKER}
+                                control={form.control}
+                                name="tanggal_nodin_ip_pengadaan"
+                                label={`Tanggal Nodin IP Pengadaan`}
+                                placeholder={`Tanggal Nodin IP Pengadaan`}
+                            />
+                        </>
                     )}
                     {/* Anggaran Investasi */}
                     <div className="grid grid-cols-4 items-center gap-1">

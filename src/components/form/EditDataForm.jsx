@@ -38,6 +38,8 @@ export function EditDataForm({ defaultValues }) {
             //         : '',
             nodin_user: '',
             tanggal_nodin_user: '',
+            nodin_ip_pengadaan: '',
+            tanggal_nodin_ip_pengadaan: '',
             nodin_plo: '',
             tanggal_nodin_plo: '',
             anggaran_investasi: defaultValues.anggaran_investasi?.amount,
@@ -69,14 +71,15 @@ export function EditDataForm({ defaultValues }) {
         )
 
         try {
+            console.log(transformedData)
             const response = await updatePengadaanData(
                 defaultValues.id,
                 transformedData,
             )
-            console.log(transformedData)
             console.log(response.data)
             transformedData.nodin_plos = response.data.nodin_plos
             transformedData.nodin_users = response.data.nodin_users
+            transformedData.nodin_ip_pengadaans = response.data.nodin_ip_pengadaans
 
             toast({
                 title: 'Success',

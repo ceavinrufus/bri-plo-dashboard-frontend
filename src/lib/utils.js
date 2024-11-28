@@ -136,6 +136,22 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                     : []
                 : []),
         ]),
+        nodin_ip_pengadaans: emptyOrNullArray([
+            ...(previousData.nodin_ip_pengadaans ? previousData.nodin_ip_pengadaans : []),
+            ...(!previousData.nodin_ip_pengadaans ||
+            previousData.nodin_ip_pengadaans.length === 0 ||
+            previousData.nodin_ip_pengadaans[previousData.nodin_ip_pengadaans.length - 1]
+                .nodin !== data.nodin_ip_pengadaan
+                ? data.nodin_ip_pengadaan
+                    ? [
+                          {
+                              nodin: data.nodin_ip_pengadaan,
+                              tanggal_nodin: data.tanggal_nodin_ip_pengadaan,
+                          },
+                      ]
+                    : []
+                : []),
+        ]),
         nodin_plos: emptyOrNullArray([
             ...(previousData.nodin_plos ? previousData.nodin_plos : []),
             ...(!previousData.nodin_plos ||
@@ -191,6 +207,8 @@ export function isProgressAbove(method, progress1, progress2) {
     // Return true if progress1 is above progress2
     return index1 > index2
 }
+
+
 
 export function getLatestDate(dates) {
     if (!Array.isArray(dates) || dates.length === 0) {
