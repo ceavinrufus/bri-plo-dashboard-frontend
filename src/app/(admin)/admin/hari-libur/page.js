@@ -3,7 +3,7 @@ import React from 'react'
 
 const HariLibur = () => {
     return (
-        <div className="mx-auto">
+        <div className="mx-auto flex justify-center items-center h-screen w-full">
             <Calendar />
         </div>
     )

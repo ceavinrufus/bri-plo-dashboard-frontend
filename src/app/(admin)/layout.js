@@ -15,7 +15,7 @@ export default function Layout({ children }) {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main>
+            <main className="min-h-screen w-full">
                 <SidebarTrigger />
                 {children}
             </main>

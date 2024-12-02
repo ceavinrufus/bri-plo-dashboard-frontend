@@ -8,25 +8,11 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-
-// Data tanggal yang diberikan
-const holidays = [
-    {
-        id: 1,
-        tanggal_mulai: '2024-11-21T00:00:00.000000Z',
-        tanggal_selesai: '2024-12-01T00:00:00.000000Z',
-        keterangan: 'Cuti bersama 1',
-    },
-    {
-        id: 2,
-        tanggal_mulai: '2024-11-20T00:00:00.000000Z',
-        tanggal_selesai: '2024-11-20T00:00:00.000000Z',
-        keterangan: 'Cuti bersama 2',
-    },
-]
+import { fetchHariLiburData } from '@/lib/actions'
 
 const Calendar = () => {
-    const [currentDate, setCurrentDate] = useState(new Date())
+    const currentDate = new Date()
+    const [holidays, setHolidays] = useState([])
     const [datesWithEvents, setDatesWithEvents] = useState([])
     const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth())
     const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear())
@@ -65,25 +51,37 @@ const Calendar = () => {
         return calendarDays
     }
 
-    // Menyaring dan mempersiapkan tanggal dengan event (cuti bersama)
     useEffect(() => {
-        const eventDates = holidays.flatMap(event => {
-            const start = new Date(event.tanggal_mulai)
-            const end = new Date(event.tanggal_selesai)
-            const dates = []
+        const fetchData = async () => {
+            try {
+                const response = await fetchHariLiburData()
+                const holidays = response.data
 
-            // Menambahkan semua tanggal antara tanggal mulai dan selesai
-            for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-                dates.push(formatDate(d))
+                // Menyaring dan mempersiapkan tanggal dengan event (cuti bersama)
+                const eventDates = holidays.flatMap(event => {
+                    const start = new Date(event.tanggal_mulai)
+                    const end = new Date(event.tanggal_selesai)
+                    const dates = []
+
+                    // Menambahkan semua tanggal antara tanggal mulai dan selesai
+                    for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
+                        dates.push(formatDate(d))
+                    }
+
+                    return dates.map(date => ({
+                        date,
+                        keterangan: event.keterangan,
+                    }))
+                })
+
+                setDatesWithEvents(eventDates)
+                console.log('Hari libur data:', holidays)
+            } catch (error) {
+                console.error('Error fetching hari libur data:', error)
+                throw error
             }
-
-            return dates.map(date => ({
-                date,
-                keterangan: event.keterangan,
-            }))
-        })
-
-        setDatesWithEvents(eventDates)
+        }
+        fetchData()
     }, [])
 
     // Mendapatkan semua tanggal yang ada di bulan yang aktif
