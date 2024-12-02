@@ -27,8 +27,28 @@ const Page = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [department, setDepartment] = useState('')
+    const [tim, setTim] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [errors, setErrors] = useState([])
+
+    const teams = {
+        bcp: [
+            { label: 'BCD', value: 'bcd' },
+            { label: 'BCR', value: 'bcr' },
+            { label: 'BCG', value: 'bcg' },
+        ],
+        igp: [
+            { label: 'PTS', value: 'pts' },
+            { label: 'PTG', value: 'ptg' },
+            { label: 'PTT', value: 'ptt' },
+            { label: 'IGM', value: 'igm' },
+        ],
+        psr: [
+            { label: 'PSG', value: 'psg' },
+            { label: 'REN', value: 'ren' },
+            { label: 'LEG', value: 'leg' },
+        ],
+    }
 
     const submitForm = async event => {
         event.preventDefault()
@@ -40,6 +60,7 @@ const Page = () => {
                 email,
                 password,
                 departemen: department,
+                tim,
                 password_confirmation: passwordConfirmation,
                 setErrors,
             })
@@ -157,6 +178,30 @@ const Page = () => {
 
                 <InputError messages={errors.department} className="mt-2" />
             </div>
+
+            {/* Tim */}
+            {department && (
+                <div className="mt-4">
+                    <Label htmlFor="tim">Tim</Label>
+
+                    <Select
+                        onValueChange={value => setTim(value)}
+                        defaultValue={tim}>
+                        <SelectTrigger className="mt-1 w-full flex rounded-md border border-dark-500 bg-dark-400 col-span-3">
+                            <SelectValue placeholder="Tim" />
+                        </SelectTrigger>
+                        <SelectContent className="">
+                            {teams[department.toLowerCase()].map(team => (
+                                <SelectItem key={team.value} value={team.value}>
+                                    {team.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+
+                    <InputError messages={errors.tim} className="mt-2" />
+                </div>
+            )}
 
             <div className="flex items-center justify-end mt-4">
                 <Link
