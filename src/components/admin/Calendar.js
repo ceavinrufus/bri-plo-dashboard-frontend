@@ -81,13 +81,26 @@ const Calendar = () => {
     }
 
     const handleEditEvent = updatedEvent => {
-        setDatesWithEvents(prevEvents =>
-            prevEvents.map(event =>
-                event.id === updatedEvent.id
-                    ? { ...event, ...updatedEvent }
-                    : event,
-            ),
-        )
+        setDatesWithEvents(prevEvents => [
+            ...prevEvents.filter(event => event.id !== updatedEvent.id),
+            ...Array.from({
+                length:
+                    1 +
+                    (new Date(updatedEvent.tanggal_selesai) -
+                        new Date(updatedEvent.tanggal_mulai)) /
+                        (1000 * 60 * 60 * 24),
+            }).map((_, i) => ({
+                ...updatedEvent,
+                date: formatDateYMD(
+                    new Date(
+                        new Date(updatedEvent.tanggal_mulai).setDate(
+                            new Date(updatedEvent.tanggal_mulai).getDate() + i,
+                        ),
+                    ),
+                ),
+                keterangan: updatedEvent.keterangan,
+            })),
+        ])
     }
 
     useEffect(() => {
