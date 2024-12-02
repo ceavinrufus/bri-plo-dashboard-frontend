@@ -191,6 +191,22 @@ const Calendar = () => {
         (_, index) => currentYear - 2 + index,
     )
 
+    const isEvent = day => {
+        const date = `${selectedYear}-${(selectedMonth + 1)
+            .toString()
+            .padStart(2, '0')}-${day.toString().padStart(2, '0')}`
+
+        return datesWithEvents.some(event => event.date === date)
+    }
+
+    const isWeekend = day => {
+        const date = `${selectedYear}-${(selectedMonth + 1)
+            .toString()
+            .padStart(2, '0')}-${day.toString().padStart(2, '0')}`
+
+        const dayOfWeek = new Date(date).getDay() // 0 = Sunday, 6 = Saturday
+        return dayOfWeek == 0 || dayOfWeek == 6
+    }
     return (
         <div className="w-full max-w-4xl mx-auto p-4 flex space-x-4">
             {/* Kalender */}
@@ -279,19 +295,11 @@ const Calendar = () => {
                             {day && (
                                 <div
                                     className={`relative rounded-full p-2 ${
-                                        datesWithEvents.some(
-                                            event =>
-                                                event.date ===
-                                                `${selectedYear}-${(
-                                                    selectedMonth + 1
-                                                )
-                                                    .toString()
-                                                    .padStart(2, '0')}-${day
-                                                    .toString()
-                                                    .padStart(2, '0')}`,
-                                        )
+                                        isEvent(day)
                                             ? 'bg-red-500 text-white'
-                                            : ''
+                                            : isWeekend(day)
+                                              ? 'bg-gray-200'
+                                              : ''
                                     }`}>
                                     {day}
                                     {hoveredDate === day && (
