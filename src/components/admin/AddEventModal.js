@@ -12,6 +12,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { postHariLiburData } from '@/lib/actions'
+import { toast } from '@/hooks/use-toast'
 
 const AddEventModal = ({ onAddEvent }) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -31,8 +32,23 @@ const AddEventModal = ({ onAddEvent }) => {
             tanggal_selesai: endDate,
         }
 
-        const response = await postHariLiburData(newEvent)
-        onAddEvent(newEvent)
+        try {
+            const response = await postHariLiburData(newEvent)
+            toast({
+                title: 'Success',
+                description: 'Data has been submitted successfully!',
+                status: 'success',
+            })
+            onAddEvent(response.data)
+        } catch (error) {
+            toast({
+                title: 'Error',
+                description:
+                    error.response?.data?.message ||
+                    'An error occurred while submitting data.',
+                status: 'error',
+            })
+        }
         setIsOpen(false)
         setEventName('')
         setStartDate('')
