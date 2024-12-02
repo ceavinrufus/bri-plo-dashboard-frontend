@@ -8,8 +8,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-import { fetchHariLiburData } from '@/lib/actions'
+import { deleteHariLiburData, fetchHariLiburData } from '@/lib/actions'
 import AddEventModal from './AddEventModal'
+import EditEventModal from './EditEventModal'
+import { toast } from '@/hooks/use-toast'
+import { Button } from '../ui/button'
+import { X } from 'lucide-react'
+import { formatDateWithWords, formatDateYMD } from '@/lib/utils'
 
 const Calendar = () => {
     const currentDate = new Date()
@@ -23,11 +28,6 @@ const Calendar = () => {
             .padStart(2, '0')}`,
     )
     const [hoveredDate, setHoveredDate] = useState(null)
-
-    // Fungsi untuk mengubah format tanggal menjadi hanya hari dan bulan/tahun
-    const formatDate = dateString => {
-        return new Date(dateString).toISOString().split('T')[0] // Format YYYY-MM-DD
-    }
 
     // Fungsi untuk menghasilkan kalender
     const generateCalendar = () => {
@@ -61,7 +61,8 @@ const Calendar = () => {
                         new Date(newEvent.tanggal_mulai)) /
                         (1000 * 60 * 60 * 24),
             }).map((_, i) => ({
-                date: formatDate(
+                ...newEvent,
+                date: formatDateYMD(
                     new Date(
                         new Date(newEvent.tanggal_mulai).setDate(
                             new Date(newEvent.tanggal_mulai).getDate() + i,
@@ -71,6 +72,22 @@ const Calendar = () => {
                 keterangan: newEvent.keterangan,
             })),
         ])
+    }
+
+    const handleRemoveEvent = eventId => {
+        setDatesWithEvents(prevEvents =>
+            prevEvents.filter(event => event.id !== eventId),
+        )
+    }
+
+    const handleEditEvent = updatedEvent => {
+        setDatesWithEvents(prevEvents =>
+            prevEvents.map(event =>
+                event.id === updatedEvent.id
+                    ? { ...event, ...updatedEvent }
+                    : event,
+            ),
+        )
     }
 
     useEffect(() => {
@@ -87,16 +104,11 @@ const Calendar = () => {
 
                     // Menambahkan semua tanggal antara tanggal mulai dan selesai
                     for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-                        dates.push(formatDate(d))
-                        dates.push(formatDate(d))
-                        dates.push(formatDate(d))
-                        dates.push(formatDate(d))
-                        dates.push(formatDate(d))
-                        dates.push(formatDate(d))
-                        dates.push(formatDate(d))
+                        dates.push(formatDateYMD(d))
                     }
 
                     return dates.map(date => ({
+                        ...event,
                         date,
                         keterangan: event.keterangan,
                     }))
@@ -305,8 +317,33 @@ const Calendar = () => {
                                             (event, index) => (
                                                 <li
                                                     key={index}
-                                                    className="bg-gray-100 p-2 my-2 rounded-md">
-                                                    <p>{event.keterangan}</p>
+                                                    className="bg-gray-100 p-2 my-2 rounded-md flex justify-between">
+                                                    <div>
+                                                        <p>
+                                                            {event.keterangan}
+                                                        </p>
+                                                        <p className="text-gray-500 text-sm">
+                                                            {event.tanggal_mulai ===
+                                                            event.tanggal_selesai
+                                                                ? formatDateWithWords(
+                                                                      event.tanggal_mulai,
+                                                                  )
+                                                                : `${formatDateWithWords(
+                                                                      event.tanggal_mulai,
+                                                                  )} - ${formatDateWithWords(
+                                                                      event.tanggal_selesai,
+                                                                  )}`}
+                                                        </p>
+                                                    </div>
+                                                    <Toolbar
+                                                        data={event}
+                                                        handleRemoveEvent={
+                                                            handleRemoveEvent
+                                                        }
+                                                        handleEditEvent={
+                                                            handleEditEvent
+                                                        }
+                                                    />
                                                 </li>
                                             ),
                                         )
@@ -320,6 +357,41 @@ const Calendar = () => {
                 )}
                 <AddEventModal onAddEvent={handleAddEvent} />
             </div>
+        </div>
+    )
+}
+
+const Toolbar = ({ data, handleRemoveEvent, handleEditEvent }) => {
+    const onDelete = async () => {
+        try {
+            await deleteHariLiburData(data.id)
+            console.log(data)
+            toast({
+                title: 'Success',
+                description: 'Data has been deleted successfully!',
+                status: 'success',
+            })
+            handleRemoveEvent(data.id)
+        } catch (error) {
+            toast({
+                title: 'Error',
+                description:
+                    error.response?.data?.message ||
+                    'An error occurred while deleting data.',
+                status: 'error',
+            })
+        }
+    }
+
+    return (
+        <div className="flex items-center gap-2">
+            <EditEventModal data={data} handleEditEvent={handleEditEvent} />
+            <Button
+                className="py-1 px-2 m-0"
+                variant="ghost"
+                onClick={onDelete}>
+                <X className="h-4 w-4" />
+            </Button>
         </div>
     )
 }

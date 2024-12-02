@@ -25,6 +25,16 @@ export const formatDateDMY = dateString => {
     return `${day}-${month}-${year}`
 }
 
+export const formatDateWithWords = dateString => {
+    if (!dateString) return null
+
+    const date = new Date(dateString)
+    const day = String(date.getDate()).padStart(2, '0')
+    const month = date.toLocaleString('default', { month: 'long' })
+    const year = String(date.getFullYear())
+    return `${day} ${month} ${year}`
+}
+
 // Modified generateNodinAlert function
 const generateNodinAlert = (defaultValues, data) => {
     // Jika nodin_plos belum ada, return null
@@ -137,11 +147,14 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
                 : []),
         ]),
         nodin_ip_pengadaans: emptyOrNullArray([
-            ...(previousData.nodin_ip_pengadaans ? previousData.nodin_ip_pengadaans : []),
+            ...(previousData.nodin_ip_pengadaans
+                ? previousData.nodin_ip_pengadaans
+                : []),
             ...(!previousData.nodin_ip_pengadaans ||
             previousData.nodin_ip_pengadaans.length === 0 ||
-            previousData.nodin_ip_pengadaans[previousData.nodin_ip_pengadaans.length - 1]
-                .nodin !== data.nodin_ip_pengadaan
+            previousData.nodin_ip_pengadaans[
+                previousData.nodin_ip_pengadaans.length - 1
+            ].nodin !== data.nodin_ip_pengadaan
                 ? data.nodin_ip_pengadaan
                     ? [
                           {
@@ -207,8 +220,6 @@ export function isProgressAbove(method, progress1, progress2) {
     // Return true if progress1 is above progress2
     return index1 > index2
 }
-
-
 
 export function getLatestDate(dates) {
     if (!Array.isArray(dates) || dates.length === 0) {
