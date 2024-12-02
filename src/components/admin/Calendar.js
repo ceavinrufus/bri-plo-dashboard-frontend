@@ -9,10 +9,10 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { fetchHariLiburData } from '@/lib/actions'
+import AddEventModal from './AddEventModal'
 
 const Calendar = () => {
     const currentDate = new Date()
-    const [holidays, setHolidays] = useState([])
     const [datesWithEvents, setDatesWithEvents] = useState([])
     const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth())
     const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear())
@@ -51,6 +51,28 @@ const Calendar = () => {
         return calendarDays
     }
 
+    const handleAddEvent = newEvent => {
+        setDatesWithEvents(prevEvents => [
+            ...prevEvents,
+            ...Array.from({
+                length:
+                    1 +
+                    (new Date(newEvent.tanggal_selesai) -
+                        new Date(newEvent.tanggal_mulai)) /
+                        (1000 * 60 * 60 * 24),
+            }).map((_, i) => ({
+                date: formatDate(
+                    new Date(
+                        new Date(newEvent.tanggal_mulai).setDate(
+                            new Date(newEvent.tanggal_mulai).getDate() + i,
+                        ),
+                    ),
+                ),
+                keterangan: newEvent.keterangan,
+            })),
+        ])
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -65,6 +87,12 @@ const Calendar = () => {
 
                     // Menambahkan semua tanggal antara tanggal mulai dan selesai
                     for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
+                        dates.push(formatDate(d))
+                        dates.push(formatDate(d))
+                        dates.push(formatDate(d))
+                        dates.push(formatDate(d))
+                        dates.push(formatDate(d))
+                        dates.push(formatDate(d))
                         dates.push(formatDate(d))
                     }
 
@@ -141,7 +169,7 @@ const Calendar = () => {
     return (
         <div className="w-full max-w-4xl mx-auto p-4 flex space-x-4">
             {/* Kalender */}
-            <div className="w-2/3">
+            <div className="flex-1 flex flex-col">
                 {/* Dropdown untuk memilih bulan dan tahun */}
                 <div className="flex justify-between items-center mb-4">
                     <button
@@ -203,7 +231,7 @@ const Calendar = () => {
                 </div>
 
                 {/* Kalender */}
-                <div className="grid grid-cols-7 gap-2">
+                <div className="grid grid-cols-7 gap-2 flex-grow overflow-hidden">
                     {/* Header nama hari */}
                     <div className="text-center font-bold">Sun</div>
                     <div className="text-center font-bold">Mon</div>
@@ -217,7 +245,9 @@ const Calendar = () => {
                     {calendarDays.map((day, index) => (
                         <div
                             key={index}
-                            className={`text-center py-2 ${day ? 'cursor-pointer' : 'text-transparent'}`}
+                            className={`text-center py-2 ${
+                                day ? 'cursor-pointer' : 'text-transparent'
+                            }`}
                             onMouseEnter={() => day && setHoveredDate(day)}
                             onMouseLeave={() => setHoveredDate(null)}
                             onClick={() => day && handleDateClick(day)}>
@@ -227,7 +257,11 @@ const Calendar = () => {
                                         datesWithEvents.some(
                                             event =>
                                                 event.date ===
-                                                `${selectedYear}-${(selectedMonth + 1).toString().padStart(2, '0')}-${day
+                                                `${selectedYear}-${(
+                                                    selectedMonth + 1
+                                                )
+                                                    .toString()
+                                                    .padStart(2, '0')}-${day
                                                     .toString()
                                                     .padStart(2, '0')}`,
                                         )
@@ -238,7 +272,14 @@ const Calendar = () => {
                                     {hoveredDate === day && (
                                         <div className="absolute top-0 right-0 bg-black text-white text-xs p-1 rounded-md">
                                             {datesWithEvents.includes(
-                                                `${selectedYear}-${(selectedMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
+                                                `${selectedYear}-${(
+                                                    selectedMonth + 1
+                                                )
+                                                    .toString()
+                                                    .padStart(
+                                                        2,
+                                                        '0',
+                                                    )}-${day.toString().padStart(2, '0')}`,
                                             ) && 'Event: Cuti bersama'}
                                         </div>
                                     )}
@@ -250,27 +291,34 @@ const Calendar = () => {
             </div>
 
             {/* Sidebar untuk menampilkan event */}
-            <div className="w-1/3 border-l pl-4">
+            <div className="flex-1 border-l pl-4">
                 {selectedDate && (
-                    <div>
+                    <>
                         <h2 className="text-lg font-semibold">
                             Event on {selectedDate}
                         </h2>
-                        <ul className="mt-2">
-                            {eventsForSelectedDate.length > 0 ? (
-                                eventsForSelectedDate.map((event, index) => (
-                                    <li
-                                        key={index}
-                                        className="bg-gray-100 p-2 my-2 rounded-md">
-                                        <p>{event.keterangan}</p>
-                                    </li>
-                                ))
-                            ) : (
-                                <p>No events</p>
-                            )}
-                        </ul>
-                    </div>
+                        <div className="flex-1 h-[400px] overflow-y-auto">
+                            <div>
+                                <ul className="mt-2">
+                                    {eventsForSelectedDate.length > 0 ? (
+                                        eventsForSelectedDate.map(
+                                            (event, index) => (
+                                                <li
+                                                    key={index}
+                                                    className="bg-gray-100 p-2 my-2 rounded-md">
+                                                    <p>{event.keterangan}</p>
+                                                </li>
+                                            ),
+                                        )
+                                    ) : (
+                                        <p>No events</p>
+                                    )}
+                                </ul>
+                            </div>
+                        </div>
+                    </>
                 )}
+                <AddEventModal onAddEvent={handleAddEvent} />
             </div>
         </div>
     )
