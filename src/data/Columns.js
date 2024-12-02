@@ -9,11 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-    calculateDaysDifference,
-    calculateWorkingDaysDifference,
-    convertToCurrencyString,
-} from '@/utils'
+import { calculateDaysDifference, convertToCurrencyString } from '@/utils'
 import { EditDataSheet } from '@/components/proses-pengadaan/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY, getLatestDate } from '@/lib/utils'
@@ -22,6 +18,7 @@ import { useContext } from 'react'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { toast } from '@/hooks/use-toast'
 import { ProsesPengadaanLogSheet } from '@/components/proses-pengadaan/ProsesPengadaanLogSheet'
+import { HariLiburContext } from '@/components/context/HariLiburContext'
 
 const prosesPengadaanActions =
     // Actions
@@ -357,14 +354,16 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => {
+            const { calculateWorkingDays } = useContext(HariLiburContext)
+
             const tanggalNodinUser = row
                 .getValue('nodin_users')
                 .map(nodin_user => nodin_user.tanggal_nodin)
-            const diff = calculateDaysDifference(
+            const diff = calculateWorkingDays(
                 getLatestDate(tanggalNodinUser),
                 row.getValue('tanggal_spk'),
             )
-            const diffWithToday = calculateDaysDifference(
+            const diffWithToday = calculateWorkingDays(
                 getLatestDate(tanggalNodinUser),
                 new Date().toISOString().split('T')[0],
             )
@@ -398,11 +397,13 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => {
-            const diff = calculateDaysDifference(
+            const { calculateWorkingDays } = useContext(HariLiburContext)
+
+            const diff = calculateWorkingDays(
                 row.getValue('verification_completed_at'),
                 row.getValue('tanggal_spk'),
             )
-            const diffWithToday = calculateDaysDifference(
+            const diffWithToday = calculateWorkingDays(
                 row.getValue('verification_completed_at'),
                 new Date().toISOString().split('T')[0],
             )
@@ -434,6 +435,8 @@ export const prosesPengadaanColumns = [
             )
         },
         cell: ({ row }) => {
+            const { calculateWorkingDays } = useContext(HariLiburContext)
+
             const metode = row.getValue('metode')
             const slaDays = {
                 'Penunjukkan Langsung': 9,
@@ -445,12 +448,12 @@ export const prosesPengadaanColumns = [
                 .getValue('nodin_users')
                 .map(nodin_user => nodin_user.tanggal_nodin)
 
-            const diff = calculateWorkingDaysDifference(
+            const diff = calculateWorkingDays(
                 row.getValue('tanggal_acuan') ||
                     getLatestDate(tanggalNodinUser),
                 row.getValue('tanggal_spk'),
             )
-            const diffWithToday = calculateWorkingDaysDifference(
+            const diffWithToday = calculateWorkingDays(
                 row.getValue('tanggal_acuan') ||
                     getLatestDate(tanggalNodinUser),
                 new Date().toISOString().split('T')[0],
@@ -488,7 +491,7 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="flex items-center gap-2">
-                {row.getValue('tanggal_acuan')}
+                {formatDateDMY(row.getValue('tanggal_acuan'))}
             </div>
         ),
     },
@@ -559,7 +562,7 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="flex items-center gap-2">
-                {row.getValue('verification_completed_at')}
+                {formatDateDMY(row.getValue('verification_completed_at'))}
             </div>
         ),
     },
