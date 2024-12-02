@@ -19,6 +19,8 @@ import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { toast } from '@/hooks/use-toast'
 import { ProsesPengadaanLogSheet } from '@/components/proses-pengadaan/ProsesPengadaanLogSheet'
 import { HariLiburContext } from '@/components/context/HariLiburContext'
+import { useAuth } from '@/hooks/auth'
+import { canEditThisData } from '@/utils/roleChecker'
 
 const prosesPengadaanActions =
     // Actions
@@ -28,7 +30,8 @@ const prosesPengadaanActions =
         cell: ({ row }) => {
             const pengadaan = row.original
             const { removePengadaan } = useContext(PengadaanContext)
-
+            const { user } = useAuth({ middleware: 'auth' })
+            console.log(user)
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -48,33 +51,42 @@ const prosesPengadaanActions =
                             }>
                             Salin nomor SPK
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                            className="cursor-pointer"
-                            onClick={async () => {
-                                try {
-                                    await deletePengadaanData(pengadaan.id)
+                        {canEditThisData(user, pengadaan) && (
+                            <>
+                                <DropdownMenuItem
+                                    className="cursor-pointer"
+                                    onClick={async () => {
+                                        try {
+                                            await deletePengadaanData(
+                                                pengadaan.id,
+                                            )
 
-                                    toast({
-                                        title: 'Success',
-                                        description:
-                                            'Data has been deleted successfully!',
-                                        status: 'success',
-                                    })
-                                    removePengadaan(pengadaan.id)
-                                } catch (error) {
-                                    toast({
-                                        title: 'Error',
-                                        description:
-                                            error.response?.data?.message ||
-                                            'An error occurred while deleting data.',
-                                        status: 'error',
-                                    })
-                                }
-                            }}>
-                            Delete data pengadaan
-                        </DropdownMenuItem>
-                        <EditDataSheet defaultValues={pengadaan} />
-                        <ProsesPengadaanLogSheet defaultValues={pengadaan} />
+                                            toast({
+                                                title: 'Success',
+                                                description:
+                                                    'Data has been deleted successfully!',
+                                                status: 'success',
+                                            })
+                                            removePengadaan(pengadaan.id)
+                                        } catch (error) {
+                                            toast({
+                                                title: 'Error',
+                                                description:
+                                                    error.response?.data
+                                                        ?.message ||
+                                                    'An error occurred while deleting data.',
+                                                status: 'error',
+                                            })
+                                        }
+                                    }}>
+                                    Delete data pengadaan
+                                </DropdownMenuItem>
+                                <EditDataSheet defaultValues={pengadaan} />
+                                <ProsesPengadaanLogSheet
+                                    defaultValues={pengadaan}
+                                />
+                            </>
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
