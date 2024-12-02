@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { differenceInBusinessDays } from 'date-fns'
+import { differenceInBusinessDays, isWeekend } from 'date-fns'
 import { fetchHariLiburData } from '@/lib/actions'
 
 // Create the context
@@ -61,8 +61,7 @@ export const HariLiburProvider = ({ children }) => {
                     date.setDate(date.getDate() + 1)
                 ) {
                     // Check if the current date is a weekend (Saturday or Sunday)
-                    const dayOfWeek = date.getDay() // 0 = Sunday, 6 = Saturday
-                    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                    if (isWeekend(date)) {
                         totalHolidays++ // Count only weekdays
                     }
                 }

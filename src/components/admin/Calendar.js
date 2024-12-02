@@ -14,6 +14,7 @@ import EditEventModal from './EditEventModal'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '../ui/button'
 import { X } from 'lucide-react'
+import { isWeekend as isDateWeekend } from 'date-fns'
 import { formatDateWithWords, formatDateYMD } from '@/lib/utils'
 
 const Calendar = () => {
@@ -204,8 +205,7 @@ const Calendar = () => {
             .toString()
             .padStart(2, '0')}-${day.toString().padStart(2, '0')}`
 
-        const dayOfWeek = new Date(date).getDay() // 0 = Sunday, 6 = Saturday
-        return dayOfWeek == 0 || dayOfWeek == 6
+        return isDateWeekend(new Date(date))
     }
     return (
         <div className="w-full max-w-4xl mx-auto p-4 flex space-x-4">
