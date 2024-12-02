@@ -16,7 +16,7 @@ import { calculateMetrics } from '@/lib/utils'
 import { AddDataSheet } from './AddDataSheet'
 
 const GET_PENGADAANS = gql`
-    query GetPengadaans($departemen: String!) {
+    query GetPengadaans($departemen: String) {
         pengadaans(departemen: $departemen) {
             id
             tim
@@ -88,15 +88,15 @@ const GET_PENGADAANS = gql`
     }
 `
 
-const ProsesPengadaanTable = () => {
+const ProsesPengadaanTable = ({ departemen }) => {
     const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
 
     if (!user) return null
 
-    const { loading, error, data } = useQuery(GET_PENGADAANS, {
-        variables: { departemen: user.departemen },
+    const { loading, error } = useQuery(GET_PENGADAANS, {
+        variables: departemen ? { departemen } : {},
         client,
         onCompleted: data => setPengadaanData(data.pengadaans),
     })
@@ -168,7 +168,9 @@ const ProsesPengadaanTable = () => {
         <div>
             <div className="flex flex-col md:flex-row">
                 <h1 className="mb-4 md:mb-0">
-                    Pengadaan Data for {user.departemen.toUpperCase()}
+                    {departemen
+                        ? `Pengadaan Data for ${departemen.toUpperCase()}`
+                        : 'All pengadaan data'}
                 </h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     {/* Stats */}
