@@ -319,8 +319,10 @@ export const prosesPengadaanColumns = [
         },
         cell: ({ row }) => (
             <div className="">
-                {row.getValue('nodin_ip_pengadaans').map(nodin_user => (
-                    <p key={nodin_user.nodin}>{nodin_user.nodin}</p>
+                {row.getValue('nodin_ip_pengadaans').map(nodin_ip_pengadaan => (
+                    <p key={nodin_ip_pengadaan.nodin}>
+                        {nodin_ip_pengadaan.nodin}
+                    </p>
                 ))}
             </div>
         ),

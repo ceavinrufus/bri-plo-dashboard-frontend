@@ -17,7 +17,7 @@ import { AddDataSheet } from './AddDataSheet'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String) {
-        pengadaans(departemen: $departemen) {
+        pengadaans(departemen: $departemen, limit: 100) {
             id
             tim
             departemen
@@ -162,7 +162,7 @@ const ProsesPengadaanTable = ({ departemen }) => {
                 tanggal_nodin_ip_pengadaan:
                     tanggalNodinIpPengadaanCombined.join(nodinDelimiter) || '',
                 metode: item.metode,
-                verification_completed_at: item.verification_completed_at || '',
+                tanggal_dokumen_lengkap: item.verification_completed_at || '',
                 catatan: item.catatan,
                 proses_pengadaan: item.proses_pengadaan,
                 nodin_plo: nodinPloCombined.join(nodinDelimiter) || '',
@@ -172,19 +172,19 @@ const ProsesPengadaanTable = ({ departemen }) => {
                 tanggal_spk: item.tanggal_spk,
                 tanggal_spph: item.tanggal_acuan,
                 pelaksana_pekerjaan: item.pelaksana_pekerjaan,
-                currency_spk_investasi: `${item.spk_investasi.currency} `,
+                currency_spk_investasi: `${item.spk_investasi.currency}`,
                 nilai_spk_investasi: `${item.spk_investasi.amount}`,
                 rate_spk_investasi: `${item.spk_investasi.rate}`,
-                currency_spk_eksploitasi: `${item.spk_eksploitasi.currency} `,
+                currency_spk_eksploitasi: `${item.spk_eksploitasi.currency}`,
                 nilai_spk_eksploitasi: `${item.spk_eksploitasi.amount}`,
                 rate_spk_eksploitasi: `${item.spk_eksploitasi.rate}`,
-                currency_anggaran_investasi: `${item.anggaran_investasi.currency} `,
+                currency_anggaran_investasi: `${item.anggaran_investasi.currency}`,
                 nilai_anggaran_investasi: `${item.anggaran_investasi?.amount}`,
                 rate_anggaran_investasi: `${item.anggaran_investasi?.rate}`,
-                currency_anggaran_eksploitasi: `${item.anggaran_eksploitasi.currency} `,
+                currency_anggaran_eksploitasi: `${item.anggaran_eksploitasi.currency}`,
                 nilai_anggaran_eksploitasi: `${item.anggaran_eksploitasi?.amount}`,
                 rate_anggaran_eksploitasi: `${item.anggaran_eksploitasi?.rate}`,
-                currency_hps: `${item.hps.currency} `,
+                currency_hps: `${item.hps.currency}`,
                 nilai_hps: `${item.hps?.amount}`,
                 rate_hps: `${item.hps?.rate}`,
                 tkdn_percentage: item.tkdn_percentage,
