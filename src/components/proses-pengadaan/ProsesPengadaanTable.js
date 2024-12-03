@@ -98,7 +98,10 @@ const ProsesPengadaanTable = ({ departemen }) => {
     const { loading, error } = useQuery(GET_PENGADAANS, {
         variables: departemen ? { departemen } : {},
         client,
-        onCompleted: data => setPengadaanData(data.pengadaans),
+        onCompleted: data => {
+            console.log(data.pengadaans)
+            setPengadaanData(data.pengadaans)
+        },
     })
 
     const metrics = calculateMetrics(filteredData)
@@ -109,49 +112,61 @@ const ProsesPengadaanTable = ({ departemen }) => {
             let maxLength = Math.max(
                 item.nodin_plos.length,
                 item.nodin_users.length,
+                item.nodin_ip_pengadaans.length,
             )
             maxLength = maxLength === 0 ? 1 : maxLength
 
             for (let i = 0; i < maxLength; i++) {
                 const nodinPlo = item.nodin_plos[i] || {}
                 const nodinUser = item.nodin_users[i] || {}
+                const nodinIpPengadaan = item.nodin_ip_pengadaans[i] || {}
 
                 exportData.push({
                     id: i === 0 ? item.id : '',
                     tim: i === 0 ? item.tim : '',
                     departemen: i === 0 ? item.departemen : '',
-                    kode_user: i === 0 ? item.kode_user : '',
                     proyek: i === 0 ? item.proyek : '',
+                    kode_user: i === 0 ? item.kode_user : '',
                     perihal: i === 0 ? item.perihal : '',
                     nodin_user: nodinUser.nodin || '',
                     tanggal_nodin_user: nodinUser.tanggal_nodin || '',
+                    nodin_ip_pengadaan: nodinIpPengadaan.nodin || '',
+                    tanggal_nodin_ip_pengadaan:
+                        nodinIpPengadaan.tanggal_nodin || '',
                     metode: i === 0 ? item.metode : '',
                     verification_completed_at:
-                        i === 0
-                            ? item.verification_completed_at
-                                ? 'YES'
-                                : 'NO'
-                            : '',
+                        item.verification_completed_at || '',
+                    catatan: i === 0 ? item.catatan : '',
                     proses_pengadaan: i === 0 ? item.proses_pengadaan : '',
+                    nodin_plo: nodinPlo.nodin || '',
+                    tanggal_nodin_plo: nodinPlo.tanggal_nodin || '',
                     nomor_spk: i === 0 ? item.nomor_spk : '',
                     tanggal_spk: i === 0 ? item.tanggal_spk : '',
-                    tanggal_acuan: i === 0 ? item.tanggal_acuan : '',
+                    tanggal_spph: i === 0 ? item.tanggal_acuan : '',
                     pelaksana_pekerjaan:
                         i === 0 ? item.pelaksana_pekerjaan : '',
                     nilai_spk_investasi:
-                        i === 0 ? item.spk_investasi.amount : '',
+                        i === 0
+                            ? `${item.spk_investasi.currency} ${item.spk_investasi.amount}`
+                            : '',
                     nilai_spk_eksploitasi:
-                        i === 0 ? item.spk_eksploitasi.amount : '',
+                        i === 0
+                            ? `${item.spk_eksploitasi.currency} ${item.spk_eksploitasi.amount}`
+                            : '',
                     anggaran_investasi:
-                        i === 0 ? item.anggaran_investasi?.amount : '',
+                        i === 0
+                            ? `${item.anggaran_investasi.currency} ${item.anggaran_investasi?.amount}`
+                            : '',
                     anggaran_eksploitasi:
-                        i === 0 ? item.anggaran_eksploitasi?.amount : '',
-                    hps: i === 0 ? item.hps?.amount : '',
+                        i === 0
+                            ? `${item.anggaran_eksploitasi.currency} ${item.anggaran_eksploitasi?.amount}`
+                            : '',
+                    hps:
+                        i === 0
+                            ? `${item.hps.currency} ${item.hps?.amount}`
+                            : '',
                     tkdn_percentage: i === 0 ? item.tkdn_percentage : '',
-                    catatan: i === 0 ? item.catatan : '',
                     pic_name: i === 0 ? item.pic.name : '',
-                    nodin_plo: nodinPlo.nodin || '',
-                    tanggal_nodin_plo: nodinPlo.tanggal_nodin || '',
                 })
             }
         })

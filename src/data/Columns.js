@@ -31,7 +31,7 @@ const prosesPengadaanActions =
             const pengadaan = row.original
             const { removePengadaan } = useContext(PengadaanContext)
             const { user } = useAuth({ middleware: 'auth' })
-            console.log(user)
+
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

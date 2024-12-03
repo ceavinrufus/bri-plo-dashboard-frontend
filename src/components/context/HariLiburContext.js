@@ -14,7 +14,6 @@ export const HariLiburProvider = ({ children }) => {
         const fetchData = async () => {
             try {
                 const response = await fetchHariLiburData()
-                console.log(response.data)
                 setHariLiburData(response.data)
             } catch (error) {
                 console.error('Error fetching hari libur data:', error)
