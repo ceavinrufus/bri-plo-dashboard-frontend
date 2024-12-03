@@ -105,6 +105,7 @@ const ProsesPengadaanTable = ({ departemen }) => {
     })
 
     const metrics = calculateMetrics(filteredData)
+    const nodinDelimiter = ';'
 
     const handleExport = () => {
         const exportData = []
@@ -116,59 +117,69 @@ const ProsesPengadaanTable = ({ departemen }) => {
             )
             maxLength = maxLength === 0 ? 1 : maxLength
 
+            let nodinPloCombined = []
+            let tanggalNodinPloCombined = []
+            let nodinUserCombined = []
+            let tanggalNodinUserCombined = []
+            let nodinIpPengadaanCombined = []
+            let tanggalNodinIpPengadaanCombined = []
+
             for (let i = 0; i < maxLength; i++) {
                 const nodinPlo = item.nodin_plos[i] || {}
                 const nodinUser = item.nodin_users[i] || {}
                 const nodinIpPengadaan = item.nodin_ip_pengadaans[i] || {}
 
-                exportData.push({
-                    id: i === 0 ? item.id : '',
-                    tim: i === 0 ? item.tim : '',
-                    departemen: i === 0 ? item.departemen : '',
-                    proyek: i === 0 ? item.proyek : '',
-                    kode_user: i === 0 ? item.kode_user : '',
-                    perihal: i === 0 ? item.perihal : '',
-                    nodin_user: nodinUser.nodin || '',
-                    tanggal_nodin_user: nodinUser.tanggal_nodin || '',
-                    nodin_ip_pengadaan: nodinIpPengadaan.nodin || '',
-                    tanggal_nodin_ip_pengadaan:
-                        nodinIpPengadaan.tanggal_nodin || '',
-                    metode: i === 0 ? item.metode : '',
-                    verification_completed_at:
-                        item.verification_completed_at || '',
-                    catatan: i === 0 ? item.catatan : '',
-                    proses_pengadaan: i === 0 ? item.proses_pengadaan : '',
-                    nodin_plo: nodinPlo.nodin || '',
-                    tanggal_nodin_plo: nodinPlo.tanggal_nodin || '',
-                    nomor_spk: i === 0 ? item.nomor_spk : '',
-                    tanggal_spk: i === 0 ? item.tanggal_spk : '',
-                    tanggal_spph: i === 0 ? item.tanggal_acuan : '',
-                    pelaksana_pekerjaan:
-                        i === 0 ? item.pelaksana_pekerjaan : '',
-                    nilai_spk_investasi:
-                        i === 0
-                            ? `${item.spk_investasi.currency} ${item.spk_investasi.amount}`
-                            : '',
-                    nilai_spk_eksploitasi:
-                        i === 0
-                            ? `${item.spk_eksploitasi.currency} ${item.spk_eksploitasi.amount}`
-                            : '',
-                    anggaran_investasi:
-                        i === 0
-                            ? `${item.anggaran_investasi.currency} ${item.anggaran_investasi?.amount}`
-                            : '',
-                    anggaran_eksploitasi:
-                        i === 0
-                            ? `${item.anggaran_eksploitasi.currency} ${item.anggaran_eksploitasi?.amount}`
-                            : '',
-                    hps:
-                        i === 0
-                            ? `${item.hps.currency} ${item.hps?.amount}`
-                            : '',
-                    tkdn_percentage: i === 0 ? item.tkdn_percentage : '',
-                    pic_name: i === 0 ? item.pic.name : '',
-                })
+                if (nodinPlo.nodin) {
+                    nodinPloCombined.push(nodinPlo.nodin)
+                    tanggalNodinPloCombined.push(nodinPlo.tanggal_nodin)
+                }
+
+                if (nodinUser.nodin) {
+                    nodinUserCombined.push(nodinUser.nodin)
+                    tanggalNodinUserCombined.push(nodinUser.tanggal_nodin)
+                }
+
+                if (nodinIpPengadaan.nodin) {
+                    nodinIpPengadaanCombined.push(nodinIpPengadaan.nodin)
+                    tanggalNodinIpPengadaanCombined.push(
+                        nodinIpPengadaan.tanggal_nodin,
+                    )
+                }
             }
+
+            exportData.push({
+                id: item.id,
+                tim: item.tim,
+                departemen: item.departemen,
+                proyek: item.proyek,
+                kode_user: item.kode_user,
+                perihal: item.perihal,
+                nodin_user: nodinUserCombined.join(nodinDelimiter) || '',
+                tanggal_nodin_user:
+                    tanggalNodinUserCombined.join(nodinDelimiter) || '',
+                nodin_ip_pengadaan:
+                    nodinIpPengadaanCombined.join(nodinDelimiter) || '',
+                tanggal_nodin_ip_pengadaan:
+                    tanggalNodinIpPengadaanCombined.join(nodinDelimiter) || '',
+                metode: item.metode,
+                verification_completed_at: item.verification_completed_at || '',
+                catatan: item.catatan,
+                proses_pengadaan: item.proses_pengadaan,
+                nodin_plo: nodinPloCombined.join(nodinDelimiter) || '',
+                tanggal_nodin_plo:
+                    tanggalNodinPloCombined.join(nodinDelimiter) || '',
+                nomor_spk: item.nomor_spk,
+                tanggal_spk: item.tanggal_spk,
+                tanggal_spph: item.tanggal_acuan,
+                pelaksana_pekerjaan: item.pelaksana_pekerjaan,
+                nilai_spk_investasi: `${item.spk_investasi.currency} ${item.spk_investasi.amount}`,
+                nilai_spk_eksploitasi: `${item.spk_eksploitasi.currency} ${item.spk_eksploitasi.amount}`,
+                anggaran_investasi: `${item.anggaran_investasi.currency} ${item.anggaran_investasi?.amount}`,
+                anggaran_eksploitasi: `${item.anggaran_eksploitasi.currency} ${item.anggaran_eksploitasi?.amount}`,
+                hps: `${item.hps.currency} ${item.hps?.amount}`,
+                tkdn_percentage: item.tkdn_percentage,
+                pic_name: item.pic.name,
+            })
         })
 
         const ws = XLSX.utils.json_to_sheet(exportData)
