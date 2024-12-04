@@ -672,7 +672,7 @@ export const prosesPengadaanColumns = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="">{row.getValue('pic').name}</div>,
+        cell: ({ row }) => <div className="">{row.getValue('pic')?.name}</div>,
     },
     // Tanggal Nodin PLO
     {
