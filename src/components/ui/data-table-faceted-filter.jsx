@@ -40,7 +40,7 @@ export function DataTableFacetedFilter({
                     size="sm"
                     className={cn('h-8 border-dashed', className)}>
                     <PlusCircledIcon className="mr-2 h-4 w-4" />
-                    {title}
+                    <p className="capitalize">{title}</p>
                     {selectedValues?.size > 0 && (
                         <>
                             <Separator

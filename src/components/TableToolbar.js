@@ -8,9 +8,9 @@ import {
 import { ChevronDown } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { DataTableFacetedFilter } from '../ui/data-table-faceted-filter'
+import { DataTableFacetedFilter } from './ui/data-table-faceted-filter'
 
-const ProsesPengadaanTableToolbar = ({ table }) => {
+const TableToolbar = ({ filters, table }) => {
     const getUniqueValues = columnId => {
         const uniqueValues = new Set()
 
@@ -52,36 +52,18 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-wrap lg:mx-2 gap-2">
-                <DataTableFacetedFilter
-                    column={table.getColumn('proyek')}
-                    title="Proyek"
-                    options={getUniqueValues('proyek')}
-                />
-                <DataTableFacetedFilter
-                    className="hidden lg:flex"
-                    column={table.getColumn('tim')}
-                    title="Tim"
-                    options={getUniqueValues('tim')}
-                />
-                <DataTableFacetedFilter
-                    className="hidden lg:flex"
-                    column={table.getColumn('kode_user')}
-                    title="Kode User"
-                    options={getUniqueValues('kode_user')}
-                />
-                <DataTableFacetedFilter
-                    column={table.getColumn('metode')}
-                    title="Metode"
-                    options={getUniqueValues('metode')}
-                />
-                <DataTableFacetedFilter
-                    column={table.getColumn('proses_pengadaan')}
-                    title="Proses Pengadaan"
-                    options={getUniqueValues('proses_pengadaan')}
-                />
-            </div>
-
+            {filters && (
+                <div className="flex flex-wrap lg:mx-2 gap-2">
+                    {filters.map(filter => (
+                        <DataTableFacetedFilter
+                            key={filter}
+                            column={table.getColumn(filter)}
+                            title={filter.split('_').join(' ')}
+                            options={getUniqueValues(filter)}
+                        />
+                    ))}
+                </div>
+            )}
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="ml-auto">
@@ -134,4 +116,4 @@ const ProsesPengadaanTableToolbar = ({ table }) => {
     )
 }
 
-export default ProsesPengadaanTableToolbar
+export default TableToolbar

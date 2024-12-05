@@ -229,6 +229,13 @@ const ProsesPengadaanTable = ({ departemen }) => {
                     <div className="hidden lg:block">
                         <DataTable
                             data={pengadaanData}
+                            filters={[
+                                'proyek',
+                                'tim',
+                                'kode_user',
+                                'metode',
+                                'proses_pengadaan',
+                            ]}
                             columns={prosesPengadaanColumns}
                             defaultColumnVisibility={{
                                 nodin_users: false,
@@ -250,6 +257,13 @@ const ProsesPengadaanTable = ({ departemen }) => {
                     <div className="lg:hidden">
                         <DataTable
                             data={pengadaanData}
+                            filters={[
+                                'proyek',
+                                'tim',
+                                'kode_user',
+                                'metode',
+                                'proses_pengadaan',
+                            ]}
                             columns={prosesPengadaanColumns}
                             defaultColumnVisibility={{
                                 nodin_users: false,

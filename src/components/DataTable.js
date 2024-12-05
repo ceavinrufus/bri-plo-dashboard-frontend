@@ -21,11 +21,12 @@ import {
     TableRow,
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
-import ProsesPengadaanTableToolbar from './proses-pengadaan/ProsesPengadaanTableToolbar'
+import TableToolbar from './TableToolbar'
 
 export function DataTable({
     data,
     columns,
+    filters,
     defaultColumnVisibility,
     onDataFilter,
 }) {
@@ -68,7 +69,7 @@ export function DataTable({
 
     return (
         <div className="w-full">
-            <ProsesPengadaanTableToolbar table={table} />
+            <TableToolbar filters={filters} table={table} />
 
             <div className="rounded-md border">
                 <Table>

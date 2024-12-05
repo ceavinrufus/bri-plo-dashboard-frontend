@@ -71,6 +71,7 @@ const MonitoringDokumenSPKTable = () => {
             ) : (
                 <DataTable
                     data={dokumenData}
+                    filters={['tim']}
                     columns={monitoringDokumenSPKColumns}
                     onDataFilter={setFilteredData}
                 />
