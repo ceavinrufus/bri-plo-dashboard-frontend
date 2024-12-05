@@ -24,79 +24,72 @@ import { useAuth } from '@/hooks/auth'
 import { canEditThisData } from '@/utils/roleChecker'
 import { DokumenContext } from '@/components/context/DokumenContext'
 
-const prosesPengadaanActions =
-    // Actions
-    {
-        id: 'actions',
-        enableHiding: false,
-        cell: ({ row }) => {
-            const pengadaan = row.original
-            const { removePengadaan } = useContext(PengadaanContext)
-            const { user } = useAuth({ middleware: 'auth' })
+const prosesPengadaanActions = (id = 'actions') => ({
+    id,
+    enableHiding: false,
+    cell: ({ row }) => {
+        const pengadaan = row.original
+        const { removePengadaan } = useContext(PengadaanContext)
+        const { user } = useAuth({ middleware: 'auth' })
 
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            onClick={() =>
-                                navigator.clipboard.writeText(
-                                    pengadaan.nomor_spk,
-                                )
-                            }>
-                            Salin nomor SPK
-                        </DropdownMenuItem>
-                        {canEditThisData(user, pengadaan) && (
-                            <>
-                                <DropdownMenuItem
-                                    className="cursor-pointer"
-                                    onClick={async () => {
-                                        try {
-                                            await deletePengadaanData(
-                                                pengadaan.id,
-                                            )
+        return (
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                        onClick={() =>
+                            navigator.clipboard.writeText(pengadaan.nomor_spk)
+                        }>
+                        Salin nomor SPK
+                    </DropdownMenuItem>
+                    {canEditThisData(user, pengadaan) && (
+                        <>
+                            <DropdownMenuItem
+                                className="cursor-pointer"
+                                onClick={async () => {
+                                    try {
+                                        await deletePengadaanData(pengadaan.id)
 
-                                            toast({
-                                                title: 'Success',
-                                                description:
-                                                    'Data has been deleted successfully!',
-                                                status: 'success',
-                                            })
-                                            removePengadaan(pengadaan.id)
-                                        } catch (error) {
-                                            toast({
-                                                title: 'Error',
-                                                description:
-                                                    error.response?.data
-                                                        ?.message ||
-                                                    'An error occurred while deleting data.',
-                                                status: 'error',
-                                            })
-                                        }
-                                    }}>
-                                    Delete data pengadaan
-                                </DropdownMenuItem>
-                                <EditDataSheet defaultValues={pengadaan} />
-                                <ProsesPengadaanLogSheet
-                                    defaultValues={pengadaan}
-                                />
-                            </>
-                        )}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
-        },
-    }
+                                        toast({
+                                            title: 'Success',
+                                            description:
+                                                'Data has been deleted successfully!',
+                                            status: 'success',
+                                        })
+                                        removePengadaan(pengadaan.id)
+                                    } catch (error) {
+                                        toast({
+                                            title: 'Error',
+                                            description:
+                                                error.response?.data?.message ||
+                                                'An error occurred while deleting data.',
+                                            status: 'error',
+                                        })
+                                    }
+                                }}>
+                                Delete data pengadaan
+                            </DropdownMenuItem>
+                            <EditDataSheet defaultValues={pengadaan} />
+                            <ProsesPengadaanLogSheet
+                                defaultValues={pengadaan}
+                            />
+                        </>
+                    )}
+                </DropdownMenuContent>
+            </DropdownMenu>
+        )
+    },
+})
 
-const monitoringDokumenActions = {
-    id: 'actions',
+const monitoringDokumenActions = (id = 'actions') => ({
+    id,
     enableHiding: false,
     cell: ({ row }) => {
         const dokumen = row.original
@@ -149,7 +142,7 @@ const monitoringDokumenActions = {
             </DropdownMenu>
         )
     },
-}
+})
 
 export const prosesPengadaanColumns = [
     // Nodin Users
@@ -311,7 +304,7 @@ export const prosesPengadaanColumns = [
         cell: ({ row }) => <div className="">{row.getValue('perihal')}</div>,
         enableHiding: false, // Hides the column
     },
-    prosesPengadaanActions,
+    prosesPengadaanActions('actions1'),
     // Nodin User
     {
         accessorKey: 'nodin_user',
@@ -1008,7 +1001,7 @@ export const prosesPengadaanColumns = [
         enableSorting: false,
         enableHiding: false, // Hides the column
     },
-    prosesPengadaanActions,
+    prosesPengadaanActions('actions2'),
 ]
 
 export const monitoringDokumenSPKColumns = [
@@ -1087,7 +1080,7 @@ export const monitoringDokumenSPKColumns = [
             <div>{formatDateDMY(row.getValue('tanggal_spk'))}</div>
         ),
     },
-    monitoringDokumenActions,
+    monitoringDokumenActions('actions1'),
     // Nama Vendor
     {
         accessorKey: 'nama_vendor',
@@ -1382,5 +1375,5 @@ export const monitoringDokumenSPKColumns = [
         cell: ({ row }) => <div>{row.getValue('penerima_dokumen')}</div>,
     },
     // Actions
-    monitoringDokumenActions,
+    monitoringDokumenActions('actions2'),
 ]
