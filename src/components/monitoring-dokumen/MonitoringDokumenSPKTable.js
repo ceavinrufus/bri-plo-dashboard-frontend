@@ -25,6 +25,8 @@ const GET_DOKUMENS = gql`
             nama_vendor
             spk {
                 amount
+                currency
+                rate
             }
             nomor_spk
             penerima_dokumen
