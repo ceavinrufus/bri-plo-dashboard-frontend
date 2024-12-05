@@ -12,7 +12,7 @@ const ProsesPengadaanTable = () => {
     // Fetch data when the component mounts
     useEffect(() => {
         const fetchData = async () => {
-            const result = await fetchPengadaanData()
+            const result = await fetchPengadaanData('igp')
             setData(result.data)
             setLoading(false)
         }

@@ -22,13 +22,35 @@ export const fetchProjectData = async () => {
 }
 
 // Define the function to fetch data
-export const fetchPengadaanData = async () => {
+export const fetchPengadaanData = async department => {
     try {
         // Get the backend URL from environment variables
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
         // Make the API request
-        const response = await axios.get(`${backendUrl}/api/pengadaan/igp`)
+        const response = await axios.get(
+            `${backendUrl}/api/pengadaan/${department}`,
+        )
+
+        // Return the data from the response
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error fetching data:', error)
+        throw error
+    }
+}
+
+// Define the function to fetch data
+export const getDataByNomorSPK = async nomor_spk => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.get(
+            `${backendUrl}/api/pengadaan/nomor_spk/${nomor_spk}`,
+        )
 
         // Return the data from the response
         return response.data
