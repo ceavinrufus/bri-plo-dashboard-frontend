@@ -197,6 +197,13 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
 export const transformDokumenDataForSubmit = (previousData, data) => {
     const transformedData = {
         ...data,
+        spk: data.nilai_spk
+            ? JSON.stringify({
+                  rate: parseFloat(data.spk_rate),
+                  amount: parseFloat(data.nilai_spk),
+                  currency: data.spk_currency,
+              })
+            : null,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
         pic_id: previousData.pic.id,
         pic: {

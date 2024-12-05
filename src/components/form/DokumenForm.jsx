@@ -5,6 +5,8 @@ import { useWatch } from 'react-hook-form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { teams } from '@/data/Tim'
 import { SelectItem } from '../ui/select'
+import { FormLabel } from '../ui/form'
+import currencies from '@/data/Currency'
 
 const GET_PENGADAAN_DATA = gql`
     query GetPengadaanData($nomor_spk: String!) {
@@ -15,6 +17,16 @@ const GET_PENGADAAN_DATA = gql`
             tim
             catatan
             departemen
+            spk_investasi {
+                amount
+                currency
+                rate
+            }
+            spk_eksploitasi {
+                amount
+                currency
+                rate
+            }
         }
     }
 `
@@ -40,6 +52,16 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                     form.setValue('tanggal_spk', data.pengadaan.tanggal_spk)
                     form.setValue('tim', data.pengadaan.tim)
                     form.setValue('catatan', data.pengadaan.catatan)
+                    form.setValue(
+                        'nilai_spk',
+                        data.pengadaan.spk_investasi.amount +
+                            data.pengadaan.spk_eksploitasi.amount,
+                    )
+                    form.setValue(
+                        'spk_currency',
+                        data.pengadaan.spk_investasi.currency,
+                    )
+                    form.setValue('spk_rate', data.pengadaan.spk_investasi.rate)
                     setDepartemen(data.pengadaan.departemen)
                 },
             })
@@ -115,13 +137,37 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                         </SelectItem>
                     ))}
             </CustomFormField>
-            <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={form.control}
-                name="spk"
-                label="SPK"
-                placeholder="SPK"
-            />
+            {/* SPK */}
+            <div className="grid grid-cols-4 items-center gap-1">
+                <FormLabel className="shad-input-label">SPK</FormLabel>
+                <CustomFormField
+                    fieldType={FormFieldType.NUMERIC}
+                    control={form.control}
+                    isLabelInline={false}
+                    name="nilai_spk"
+                    label="Nilai"
+                    placeholder="Nilai SPK"
+                />
+                <CustomFormField
+                    fieldType={FormFieldType.COMBOBOX}
+                    control={form.control}
+                    isLabelInline={false}
+                    name="spk_currency"
+                    placeholder={
+                        form.watch('spk_currency') || 'Select Currency'
+                    }
+                    options={currencies}
+                    label="Currency"
+                />
+                <CustomFormField
+                    fieldType={FormFieldType.NUMERIC}
+                    control={form.control}
+                    isLabelInline={false}
+                    name="spk_rate"
+                    label="Rate to IDR"
+                    placeholder="Rate to IDR"
+                />
+            </div>
             <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
