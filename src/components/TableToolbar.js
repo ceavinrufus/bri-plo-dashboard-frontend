@@ -11,18 +11,18 @@ import { Button } from '@/components/ui/button'
 import { DataTableFacetedFilter } from './ui/data-table-faceted-filter'
 
 const TableToolbar = ({ filters, table }) => {
-    const getUniqueValues = columnId => {
+    const getUniqueValues = filter => {
         const uniqueValues = new Set()
 
         table.getPreFilteredRowModel().rows.forEach(row => {
-            const value = row.getValue(columnId)
+            const value = row.getValue(filter.kolom)
             if (value) {
                 uniqueValues.add(value)
             }
         })
         return Array.from(uniqueValues).map(value => ({
             value,
-            label: value,
+            label: filter.isUppercaseValue ? value.toUpperCase() : value,
         }))
     }
 
@@ -56,9 +56,9 @@ const TableToolbar = ({ filters, table }) => {
                 <div className="flex flex-wrap lg:mx-2 gap-2">
                     {filters.map(filter => (
                         <DataTableFacetedFilter
-                            key={filter}
-                            column={table.getColumn(filter)}
-                            title={filter.split('_').join(' ')}
+                            key={filter.kolim}
+                            column={table.getColumn(filter.kolom)}
+                            title={filter.kolom.split('_').join(' ')}
                             options={getUniqueValues(filter)}
                         />
                     ))}

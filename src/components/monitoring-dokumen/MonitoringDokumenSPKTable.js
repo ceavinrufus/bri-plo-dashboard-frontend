@@ -71,7 +71,7 @@ const MonitoringDokumenSPKTable = () => {
             ) : (
                 <DataTable
                     data={dokumenData}
-                    filters={['tim']}
+                    filters={[{ kolom: 'tim', isUppercaseValue: true }]}
                     columns={monitoringDokumenSPKColumns}
                     onDataFilter={setFilteredData}
                 />

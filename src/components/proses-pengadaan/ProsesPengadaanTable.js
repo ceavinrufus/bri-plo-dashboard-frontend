@@ -230,11 +230,14 @@ const ProsesPengadaanTable = ({ departemen }) => {
                         <DataTable
                             data={pengadaanData}
                             filters={[
-                                'proyek',
-                                'tim',
-                                'kode_user',
-                                'metode',
-                                'proses_pengadaan',
+                                { kolom: 'proyek', isUppercaseValue: false },
+                                { kolom: 'tim', isUppercaseValue: true },
+                                { kolom: 'kode_user', isUppercaseValue: false },
+                                { kolom: 'metode', isUppercaseValue: false },
+                                {
+                                    kolom: 'proses_pengadaan',
+                                    isUppercaseValue: false,
+                                },
                             ]}
                             columns={prosesPengadaanColumns}
                             defaultColumnVisibility={{
@@ -258,11 +261,14 @@ const ProsesPengadaanTable = ({ departemen }) => {
                         <DataTable
                             data={pengadaanData}
                             filters={[
-                                'proyek',
-                                'tim',
-                                'kode_user',
-                                'metode',
-                                'proses_pengadaan',
+                                { kolom: 'proyek', isUppercaseValue: false },
+                                { kolom: 'tim', isUppercaseValue: true },
+                                { kolom: 'kode_user', isUppercaseValue: false },
+                                { kolom: 'metode', isUppercaseValue: false },
+                                {
+                                    kolom: 'proses_pengadaan',
+                                    isUppercaseValue: false,
+                                },
                             ]}
                             columns={prosesPengadaanColumns}
                             defaultColumnVisibility={{
