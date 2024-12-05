@@ -9,11 +9,12 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { calculateDaysDifference, convertToCurrencyString } from '@/utils'
+import { convertToCurrencyString } from '@/utils'
 import { EditDataSheet } from '@/components/proses-pengadaan/EditDataSheet'
+import { EditDataSheet as EditDokumenSheet } from '@/components/monitoring-dokumen/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY, getLatestDate } from '@/lib/utils'
-import { deletePengadaanData } from '@/lib/actions'
+import { deleteDokumenData, deletePengadaanData } from '@/lib/actions'
 import { useContext } from 'react'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
 import { toast } from '@/hooks/use-toast'
@@ -21,6 +22,7 @@ import { ProsesPengadaanLogSheet } from '@/components/proses-pengadaan/ProsesPen
 import { HariLiburContext } from '@/components/context/HariLiburContext'
 import { useAuth } from '@/hooks/auth'
 import { canEditThisData } from '@/utils/roleChecker'
+import { DokumenContext } from '@/components/context/DokumenContext'
 
 const prosesPengadaanActions =
     // Actions
@@ -92,6 +94,62 @@ const prosesPengadaanActions =
             )
         },
     }
+
+const monitoringDokumenActions = {
+    id: 'actions',
+    enableHiding: false,
+    cell: ({ row }) => {
+        const dokumen = row.original
+        const { removeDokumen } = useContext(DokumenContext)
+
+        return (
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                        onClick={() =>
+                            navigator.clipboard.writeText(dokumen.nomor_spk)
+                        }>
+                        Salin nomor SPK
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={async () => {
+                            try {
+                                await deleteDokumenData(dokumen.id)
+
+                                toast({
+                                    title: 'Success',
+                                    description:
+                                        'Data has been deleted successfully!',
+                                    status: 'success',
+                                })
+                                removeDokumen(dokumen.id)
+                            } catch (error) {
+                                toast({
+                                    title: 'Error',
+                                    description:
+                                        error.response?.data?.message ||
+                                        'An error occurred while deleting data.',
+                                    status: 'error',
+                                })
+                            }
+                        }}>
+                        Delete data dokumen
+                    </DropdownMenuItem>
+                    <EditDokumenSheet defaultValues={dokumen} />
+                </DropdownMenuContent>
+            </DropdownMenu>
+        )
+    },
+}
 
 export const prosesPengadaanColumns = [
     // Nodin Users
@@ -1029,6 +1087,7 @@ export const monitoringDokumenSPKColumns = [
             <div>{formatDateDMY(row.getValue('tanggal_spk'))}</div>
         ),
     },
+    monitoringDokumenActions,
     // Nama Vendor
     {
         accessorKey: 'nama_vendor',
@@ -1132,7 +1191,9 @@ export const monitoringDokumenSPKColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('tim')}</div>,
+        cell: ({ row }) => (
+            <div className="uppercase text-center">{row.getValue('tim')}</div>
+        ),
         filterFn: (row, id, value) => {
             return value.includes(row.getValue(id))
         },
@@ -1321,61 +1382,5 @@ export const monitoringDokumenSPKColumns = [
         cell: ({ row }) => <div>{row.getValue('penerima_dokumen')}</div>,
     },
     // Actions
-    {
-        id: 'actions',
-        enableHiding: false,
-        cell: ({ row }) => {
-            const pengadaan = row.original
-            const { removePengadaan } = useContext(PengadaanContext)
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            onClick={() =>
-                                navigator.clipboard.writeText(
-                                    pengadaan.nomor_spk,
-                                )
-                            }>
-                            Salin nomor SPK
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                            className="cursor-pointer"
-                            onClick={async () => {
-                                try {
-                                    await deletePengadaanData(pengadaan.id)
-
-                                    toast({
-                                        title: 'Success',
-                                        description:
-                                            'Data has been deleted successfully!',
-                                        status: 'success',
-                                    })
-                                    removePengadaan(pengadaan.id)
-                                } catch (error) {
-                                    toast({
-                                        title: 'Error',
-                                        description:
-                                            error.response?.data?.message ||
-                                            'An error occurred while deleting data.',
-                                        status: 'error',
-                                    })
-                                }
-                            }}>
-                            Delete data pengadaan
-                        </DropdownMenuItem>
-                        <EditDataSheet defaultValues={pengadaan} />
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
-        },
-    },
+    monitoringDokumenActions,
 ]
