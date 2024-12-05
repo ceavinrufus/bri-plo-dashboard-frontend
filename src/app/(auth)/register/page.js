@@ -15,6 +15,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
+import { teams } from '@/data/Tim'
 
 const Page = () => {
     const { register, isLoading } = useAuth({
@@ -30,25 +31,6 @@ const Page = () => {
     const [tim, setTim] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [errors, setErrors] = useState([])
-
-    const teams = {
-        bcp: [
-            { label: 'BCD', value: 'bcd' },
-            { label: 'BCR', value: 'bcr' },
-            { label: 'BCG', value: 'bcg' },
-        ],
-        igp: [
-            { label: 'PTS', value: 'pts' },
-            { label: 'PTG', value: 'ptg' },
-            { label: 'PTT', value: 'ptt' },
-            { label: 'IGM', value: 'igm' },
-        ],
-        psr: [
-            { label: 'PSG', value: 'psg' },
-            { label: 'REN', value: 'ren' },
-            { label: 'LEG', value: 'leg' },
-        ],
-    }
 
     const submitForm = async event => {
         event.preventDefault()

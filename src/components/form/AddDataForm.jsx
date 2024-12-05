@@ -28,7 +28,7 @@ export function AddDataForm() {
         nodin_ip_pengadaans: null,
         nodin_ip_pengadaan: '',
         tanggal_nodin_ip_pengadaan: undefined,
-        tim: 'ptt',
+        tim: user.tim,
         departemen: user.departemen,
         perihal: '',
         nomor_spk: '',
