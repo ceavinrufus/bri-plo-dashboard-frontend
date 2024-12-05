@@ -344,3 +344,83 @@ export const deleteHariLiburData = async hariLiburId => {
         throw error
     }
 }
+
+// Define the function to fetch dokumen data
+export const fetchDokumenData = async () => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.get(`${backendUrl}/api/dokumen`)
+
+        // Return the data from the response
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error fetching dokumen data:', error)
+        throw error
+    }
+}
+
+// Define the function to post dokumen data
+export const postDokumenData = async data => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.post(
+            `${backendUrl}/api/dokumen/store`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error posting dokumen data:', error)
+        throw error
+    }
+}
+
+// Define the function to update dokumen data
+export const updateDokumenData = async (dokumenId, data) => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.put(
+            `${backendUrl}/api/dokumen/update/${dokumenId}`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error updating dokumen data:', error)
+        throw error
+    }
+}
+
+// Define the function to delete dokumen data
+export const deleteDokumenData = async dokumenId => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request to delete the dokumen
+        const response = await axios.delete(
+            `${backendUrl}/api/dokumen/delete/${dokumenId}`,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error deleting dokumen data:', error)
+        throw error
+    }
+}

@@ -4,14 +4,7 @@ import { useEffect, useState } from 'react'
 import { useWatch } from 'react-hook-form'
 import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { teams } from '@/data/Tim'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '../ui/select'
-import { FormControl, FormItem, FormMessage } from '../ui/form'
+import { SelectItem } from '../ui/select'
 
 const GET_PENGADAAN_DATA = gql`
     query GetPengadaanData($nomor_spk: String!) {
@@ -81,13 +74,6 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                 name="nama_vendor"
                 label="Nama Vendor"
                 placeholder="Nama Vendor"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={form.control}
-                name="pic_id"
-                label="PIC ID"
-                placeholder="PIC ID"
             />
             <CustomFormField
                 fieldType={FormFieldType.INPUT}

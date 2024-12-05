@@ -194,6 +194,20 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
     return transformedData
 }
 
+export const transformDokumenDataForSubmit = (previousData, data) => {
+    const transformedData = {
+        ...data,
+        tanggal_spk: formatDateYMD(data.tanggal_spk),
+        pic_id: previousData.pic.id,
+        pic: {
+            id: previousData.pic.id,
+            name: previousData.pic.name,
+        },
+    }
+
+    return transformedData
+}
+
 const emptyOrNullArray = array => {
     if (array.length === 0) {
         return []

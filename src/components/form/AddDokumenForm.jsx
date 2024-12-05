@@ -11,20 +11,23 @@ import { DokumenFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import { DokumenContext } from '../context/DokumenContext'
-// import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/auth'
 import DokumenForm from './DokumenForm'
 
 export function AddDokumenForm() {
     const { addDokumen } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
-    // const { user } = useAuth({ middleware: 'auth' })
+    const { user } = useAuth({ middleware: 'auth' })
 
     const defaultValues = {
         perihal: '',
         nomor_spk: '',
         tanggal_spk: undefined,
         nama_vendor: '',
-        pic_id: '',
+        pic: {
+            id: user.id,
+            name: user.name,
+        },
         sla_spk_sejak_terbit: '',
         sla_spk_sejak_diambil: '',
         tanggal: undefined,
