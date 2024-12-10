@@ -116,8 +116,8 @@ const PengadaanForm = ({ form, onSubmit, defaultValues, children }) => {
                         <SelectItem value="Seleksi Langsung">
                             Seleksi Langsung
                         </SelectItem>
-                        <SelectItem value="Penunjukkan Langsung">
-                            Penunjukkan Langsung
+                        <SelectItem value="Penunjukan Langsung">
+                            Penunjukan Langsung
                         </SelectItem>
                     </CustomFormField>
                     {form.watch('metode') && (

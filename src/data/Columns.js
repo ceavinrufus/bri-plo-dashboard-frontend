@@ -504,7 +504,7 @@ export const prosesPengadaanColumns = [
 
             const metode = row.getValue('metode')
             const slaDays = {
-                'Penunjukkan Langsung': 9,
+                'Penunjukan Langsung': 9,
                 Lelang: 30,
                 'Pemilihan Langsung': 28,
                 Seleksi: 28,

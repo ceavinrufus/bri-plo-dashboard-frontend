@@ -17,7 +17,7 @@ export const ProgressPengadaanFormValidation = z.object({
             'Lelang',
             'Pemilihan Langsung',
             'Seleksi Langsung',
-            'Penunjukkan Langsung',
+            'Penunjukan Langsung',
         ])
         .nullable()
         .optional(),

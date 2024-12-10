@@ -60,7 +60,7 @@ export const progress = {
         'SPK dan/atau Perjanjian',
         'Selesai',
     ],
-    'Penunjukkan Langsung': [
+    'Penunjukan Langsung': [
         'Penyusunan & Penetapan HPS',
         'Permohonan Anggaran',
         'Izin Pengadaan',
