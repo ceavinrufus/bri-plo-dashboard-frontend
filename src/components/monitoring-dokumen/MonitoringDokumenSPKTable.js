@@ -11,34 +11,38 @@ import client from '@/lib/apolloClient'
 
 const GET_DOKUMENS = gql`
     query GetDokumens {
-        dokumens {
-            sla_spk_sejak_diambil
-            pic {
+        dokumen_spks {
+            id
+            tanggal_spk_diterima
+            tim_pemrakarsa
+            pic_pengadaan {
                 id
                 name
             }
-            id
-            identitas_pengambil
-            identitas_vendor
-            info_vendor
-            jangka_waktu
-            nama_vendor
+            nomor_spk
+            tanggal_spk
+            jenis_pekerjaan
             spk {
                 amount
                 currency
                 rate
             }
-            nomor_spk
-            penerima_dokumen
-            perihal
-            sla_spk_sejak_terbit
-            tanggal
-            tanggal_jatuh_tempo
+            jangka_waktu
+            pelaksana_pekerjaan
+            pic_pelaksana_pekerjaan
+            dokumen_pelengkap
+            info_ke_vendor
             tanggal_pengambilan
+            identitas_pengambil
             tanggal_pengembalian
+            dokumen_yang_dikembalikan
+            tkdn_percentage
             tanggal_penyerahan_dokumen
-            tanggal_spk
-            tim
+            penerima_dokumen
+            pic_legal {
+                name
+            }
+            catatan
         }
     }
 `
@@ -51,9 +55,11 @@ const MonitoringDokumenSPKTable = () => {
     if (!user) return null
 
     const { loading, error, data } = useQuery(GET_DOKUMENS, {
-        variables: { departemen: user.departemen },
         client,
-        onCompleted: data => setDokumenData(data.dokumens),
+        onCompleted: data => {
+            setDokumenData(data.dokumen_spks)
+        },
+        onError: error => console.error(error),
     })
 
     if (loading) return <div>Loading...</div>
@@ -71,9 +77,14 @@ const MonitoringDokumenSPKTable = () => {
             ) : (
                 <DataTable
                     data={dokumenData}
-                    filters={[{ kolom: 'tim', isUppercaseValue: true }]}
+                    filters={[
+                        { kolom: 'tim_pemrakarsa', isUppercaseValue: true },
+                    ]}
                     searches={[
-                        { kolom: 'perihal', placeholder: 'Search name...' },
+                        {
+                            kolom: 'jenis_pekerjaan',
+                            placeholder: 'Search jenis pekerjaan...',
+                        },
                         {
                             kolom: 'nomor_spk',
                             placeholder: 'Search nomor SPK...',
