@@ -37,6 +37,9 @@ export function EditDokumenForm({ defaultValues }) {
             tanggal_info_ke_vendor:
                 defaultValues.tanggal_info_ke_vendor || undefined,
             tanggal_pengambilan: defaultValues.tanggal_pengambilan || undefined,
+            dokumen_pelengkap: defaultValues.dokumen_pelengkap || [],
+            dokumen_yang_dikembalikan:
+                defaultValues.dokumen_yang_dikembalikan || [],
             identitas_pengambil: defaultValues.identitas_pengambil || '',
             tanggal_pengembalian:
                 defaultValues.tanggal_pengembalian || undefined,

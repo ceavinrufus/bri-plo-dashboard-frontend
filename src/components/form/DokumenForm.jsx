@@ -8,6 +8,33 @@ import { SelectItem } from '../ui/select'
 import { FormLabel } from '../ui/form'
 import currencies from '@/data/Currency'
 
+const dokumen_pelengkap_options = [
+    {
+        value: 'spk',
+        label: 'SPK',
+    },
+    {
+        value: 'add_spk',
+        label: 'Add SPK',
+    },
+    {
+        value: 'jaminan_pelaksanaan',
+        label: 'Jaminan Pelaksanaan',
+    },
+    {
+        value: 'jaminan_pemeliharaan',
+        label: 'Jaminan Pemeliharaan',
+    },
+    {
+        value: 'pakta_integritas',
+        label: 'Pakta Integritas',
+    },
+    {
+        value: 'tkdn',
+        label: 'TKDN',
+    },
+]
+
 const GET_PENGADAAN_DATA = gql`
     query GetPengadaanData($nomor_spk: String!) {
         pengadaan(nomor_spk: $nomor_spk) {
@@ -173,12 +200,12 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                 placeholder="PIC Pelaksana Pekerjaan"
             />
             <CustomFormField
-                fieldType={FormFieldType.MULTISELECT}
+                fieldType={FormFieldType.MULTI_SELECT}
                 control={form.control}
                 name="dokumen_pelengkap"
                 label="Dokumen Pelengkap"
                 placeholder="Dokumen Pelengkap"
-                options={[]}
+                options={dokumen_pelengkap_options}
             />
             <CustomFormField
                 fieldType={FormFieldType.DATE_PICKER}
@@ -206,12 +233,12 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                 label="Tanggal Pengembalian"
             />
             <CustomFormField
-                fieldType={FormFieldType.MULTISELECT}
+                fieldType={FormFieldType.MULTI_SELECT}
                 control={form.control}
                 name="dokumen_yang_dikembalikan"
                 label="Dokumen yang Dikembalikan"
                 placeholder="Dokumen yang Dikembalikan"
-                options={[]}
+                options={dokumen_pelengkap_options}
             />
             <CustomFormField
                 fieldType={FormFieldType.NUMERIC}

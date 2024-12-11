@@ -1240,12 +1240,12 @@ export const monitoringDokumenSPKColumns = [
         ),
         cell: ({ row }) => (
             <div>
-                {JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))?.name} (
-                {
-                    JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))
-                        ?.phone_number
-                }
-                )
+                {row.getValue('pic_pelaksana_pekerjaan') &&
+                    JSON.parse(row.getValue('pic_pelaksana_pekerjaan')).name +
+                        ' (' +
+                        JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))
+                            .phone_number +
+                        ')'}
             </div>
         ),
     },

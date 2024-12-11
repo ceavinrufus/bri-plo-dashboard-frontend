@@ -31,6 +31,7 @@ import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
 import { Check } from 'lucide-react'
 import { CaretSortIcon } from '@radix-ui/react-icons'
+import { MultiSelect } from './ui/multi-select'
 
 export const FormFieldType = {
     INPUT: 'input',
@@ -40,6 +41,7 @@ export const FormFieldType = {
     SELECT: 'select',
     COMBOBOX: 'combobox',
     SKELETON: 'skeleton',
+    MULTI_SELECT: 'multiSelect',
 }
 
 // interface CustomProps {
@@ -165,6 +167,19 @@ const RenderInput = ({ field, props }) => {
                             {props.children}
                         </SelectContent>
                     </Select>
+                </FormControl>
+            )
+        case FormFieldType.MULTI_SELECT:
+            return (
+                <FormControl>
+                    <MultiSelect
+                        options={props.options}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        placeholder="Select options"
+                        animation={2}
+                        maxCount={3}
+                    />
                 </FormControl>
             )
         case FormFieldType.COMBOBOX:
