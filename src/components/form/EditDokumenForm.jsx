@@ -8,7 +8,7 @@ import { Form } from '@/components/ui/form'
 import { updateDokumenData } from '@/lib/actions'
 import { useContext, useState } from 'react'
 import { DokumenContext } from '../context/DokumenContext'
-import { DokumenFormValidation } from '@/lib/validation'
+import { DokumenSPKFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
 import DokumenForm from './DokumenForm'
 import { transformDokumenDataForSubmit } from '@/lib/utils'
@@ -18,29 +18,30 @@ export function EditDokumenForm({ defaultValues }) {
     const [isProcessing, setIsProcessing] = useState(false)
 
     const form = useForm({
-        resolver: zodResolver(DokumenFormValidation),
+        resolver: zodResolver(DokumenSPKFormValidation),
         defaultValues: {
             ...defaultValues,
-            perihal: defaultValues.perihal || '',
+            jenis_pekerjaan: defaultValues.jenis_pekerjaan || '',
             nomor_spk: defaultValues.nomor_spk || '',
             tanggal_spk: defaultValues.tanggal_spk || undefined,
-            nama_vendor: defaultValues.nama_vendor || '',
-            pic: defaultValues.pic || { id: '', name: '' },
-            sla_spk_sejak_terbit: defaultValues.sla_spk_sejak_terbit || '',
-            sla_spk_sejak_diambil: defaultValues.sla_spk_sejak_diambil || '',
-            tanggal: defaultValues.tanggal || undefined,
+            pelaksana_pekerjaan: defaultValues.nama_vendor || '',
+            pic_legal: defaultValues.pic_legal || { id: '', name: '' },
+            tanggal_spk_diterima:
+                defaultValues.tanggal_spk_diterima || undefined,
             jangka_waktu: defaultValues.jangka_waktu || '',
-            tim: defaultValues.tim || '',
-            spk: defaultValues.spk || '',
+            tim_pemrakarsa: defaultValues.tim_pemrakarsa || '',
+            nilai_spk: defaultValues.spk?.amount,
+            spk_currency: defaultValues.spk?.currency,
+            spk_rate: defaultValues.spk?.rate,
             identitas_vendor: defaultValues.identitas_vendor || '',
-            info_vendor: defaultValues.info_vendor || '',
+            tanggal_info_ke_vendor:
+                defaultValues.tanggal_info_ke_vendor || undefined,
             tanggal_pengambilan: defaultValues.tanggal_pengambilan || undefined,
             identitas_pengambil: defaultValues.identitas_pengambil || '',
             tanggal_pengembalian:
                 defaultValues.tanggal_pengembalian || undefined,
-            tanggal_jatuh_tempo: defaultValues.tanggal_jatuh_tempo || undefined,
             catatan: defaultValues.catatan || '',
-            form_tkdn: defaultValues.form_tkdn || '',
+            tkdn_percentage: defaultValues.tkdn_percentage || '',
             tanggal_penyerahan_dokumen:
                 defaultValues.tanggal_penyerahan_dokumen || undefined,
             penerima_dokumen: defaultValues.penerima_dokumen || '',

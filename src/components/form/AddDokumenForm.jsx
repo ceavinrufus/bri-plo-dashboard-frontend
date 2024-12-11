@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { postDokumenData } from '@/lib/actions'
 import { formatDateYMD, transformDokumenDataForSubmit } from '@/lib/utils'
-import { DokumenFormValidation } from '@/lib/validation'
+import { DokumenSPKFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import { DokumenContext } from '../context/DokumenContext'
@@ -20,26 +20,22 @@ export function AddDokumenForm() {
     const { user } = useAuth({ middleware: 'auth' })
 
     const defaultValues = {
-        perihal: '',
+        tanggal_spk_diterima: undefined,
+        tim_pemrakarsa: '',
         nomor_spk: '',
         tanggal_spk: undefined,
-        nama_vendor: '',
-        pic: {
+        jenis_pekerjaan: '',
+        pelaksana_pekerjaan: '',
+        pic_legal: {
             id: user.id,
             name: user.name,
         },
-        sla_spk_sejak_terbit: '',
-        sla_spk_sejak_diambil: '',
-        tanggal: undefined,
         jangka_waktu: '',
-        tim: '',
-        spk: '',
         identitas_vendor: '',
-        info_vendor: '',
+        tanggal_info_ke_vendor: '',
         tanggal_pengambilan: undefined,
         identitas_pengambil: '',
         tanggal_pengembalian: undefined,
-        tanggal_jatuh_tempo: undefined,
         catatan: '',
         form_tkdn: '',
         tanggal_penyerahan_dokumen: undefined,
@@ -47,7 +43,7 @@ export function AddDokumenForm() {
     }
 
     const form = useForm({
-        resolver: zodResolver(DokumenFormValidation),
+        resolver: zodResolver(DokumenSPKFormValidation),
         defaultValues,
     })
 

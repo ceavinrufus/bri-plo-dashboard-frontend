@@ -31,7 +31,7 @@ const GET_DOKUMENS = gql`
             pelaksana_pekerjaan
             pic_pelaksana_pekerjaan
             dokumen_pelengkap
-            info_ke_vendor
+            tanggal_info_ke_vendor
             tanggal_pengambilan
             identitas_pengambil
             tanggal_pengembalian

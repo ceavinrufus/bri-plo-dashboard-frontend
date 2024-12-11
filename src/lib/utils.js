@@ -205,11 +205,18 @@ export const transformDokumenDataForSubmit = (previousData, data) => {
               })
             : null,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
-        pic_id: previousData.pic.id,
-        pic: {
-            id: previousData.pic.id,
-            name: previousData.pic.name,
+        pic_legal_id: previousData.pic_legal.id,
+        pic_legal: {
+            id: previousData.pic_legal.id,
+            name: previousData.pic_legal.name,
         },
+        pic_pengadaan_id: JSON.parse(data.pic_pengadaan).id,
+        pic_pengadaan: data.pic_pengadaan,
+        pelaksana_pekerjaan: JSON.stringify({
+            name: data.pelaksana_pekerjaan || '',
+            address: data.alamat_pelaksana_pekerjaan || '',
+            phone_number: data.no_telpon_pelaksana_pekerjaan || '',
+        }),
     }
 
     return transformedData

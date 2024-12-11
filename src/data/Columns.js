@@ -1240,10 +1240,10 @@ export const monitoringDokumenSPKColumns = [
         ),
         cell: ({ row }) => (
             <div>
-                {JSON.parse(row.getValue('pic_pelaksana_pekerjaan')).name} (
+                {JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))?.name} (
                 {
                     JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))
-                        .phone_number
+                        ?.phone_number
                 }
                 )
             </div>
@@ -1268,28 +1268,18 @@ export const monitoringDokumenSPKColumns = [
     },
     // Info Vendor
     {
-        accessorKey: 'info_ke_vendor',
+        accessorKey: 'tanggal_info_ke_vendor',
         header: ({ column }) => (
             <Button
                 variant="ghost"
                 onClick={() =>
                     column.toggleSorting(column.getIsSorted() === 'asc')
                 }>
-                Info ke Vendor
+                Tanggal Info ke Vendor
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => (
-            <ul>
-                <li className="list-disc">
-                    Via: {JSON.parse(row.getValue('info_ke_vendor')).via}
-                </li>
-                <li className="list-disc">
-                    Tanggal:{' '}
-                    {JSON.parse(row.getValue('info_ke_vendor')).tanggal}
-                </li>
-            </ul>
-        ),
+        cell: ({ row }) => <div>{row.getValue('tanggal_info_ke_vendor')}</div>,
     },
     // Tanggal Pengambilan
     {

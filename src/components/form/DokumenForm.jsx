@@ -16,7 +16,12 @@ const GET_PENGADAAN_DATA = gql`
             tanggal_spk
             tim
             catatan
+            pelaksana_pekerjaan
             departemen
+            pic {
+                id
+                name
+            }
             spk_investasi {
                 amount
                 currency
@@ -32,7 +37,6 @@ const GET_PENGADAAN_DATA = gql`
 `
 
 const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
-    const [departemen, setDepartemen] = useState('')
     const [getPengadaanData, { data, loading, error }] =
         useLazyQuery(GET_PENGADAAN_DATA)
 
@@ -46,12 +50,18 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
             getPengadaanData({
                 variables: { nomor_spk: nomorSpk },
                 onCompleted: data => {
-                    form.setValue('perihal', data.pengadaan.perihal)
+                    form.setValue('jenis_pekerjaan', data.pengadaan.perihal)
                     form.setValue('tanggal_spk', data.pengadaan.tanggal_spk)
-                    form.setValue('perihal', data.pengadaan.perihal)
                     form.setValue('tanggal_spk', data.pengadaan.tanggal_spk)
-                    form.setValue('tim', data.pengadaan.tim)
-                    form.setValue('catatan', data.pengadaan.catatan)
+                    form.setValue('tim_pemrakarsa', data.pengadaan.tim)
+                    form.setValue(
+                        'pic_pengadaan',
+                        JSON.stringify(data.pengadaan.pic),
+                    )
+                    form.setValue(
+                        'pelaksana_pekerjaan',
+                        data.pengadaan.pelaksana_pekerjaan,
+                    )
                     form.setValue(
                         'nilai_spk',
                         data.pengadaan.spk_investasi.amount +
@@ -62,7 +72,6 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                         data.pengadaan.spk_investasi.currency,
                     )
                     form.setValue('spk_rate', data.pengadaan.spk_investasi.rate)
-                    setDepartemen(data.pengadaan.departemen)
                 },
             })
         }
@@ -86,72 +95,32 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
             <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                name="perihal"
-                label="Perihal"
-                placeholder="Perihal"
+                name="jenis_pekerjaan"
+                label="Jenis Pekerjaan"
+                placeholder="Jenis Pekerjaan"
             />
             <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                name="nama_vendor"
-                label="Nama Vendor"
-                placeholder="Nama Vendor"
+                name="tim_pemrakarsa"
+                label="Tim Pemrakarsa"
+                placeholder="Tim Pemrakarsa"
             />
-            <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={form.control}
-                name="sla_spk_sejak_terbit"
-                label="SLA SPK Sejak Terbit"
-                placeholder="SLA SPK Sejak Terbit"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={form.control}
-                name="sla_spk_sejak_diambil"
-                label="SLA SPK Sejak Diambil"
-                placeholder="SLA SPK Sejak Diambil"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.DATE_PICKER}
-                control={form.control}
-                name="tanggal"
-                label="Tanggal"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={form.control}
-                name="jangka_waktu"
-                label="Jangka Waktu"
-                placeholder="Jangka Waktu"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.SELECT}
-                control={form.control}
-                name="tim"
-                placeholder={form.watch('tim').toUpperCase() || 'Tim'}
-                label="Tim">
-                {departemen &&
-                    teams[departemen.toLowerCase()].map(team => (
-                        <SelectItem key={team.value} value={team.value}>
-                            {team.label}
-                        </SelectItem>
-                    ))}
-            </CustomFormField>
             {/* SPK */}
             <div className="grid grid-cols-4 items-center gap-1">
                 <FormLabel className="shad-input-label">SPK</FormLabel>
                 <CustomFormField
                     fieldType={FormFieldType.NUMERIC}
-                    control={form.control}
                     isLabelInline={false}
+                    control={form.control}
                     name="nilai_spk"
-                    label="Nilai"
+                    label="Nilai SPK"
                     placeholder="Nilai SPK"
                 />
                 <CustomFormField
                     fieldType={FormFieldType.COMBOBOX}
-                    control={form.control}
                     isLabelInline={false}
+                    control={form.control}
                     name="spk_currency"
                     placeholder={
                         form.watch('spk_currency') || 'Select Currency'
@@ -161,8 +130,8 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                 />
                 <CustomFormField
                     fieldType={FormFieldType.NUMERIC}
-                    control={form.control}
                     isLabelInline={false}
+                    control={form.control}
                     name="spk_rate"
                     label="Rate to IDR"
                     placeholder="Rate to IDR"
@@ -171,16 +140,51 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
             <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                name="identitas_vendor"
-                label="Identitas Vendor"
-                placeholder="Identitas Vendor"
+                name="jangka_waktu"
+                label="Jangka Waktu"
+                placeholder="Jangka Waktu"
             />
             <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                name="info_vendor"
-                label="Info Vendor"
-                placeholder="Info Vendor"
+                name="pelaksana_pekerjaan"
+                label="Pelaksana Pekerjaan"
+                placeholder="Pelaksana Pekerjaan"
+            />
+            <CustomFormField
+                fieldType={FormFieldType.TEXTAREA}
+                control={form.control}
+                name="alamat_pelaksana_pekerjaan"
+                label="Alamat Pelaksana Pekerjaan"
+                placeholder="Alamat Pelaksana Pekerjaan"
+            />
+            <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={form.control}
+                name="no_telpon_pelaksana_pekerjaan"
+                label="No Telpon Pelaksana Pekerjaan"
+                placeholder="No Telpon Pelaksana Pekerjaan"
+            />
+            <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={form.control}
+                name="pic_pelaksana_pekerjaan"
+                label="PIC Pelaksana Pekerjaan"
+                placeholder="PIC Pelaksana Pekerjaan"
+            />
+            <CustomFormField
+                fieldType={FormFieldType.MULTISELECT}
+                control={form.control}
+                name="dokumen_pelengkap"
+                label="Dokumen Pelengkap"
+                placeholder="Dokumen Pelengkap"
+                options={[]}
+            />
+            <CustomFormField
+                fieldType={FormFieldType.DATE_PICKER}
+                control={form.control}
+                name="tanggal_info_ke_vendor"
+                label="Tanggal Info ke Vendor"
             />
             <CustomFormField
                 fieldType={FormFieldType.DATE_PICKER}
@@ -202,24 +206,19 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                 label="Tanggal Pengembalian"
             />
             <CustomFormField
-                fieldType={FormFieldType.DATE_PICKER}
+                fieldType={FormFieldType.MULTISELECT}
                 control={form.control}
-                name="tanggal_jatuh_tempo"
-                label="Tanggal Jatuh Tempo"
+                name="dokumen_yang_dikembalikan"
+                label="Dokumen yang Dikembalikan"
+                placeholder="Dokumen yang Dikembalikan"
+                options={[]}
             />
             <CustomFormField
-                fieldType={FormFieldType.TEXTAREA}
+                fieldType={FormFieldType.NUMERIC}
                 control={form.control}
-                name="catatan"
-                label="Catatan"
-                placeholder="Catatan"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={form.control}
-                name="form_tkdn"
-                label="Form TKDN"
-                placeholder="Form TKDN"
+                name="tkdn_percentage"
+                label="TKDN Percentage"
+                placeholder="TKDN Percentage"
             />
             <CustomFormField
                 fieldType={FormFieldType.DATE_PICKER}
@@ -233,6 +232,13 @@ const DokumenForm = ({ form, onSubmit, defaultValues, children }) => {
                 name="penerima_dokumen"
                 label="Penerima Dokumen"
                 placeholder="Penerima Dokumen"
+            />
+            <CustomFormField
+                fieldType={FormFieldType.TEXTAREA}
+                control={form.control}
+                name="catatan"
+                label="Catatan"
+                placeholder="Catatan"
             />
             {children}
         </form>
