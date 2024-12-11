@@ -239,6 +239,16 @@ const ProsesPengadaanTable = ({ departemen }) => {
                                     isUppercaseValue: false,
                                 },
                             ]}
+                            searches={[
+                                {
+                                    kolom: 'perihal',
+                                    placeholder: 'Search name...',
+                                },
+                                {
+                                    kolom: 'nomor_spk',
+                                    placeholder: 'Search nomor SPK...',
+                                },
+                            ]}
                             columns={prosesPengadaanColumns}
                             defaultColumnVisibility={{
                                 nodin_users: false,
@@ -268,6 +278,16 @@ const ProsesPengadaanTable = ({ departemen }) => {
                                 {
                                     kolom: 'proses_pengadaan',
                                     isUppercaseValue: false,
+                                },
+                            ]}
+                            searches={[
+                                {
+                                    kolom: 'perihal',
+                                    placeholder: 'Search name...',
+                                },
+                                {
+                                    kolom: 'nomor_spk',
+                                    placeholder: 'Search nomor SPK...',
                                 },
                             ]}
                             columns={prosesPengadaanColumns}

@@ -34,7 +34,7 @@ const UserTable = () => {
         },
         {
             accessorKey: 'pn',
-            header: 'Phone Number',
+            header: 'Personal Number',
             cell: ({ row }) => row.getValue('pn'),
         },
         {
@@ -80,6 +80,10 @@ const UserTable = () => {
                     { kolom: 'role', isUppercaseValue: false },
                     { kolom: 'departemen', isUppercaseValue: true },
                     { kolom: 'tim', isUppercaseValue: true },
+                ]}
+                searches={[
+                    { kolom: 'name', placeholder: 'Search name...' },
+                    { kolom: 'pn', placeholder: 'Search personal number...' },
                 ]}
                 defaultColumnVisibility={{
                     id: true,

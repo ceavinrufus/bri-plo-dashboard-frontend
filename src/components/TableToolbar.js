@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { DataTableFacetedFilter } from './ui/data-table-faceted-filter'
 
-const TableToolbar = ({ filters, table }) => {
+const TableToolbar = ({ filters, searches, table }) => {
     const getUniqueValues = filter => {
         const uniqueValues = new Set()
 
@@ -29,26 +29,22 @@ const TableToolbar = ({ filters, table }) => {
     return (
         <div className="flex flex-col lg:flex-row lg:items-center gap-2 py-4">
             <div className="flex items-center gap-2">
-                <Input
-                    placeholder="Search pengadaan..."
-                    value={table.getColumn('perihal')?.getFilterValue() ?? ''}
-                    onChange={event =>
-                        table
-                            .getColumn('perihal')
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
-                <Input
-                    placeholder="Search nomor SPK..."
-                    value={table.getColumn('nomor_spk')?.getFilterValue() ?? ''}
-                    onChange={event =>
-                        table
-                            .getColumn('nomor_spk')
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+                {searches.map(search => (
+                    <Input
+                        key={search.kolom}
+                        placeholder={search.placeholder}
+                        value={
+                            table.getColumn(search.kolom)?.getFilterValue() ??
+                            ''
+                        }
+                        onChange={event =>
+                            table
+                                .getColumn(search.kolom)
+                                ?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                ))}
             </div>
 
             {/* Filters */}
@@ -56,7 +52,7 @@ const TableToolbar = ({ filters, table }) => {
                 <div className="flex flex-wrap lg:mx-2 gap-2">
                     {filters.map(filter => (
                         <DataTableFacetedFilter
-                            key={filter.kolim}
+                            key={filter.kolom}
                             column={table.getColumn(filter.kolom)}
                             title={filter.kolom.split('_').join(' ')}
                             options={getUniqueValues(filter)}

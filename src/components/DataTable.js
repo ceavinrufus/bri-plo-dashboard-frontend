@@ -27,6 +27,7 @@ export function DataTable({
     data,
     columns,
     filters,
+    searches,
     defaultColumnVisibility,
     onDataFilter,
 }) {
@@ -69,7 +70,7 @@ export function DataTable({
 
     return (
         <div className="w-full">
-            <TableToolbar filters={filters} table={table} />
+            <TableToolbar filters={filters} searches={searches} table={table} />
 
             <div className="rounded-md border">
                 <Table>

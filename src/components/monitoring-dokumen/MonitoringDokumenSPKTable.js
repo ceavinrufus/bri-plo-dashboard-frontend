@@ -72,6 +72,13 @@ const MonitoringDokumenSPKTable = () => {
                 <DataTable
                     data={dokumenData}
                     filters={[{ kolom: 'tim', isUppercaseValue: true }]}
+                    searches={[
+                        { kolom: 'perihal', placeholder: 'Search name...' },
+                        {
+                            kolom: 'nomor_spk',
+                            placeholder: 'Search nomor SPK...',
+                        },
+                    ]}
                     columns={monitoringDokumenSPKColumns}
                     onDataFilter={setFilteredData}
                 />
