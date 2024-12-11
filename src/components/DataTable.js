@@ -62,10 +62,12 @@ export function DataTable({
     })
 
     React.useEffect(() => {
-        const filteredData = table
-            .getFilteredRowModel()
-            .rows.map(row => row.original)
-        onDataFilter(filteredData) // Send filtered data back to the parent
+        if (onDataFilter) {
+            const filteredData = table
+                .getFilteredRowModel()
+                .rows.map(row => row.original)
+            onDataFilter(filteredData) // Send filtered data back to the parent
+        }
     }, [table.getFilteredRowModel().rows, onDataFilter])
 
     return (

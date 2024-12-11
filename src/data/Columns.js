@@ -1377,3 +1377,105 @@ export const monitoringDokumenSPKColumns = [
     // Actions
     monitoringDokumenActions('actions2'),
 ]
+
+export const userColumns = [
+    {
+        accessorKey: 'name',
+        header: 'Name',
+        cell: ({ row }) => row.getValue('name'),
+    },
+    {
+        accessorKey: 'email',
+        header: 'Email',
+        cell: ({ row }) => row.getValue('email'),
+    },
+    {
+        accessorKey: 'pn',
+        header: 'Personal Number',
+        cell: ({ row }) => row.getValue('pn'),
+    },
+    {
+        accessorKey: 'departemen',
+        header: 'Departemen',
+        cell: ({ row }) => (
+            <div className="uppercase">{row.getValue('departemen')}</div>
+        ),
+    },
+    {
+        accessorKey: 'tim',
+        header: 'Tim',
+        cell: ({ row }) => (
+            <div className="uppercase">{row.getValue('tim')}</div>
+        ),
+    },
+    {
+        accessorKey: 'role',
+        header: 'Role',
+        cell: ({ row }) => (
+            <div className="capitalize">{row.getValue('role')}</div>
+        ),
+    },
+    {
+        accessorKey: 'created_at',
+        header: 'Created At',
+        cell: ({ row }) =>
+            new Date(row.getValue('created_at')).toLocaleString(),
+    },
+    {
+        accessorKey: 'updated_at',
+        header: 'Updated At',
+        cell: ({ row }) =>
+            new Date(row.getValue('updated_at')).toLocaleString(),
+    },
+    {
+        id: 'action',
+        enableHiding: false,
+        cell: ({ row }) => {
+            const userData = row.original
+            const { user } = useAuth({ middleware: 'auth' })
+
+            return (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                            onClick={() =>
+                                navigator.clipboard.writeText(userData.pn)
+                            }>
+                            Salin PN
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="cursor-pointer"
+                            onClick={async () => {
+                                try {
+                                    toast({
+                                        title: 'Success',
+                                        description:
+                                            'Password reset successfully!',
+                                        status: 'success',
+                                    })
+                                } catch (error) {
+                                    toast({
+                                        title: 'Error',
+                                        description:
+                                            error.response?.data?.message ||
+                                            'An error occurred while resetting password',
+                                        status: 'error',
+                                    })
+                                }
+                            }}>
+                            Reset password
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )
+        },
+    },
+]
