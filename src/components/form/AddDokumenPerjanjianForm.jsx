@@ -6,15 +6,15 @@ import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { postDokumenData } from '@/lib/actions'
-import { formatDateYMD, transformDokumenDataForSubmit } from '@/lib/utils'
-import { DokumenSPKFormValidation } from '@/lib/validation'
+import { transformDokumenDataForSubmit } from '@/lib/utils'
+import { DokumenPerjanjianFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import { DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
-import DokumenSPKForm from './DokumenSPKForm'
+import DokumenPerjanjianForm from './DokumenPerjanjianForm'
 
-export function AddDokumenSPKForm() {
+export function AddDokumenPerjanjianForm() {
     const { addDokumen } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
     const { user } = useAuth({ middleware: 'auth' })
@@ -32,18 +32,12 @@ export function AddDokumenSPKForm() {
         },
         jangka_waktu: '',
         pic_pelaksana_pekerjaan: '',
-        tanggal_info_ke_vendor: '',
-        tanggal_pengambilan: undefined,
-        identitas_pengambil: '',
-        tanggal_pengembalian: undefined,
-        catatan: '',
-        form_tkdn: '',
-        tanggal_penyerahan_dokumen: undefined,
-        penerima_dokumen: '',
+        nomor_kontrak: '',
+        tanggal_kontrak: undefined,
     }
 
     const form = useForm({
-        resolver: zodResolver(DokumenSPKFormValidation),
+        resolver: zodResolver(DokumenPerjanjianFormValidation),
         defaultValues,
     })
 
@@ -80,7 +74,7 @@ export function AddDokumenSPKForm() {
 
     return (
         <Form {...form}>
-            <DokumenSPKForm
+            <DokumenPerjanjianForm
                 form={form}
                 onSubmit={onSubmit}
                 defaultValues={defaultValues}>
@@ -95,7 +89,7 @@ export function AddDokumenSPKForm() {
                         'Submit'
                     )}
                 </Button>
-            </DokumenSPKForm>
+            </DokumenPerjanjianForm>
         </Form>
     )
 }

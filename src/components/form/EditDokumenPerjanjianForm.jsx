@@ -8,17 +8,17 @@ import { Form } from '@/components/ui/form'
 import { updateDokumenData } from '@/lib/actions'
 import { useContext, useState } from 'react'
 import { DokumenContext } from '../context/DokumenContext'
-import { DokumenSPKFormValidation } from '@/lib/validation'
+import { DokumenPerjanjianFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
-import DokumenSPKForm from './DokumenSPKForm'
+import DokumenPerjanjianForm from './DokumenPerjanjianForm'
 import { transformDokumenDataForSubmit } from '@/lib/utils'
 
-export function EditDokumenSPKForm({ defaultValues }) {
+export function EditDokumenPerjanjianForm({ defaultValues }) {
     const { updateDokumen } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
 
     const form = useForm({
-        resolver: zodResolver(DokumenSPKFormValidation),
+        resolver: zodResolver(DokumenPerjanjianFormValidation),
         defaultValues: {
             ...defaultValues,
             jenis_pekerjaan: defaultValues.jenis_pekerjaan || '',
@@ -35,20 +35,8 @@ export function EditDokumenSPKForm({ defaultValues }) {
             spk_rate: defaultValues.spk?.rate,
             pic_pelaksana_pekerjaan:
                 defaultValues.pic_pelaksana_pekerjaan || '',
-            tanggal_info_ke_vendor:
-                defaultValues.tanggal_info_ke_vendor || undefined,
-            tanggal_pengambilan: defaultValues.tanggal_pengambilan || undefined,
-            dokumen_pelengkap: defaultValues.dokumen_pelengkap || [],
-            dokumen_yang_dikembalikan:
-                defaultValues.dokumen_yang_dikembalikan || [],
-            identitas_pengambil: defaultValues.identitas_pengambil || '',
-            tanggal_pengembalian:
-                defaultValues.tanggal_pengembalian || undefined,
-            catatan: defaultValues.catatan || '',
-            tkdn_percentage: defaultValues.tkdn_percentage || '',
-            tanggal_penyerahan_dokumen:
-                defaultValues.tanggal_penyerahan_dokumen || undefined,
-            penerima_dokumen: defaultValues.penerima_dokumen || '',
+            nomor_kontrak: defaultValues.nomor_kontrak || '',
+            tanggal_kontrak: defaultValues.tanggal_kontrak || undefined,
         },
     })
 
@@ -88,7 +76,7 @@ export function EditDokumenSPKForm({ defaultValues }) {
 
     return (
         <Form {...form}>
-            <DokumenSPKForm
+            <DokumenPerjanjianForm
                 form={form}
                 onSubmit={onSubmit}
                 defaultValues={defaultValues}>
@@ -103,7 +91,7 @@ export function EditDokumenSPKForm({ defaultValues }) {
                         'Save'
                     )}
                 </Button>
-            </DokumenSPKForm>
+            </DokumenPerjanjianForm>
         </Form>
     )
 }

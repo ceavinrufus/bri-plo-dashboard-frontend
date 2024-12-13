@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useContext } from 'react'
-import { AddDataSheet } from './AddDataSheet'
+import { AddDataSheet, DocumentType } from './AddDataSheet'
 import { monitoringDokumenPerjanjianColumns } from '@/data/Columns'
 import { DataTable } from '../DataTable'
 import { DokumenContext } from '../context/DokumenContext'
@@ -69,7 +69,7 @@ const MonitoringDokumenPerjanjianTable = () => {
             <div className="flex flex-col md:flex-row">
                 <h1 className="mb-4 md:mb-0">Monitoring Dokumen Perjanjian</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
-                    <AddDataSheet />
+                    <AddDataSheet type={DocumentType.PERJANJIAN} />
                 </div>
             </div>
             {error ? (
@@ -87,7 +87,7 @@ const MonitoringDokumenPerjanjianTable = () => {
                         },
                         {
                             kolom: 'nomor_spk',
-                            placeholder: 'Search nomor Perjanjian...',
+                            placeholder: 'Search nomor SPK...',
                         },
                     ]}
                     columns={monitoringDokumenPerjanjianColumns}

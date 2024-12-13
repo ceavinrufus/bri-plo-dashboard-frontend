@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/sheet'
 import { AddDataForm } from '../form/AddDataForm'
 import { AddDokumenSPKForm } from '../form/AddDokumenSPKForm'
+import { AddDokumenPerjanjianForm } from '../form/AddDokumenPerjanjianForm'
 
 export const DocumentType = {
     SPK: 'spk',
@@ -34,7 +35,7 @@ export function AddDataSheet({ type }) {
                 ) : type === DocumentType.JAMINAN ? (
                     <></>
                 ) : type === DocumentType.PERJANJIAN ? (
-                    <></>
+                    <AddDokumenPerjanjianForm />
                 ) : (
                     <></>
                 )}

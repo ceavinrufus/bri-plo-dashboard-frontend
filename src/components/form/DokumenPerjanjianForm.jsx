@@ -8,33 +8,6 @@ import { SelectItem } from '../ui/select'
 import { FormLabel } from '../ui/form'
 import currencies from '@/data/Currency'
 
-const dokumen_pelengkap_options = [
-    {
-        value: 'SPK',
-        label: 'SPK',
-    },
-    {
-        value: 'Add SPK',
-        label: 'Add SPK',
-    },
-    {
-        value: 'Jaminan Pelaksanaan',
-        label: 'Jaminan Pelaksanaan',
-    },
-    {
-        value: 'Jaminan Pemeliharaan',
-        label: 'Jaminan Pemeliharaan',
-    },
-    {
-        value: 'Pakta Integritas',
-        label: 'Pakta Integritas',
-    },
-    {
-        value: 'TKDN',
-        label: 'TKDN',
-    },
-]
-
 const GET_PENGADAAN_DATA = gql`
     query GetPengadaanData($nomor_spk: String!) {
         pengadaan(nomor_spk: $nomor_spk) {
@@ -63,7 +36,7 @@ const GET_PENGADAAN_DATA = gql`
     }
 `
 
-const DokumenSPKForm = ({ form, onSubmit, defaultValues, children }) => {
+const DokumenPerjanjianForm = ({ form, onSubmit, defaultValues, children }) => {
     const [getPengadaanData, { data, loading, error }] =
         useLazyQuery(GET_PENGADAAN_DATA)
 
@@ -200,76 +173,21 @@ const DokumenSPKForm = ({ form, onSubmit, defaultValues, children }) => {
                 placeholder="PIC Pelaksana Pekerjaan"
             />
             <CustomFormField
-                fieldType={FormFieldType.MULTI_SELECT}
-                control={form.control}
-                name="dokumen_pelengkap"
-                label="Dokumen Pelengkap"
-                placeholder="Dokumen Pelengkap"
-                options={dokumen_pelengkap_options}
-            />
-            <CustomFormField
-                fieldType={FormFieldType.DATE_PICKER}
-                control={form.control}
-                name="tanggal_info_ke_vendor"
-                label="Tanggal Info ke Vendor"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.DATE_PICKER}
-                control={form.control}
-                name="tanggal_pengambilan"
-                label="Tanggal Pengambilan"
-            />
-            <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
-                name="identitas_pengambil"
-                label="Identitas Pengambil"
-                placeholder="Identitas Pengambil"
+                name="nomor_kontrak"
+                label="Nomor Kontrak"
+                placeholder="Nomor Kontrak"
             />
             <CustomFormField
                 fieldType={FormFieldType.DATE_PICKER}
                 control={form.control}
-                name="tanggal_pengembalian"
-                label="Tanggal Pengembalian"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.MULTI_SELECT}
-                control={form.control}
-                name="dokumen_yang_dikembalikan"
-                label="Dokumen yang Dikembalikan"
-                placeholder="Dokumen yang Dikembalikan"
-                options={dokumen_pelengkap_options}
-            />
-            <CustomFormField
-                fieldType={FormFieldType.NUMERIC}
-                control={form.control}
-                name="tkdn_percentage"
-                label="TKDN Percentage"
-                placeholder="TKDN Percentage"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.DATE_PICKER}
-                control={form.control}
-                name="tanggal_penyerahan_dokumen"
-                label="Tanggal Penyerahan Dokumen"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={form.control}
-                name="penerima_dokumen"
-                label="Penerima Dokumen"
-                placeholder="Penerima Dokumen"
-            />
-            <CustomFormField
-                fieldType={FormFieldType.TEXTAREA}
-                control={form.control}
-                name="catatan"
-                label="Catatan"
-                placeholder="Catatan"
+                name="tanggal_kontrak"
+                label="Tanggal Kontrak"
             />
             {children}
         </form>
     )
 }
 
-export default DokumenSPKForm
+export default DokumenPerjanjianForm

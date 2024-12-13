@@ -68,7 +68,7 @@ export const ProjectFormValidation = z.object({
     jenis: z.string().min(3, { message: 'Minimum 3 characters.' }),
 })
 
-// Dokumen form validation
+// Dokumen SPK form validation
 export const DokumenSPKFormValidation = z.object({
     tanggal_spk_diterima: z.union([z.string(), z.date()]).nullable().optional(),
     tim_pemrakarsa: z
@@ -104,4 +104,28 @@ export const DokumenSPKFormValidation = z.object({
         .optional(),
     penerima_dokumen: z.string().nullable().optional(),
     catatan: z.string().nullable().optional(),
+})
+
+// Dokumen Perjanjian form validation
+export const DokumenPerjanjianFormValidation = z.object({
+    tanggal_spk_diterima: z.union([z.string(), z.date()]).nullable().optional(),
+    tim_pemrakarsa: z
+        .string()
+        .min(1, { message: 'Tim Pemrakarsa is required.' }),
+    nomor_spk: z.string().min(1, { message: 'Nomor SPK is required.' }),
+    tanggal_spk: z.union([z.string(), z.date()]).nullable().optional(),
+    jenis_pekerjaan: z
+        .string()
+        .min(1, { message: 'Jenis Pekerjaan is required.' }),
+    nilai_spk: z.union([z.string(), z.number()]).nullable().optional(),
+    spk_currency: z.string().nullable().optional(),
+    spk_rate: z.union([z.string(), z.number()]).nullable().optional(),
+    jangka_waktu: z.string().nullable().optional(),
+    pelaksana_pekerjaan: z.string().nullable().optional(),
+    alamat_pelaksana_pekerjaan: z.string().nullable().optional(),
+    no_telpon_pelaksana_pekerjaan: z.string().nullable().optional(),
+    pic_pengadaan: z.string().nullable().optional(),
+    pic_pelaksana_pekerjaan: z.string().nullable().optional(),
+    nomor_kontrak: z.string().min(1, { message: 'Nomor Kontrak is required.' }),
+    tanggal_kontrak: z.union([z.string(), z.date()]).nullable().optional(),
 })
