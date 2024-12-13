@@ -8,9 +8,15 @@ import {
     SheetTrigger,
 } from '@/components/ui/sheet'
 import { AddDataForm } from '../form/AddDataForm'
-import { AddDokumenForm } from '../form/AddDokumenForm'
+import { AddDokumenSPKForm } from '../form/AddDokumenSPKForm'
 
-export function AddDataSheet() {
+export const DocumentType = {
+    SPK: 'spk',
+    JAMINAN: 'jaminan',
+    PERJANJIAN: 'perjanjian',
+}
+
+export function AddDataSheet({ type }) {
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -23,7 +29,15 @@ export function AddDataSheet() {
                         Fill in the form below to add new data.
                     </SheetDescription>
                 </SheetHeader>
-                <AddDokumenForm />
+                {type === DocumentType.SPK ? (
+                    <AddDokumenSPKForm />
+                ) : type === DocumentType.JAMINAN ? (
+                    <></>
+                ) : type === DocumentType.PERJANJIAN ? (
+                    <></>
+                ) : (
+                    <></>
+                )}
             </SheetContent>
         </Sheet>
     )

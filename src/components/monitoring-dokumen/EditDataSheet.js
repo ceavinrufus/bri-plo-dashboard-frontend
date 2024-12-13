@@ -6,9 +6,9 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
-import { EditDokumenForm } from '../form/EditDokumenForm'
+import { EditDokumenSPKForm } from '../form/EditDokumenSPKForm'
 
-export function EditDataSheet({ defaultValues }) {
+export function EditDataSheet({ type, defaultValues }) {
     return (
         <Sheet>
             <SheetTrigger
@@ -24,7 +24,15 @@ export function EditDataSheet({ defaultValues }) {
                         Fill in the form below to edit data.
                     </SheetDescription>
                 </SheetHeader>
-                <EditDokumenForm defaultValues={defaultValues} />
+                {type === DocumentType.SPK ? (
+                    <EditDokumenSPKForm defaultValues={defaultValues} />
+                ) : type === DocumentType.JAMINAN ? (
+                    <></>
+                ) : type === DocumentType.PERJANJIAN ? (
+                    <></>
+                ) : (
+                    <></>
+                )}
             </SheetContent>
         </Sheet>
     )

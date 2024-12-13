@@ -1,3 +1,4 @@
+import MonitoringDokumenPerjanjianTable from '@/components/monitoring-dokumen/MonitoringDokumenPerjanjianTable'
 import MonitoringDokumenSPKTable from '@/components/monitoring-dokumen/MonitoringDokumenSPKTable'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
@@ -31,7 +32,7 @@ const MonitoringDokumen = () => {
                             <TabsContent
                                 value="perjanjian"
                                 className="space-y-4">
-                                Perjanjian
+                                <MonitoringDokumenPerjanjianTable />
                             </TabsContent>
                         </Tabs>
                     </div>

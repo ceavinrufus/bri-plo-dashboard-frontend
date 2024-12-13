@@ -12,9 +12,9 @@ import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import { DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
-import DokumenForm from './DokumenForm'
+import DokumenSPKForm from './DokumenSPKForm'
 
-export function AddDokumenForm() {
+export function AddDokumenSPKForm() {
     const { addDokumen } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
     const { user } = useAuth({ middleware: 'auth' })
@@ -80,7 +80,7 @@ export function AddDokumenForm() {
 
     return (
         <Form {...form}>
-            <DokumenForm
+            <DokumenSPKForm
                 form={form}
                 onSubmit={onSubmit}
                 defaultValues={defaultValues}>
@@ -95,7 +95,7 @@ export function AddDokumenForm() {
                         'Submit'
                     )}
                 </Button>
-            </DokumenForm>
+            </DokumenSPKForm>
         </Form>
     )
 }

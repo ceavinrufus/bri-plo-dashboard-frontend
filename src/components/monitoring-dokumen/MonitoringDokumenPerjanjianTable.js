@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useContext } from 'react'
-import { AddDataSheet, DocumentType } from '../monitoring-dokumen/AddDataSheet'
-import { monitoringDokumenSPKColumns } from '@/data/Columns'
+import { AddDataSheet } from './AddDataSheet'
+import { monitoringDokumenPerjanjianColumns } from '@/data/Columns'
 import { DataTable } from '../DataTable'
 import { DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
@@ -47,7 +47,7 @@ const GET_DOKUMENS = gql`
     }
 `
 
-const MonitoringDokumenSPKTable = () => {
+const MonitoringDokumenPerjanjianTable = () => {
     const { dokumenData, setDokumenData } = useContext(DokumenContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
@@ -67,9 +67,9 @@ const MonitoringDokumenSPKTable = () => {
     return (
         <div>
             <div className="flex flex-col md:flex-row">
-                <h1 className="mb-4 md:mb-0">Monitoring Dokumen SPK</h1>
+                <h1 className="mb-4 md:mb-0">Monitoring Dokumen Perjanjian</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
-                    <AddDataSheet type={DocumentType.SPK} />
+                    <AddDataSheet />
                 </div>
             </div>
             {error ? (
@@ -87,10 +87,10 @@ const MonitoringDokumenSPKTable = () => {
                         },
                         {
                             kolom: 'nomor_spk',
-                            placeholder: 'Search nomor SPK...',
+                            placeholder: 'Search nomor Perjanjian...',
                         },
                     ]}
-                    columns={monitoringDokumenSPKColumns}
+                    columns={monitoringDokumenPerjanjianColumns}
                     onDataFilter={setFilteredData}
                 />
             )}
@@ -98,4 +98,4 @@ const MonitoringDokumenSPKTable = () => {
     )
 }
 
-export default MonitoringDokumenSPKTable
+export default MonitoringDokumenPerjanjianTable

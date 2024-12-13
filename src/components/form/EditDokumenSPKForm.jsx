@@ -10,10 +10,10 @@ import { useContext, useState } from 'react'
 import { DokumenContext } from '../context/DokumenContext'
 import { DokumenSPKFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
-import DokumenForm from './DokumenForm'
+import DokumenSPKForm from './DokumenSPKForm'
 import { transformDokumenDataForSubmit } from '@/lib/utils'
 
-export function EditDokumenForm({ defaultValues }) {
+export function EditDokumenSPKForm({ defaultValues }) {
     const { updateDokumen } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
 
@@ -87,7 +87,7 @@ export function EditDokumenForm({ defaultValues }) {
 
     return (
         <Form {...form}>
-            <DokumenForm
+            <DokumenSPKForm
                 form={form}
                 onSubmit={onSubmit}
                 defaultValues={defaultValues}>
@@ -102,7 +102,7 @@ export function EditDokumenForm({ defaultValues }) {
                         'Save'
                     )}
                 </Button>
-            </DokumenForm>
+            </DokumenSPKForm>
         </Form>
     )
 }

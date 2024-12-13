@@ -1454,6 +1454,304 @@ export const monitoringDokumenSPKColumns = [
     monitoringDokumenActions('actions2'),
 ]
 
+export const monitoringDokumenPerjanjianColumns = [
+    // Select
+    {
+        id: 'select',
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && 'indeterminate')
+                }
+                onCheckedChange={value =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={value => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    // Tanggal Permohonan Diterima
+    {
+        accessorKey: 'tanggal_permohonan_diterima',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Permohonan Diterima
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {formatDateDMY(row.getValue('tanggal_permohonan_diterima'))}
+            </div>
+        ),
+    },
+    // Tim
+    {
+        accessorKey: 'tim_pemrakarsa',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tim Pemrakarsa
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div className="uppercase text-center">
+                {row.getValue('tim_pemrakarsa')}
+            </div>
+        ),
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
+    },
+    // PIC
+    {
+        accessorKey: 'pic_pengadaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC Pengadaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic_pengadaan').name}</div>,
+    },
+    // Nomor SPK
+    {
+        accessorKey: 'nomor_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_spk')}</div>,
+    },
+    // Tanggal SPK
+    {
+        accessorKey: 'tanggal_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_spk'))}</div>
+        ),
+    },
+    // Jenis Pekerjaan
+    {
+        accessorKey: 'jenis_pekerjaan',
+        header: ({ column }) => (
+            <div className="w-72 md:w-96">
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Jenis Pekerjaan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        ),
+        cell: ({ row }) => <div>{row.getValue('jenis_pekerjaan')}</div>,
+        enableHiding: false,
+    },
+    // Nilai SPK
+    {
+        accessorKey: 'spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nilai SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {convertToCurrencyString(
+                    row.getValue('spk').amount,
+                    row.getValue('spk').currency,
+                )}
+            </div>
+        ),
+    },
+    // Jangka Waktu
+    {
+        accessorKey: 'jangka_waktu',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Jangka Waktu
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('jangka_waktu')}</div>,
+    },
+    monitoringDokumenActions('actions1'),
+    // Pelaksana Pekerjaan
+    {
+        accessorKey: 'pelaksana_pekerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{JSON.parse(row.getValue('pelaksana_pekerjaan')).name}</div>
+        ),
+    },
+    // Alamat Pelaksana Pekerjaan
+    {
+        accessorKey: 'alamat_pelaksana_pekerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Alamat Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{JSON.parse(row.getValue('pelaksana_pekerjaan')).address}</div>
+        ),
+    },
+    // Nomor Telepon Pelaksana Pekerjaan
+    {
+        accessorKey: 'no_telp_pelaksana_pekerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                No Telp Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {JSON.parse(row.getValue('pelaksana_pekerjaan')).phone_number}
+            </div>
+        ),
+    },
+    // PIC Pelaksana Pekerjaan
+    {
+        accessorKey: 'pic_pelaksana_pekerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {row.getValue('pic_pelaksana_pekerjaan') &&
+                    JSON.parse(row.getValue('pic_pelaksana_pekerjaan')).name +
+                        ' (' +
+                        JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))
+                            .phone_number +
+                        ')'}
+            </div>
+        ),
+    },
+    // Nomor Kontrak
+    {
+        accessorKey: 'nomor_kontrak',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor Kontrak
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_kontrak')}</div>,
+    },
+    // Tanggal Kontrak
+    {
+        accessorKey: 'tanggal_kontrak',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Kontrak
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_kontrak'))}</div>
+        ),
+    },
+    // PIC Legal
+    {
+        accessorKey: 'pic_legal',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC Legal
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic_legal').name}</div>,
+    },
+    // Actions
+    monitoringDokumenActions('actions2'),
+]
+
 export const userColumns = [
     {
         accessorKey: 'name',
