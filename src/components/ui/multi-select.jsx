@@ -33,7 +33,7 @@ import { CaretSortIcon } from '@radix-ui/react-icons'
  * Uses class-variance-authority (cva) to define different styles based on "variant" prop.
  */
 const multiSelectVariants = cva(
-    'm-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300',
+    'm-1 transition ease-in-out delay-150 duration-300',
     {
         variants: {
             variant: {
@@ -58,7 +58,6 @@ export const MultiSelect = React.forwardRef(
             variant,
             defaultValue = [],
             placeholder = 'Select options',
-            animation = 0,
             maxCount = 3,
             modalPopover = false,
             asChild = false,
@@ -69,10 +68,23 @@ export const MultiSelect = React.forwardRef(
     ) => {
         const [selectedValues, setSelectedValues] = React.useState(defaultValue)
         const [isPopoverOpen, setIsPopoverOpen] = React.useState(false)
+        const [inputValue, setInputValue] = React.useState('')
+        const [newOptions, setNewOptions] = React.useState(options)
 
         const handleInputKeyDown = event => {
+            console.log(selectedValues)
             if (event.key === 'Enter') {
-                setIsPopoverOpen(true)
+                const inputValue = event.currentTarget.value.trim()
+                if (inputValue && !selectedValues.includes(inputValue)) {
+                    setSelectedValues(prev => [...prev, inputValue])
+                    onValueChange([...selectedValues, inputValue])
+                    setNewOptions(prev => [
+                        ...prev,
+                        { label: inputValue, value: inputValue },
+                    ])
+                    event.currentTarget.value = '' // Clear the input after adding
+                    setIsPopoverOpen(false) // Close the popover
+                }
             } else if (
                 event.key === 'Backspace' &&
                 !event.currentTarget.value
@@ -108,10 +120,10 @@ export const MultiSelect = React.forwardRef(
         }
 
         const toggleAll = () => {
-            if (selectedValues.length === options.length) {
+            if (selectedValues.length === newOptions.length) {
                 handleClear()
             } else {
-                const allValues = options.map(option => option.value)
+                const allValues = newOptions.map(option => option.value)
                 setSelectedValues(allValues)
                 onValueChange(allValues)
             }
@@ -129,7 +141,7 @@ export const MultiSelect = React.forwardRef(
                         variant="outline"
                         onClick={handleTogglePopover}
                         className={cn(
-                            'w-full flex rounded-md border border-dark-500 bg-dark-400 col-span-3 justify-between px-3',
+                            'w-full flex rounded-md border h-auto border-dark-500 bg-dark-400 col-span-3 justify-between px-3',
                             className,
                         )}>
                         {selectedValues.length > 0 ? (
@@ -138,7 +150,7 @@ export const MultiSelect = React.forwardRef(
                                     {selectedValues
                                         .slice(0, maxCount)
                                         .map(value => {
-                                            const option = options.find(
+                                            const option = newOptions.find(
                                                 o => o.value === value,
                                             )
                                             const IconComponent = option?.icon
@@ -149,10 +161,7 @@ export const MultiSelect = React.forwardRef(
                                                         multiSelectVariants({
                                                             variant,
                                                         }),
-                                                    )}
-                                                    style={{
-                                                        animationDuration: `${animation}s`,
-                                                    }}>
+                                                    )}>
                                                     {IconComponent && (
                                                         <IconComponent className="h-4 w-4 mr-2" />
                                                     )}
@@ -174,10 +183,7 @@ export const MultiSelect = React.forwardRef(
                                                 multiSelectVariants({
                                                     variant,
                                                 }),
-                                            )}
-                                            style={{
-                                                animationDuration: `${animation}s`,
-                                            }}>
+                                            )}>
                                             {`+ ${selectedValues.length - maxCount} more`}
                                             <XCircle
                                                 className="ml-2 h-4 w-4 cursor-pointer"
@@ -222,9 +228,17 @@ export const MultiSelect = React.forwardRef(
                         <CommandInput
                             placeholder="Search..."
                             onKeyDown={handleInputKeyDown}
+                            onValueChange={value => setInputValue(value)}
                         />
                         <CommandList>
-                            <CommandEmpty>No results found.</CommandEmpty>
+                            <CommandEmpty>
+                                <div className="flex flex-col items-center justify-center text-center">
+                                    <span>No results found.</span>
+                                    <span className="text-sm text-muted-foreground">
+                                        Press Enter to add "{inputValue}".
+                                    </span>
+                                </div>
+                            </CommandEmpty>
                             <CommandGroup>
                                 <CommandItem
                                     key="all"
@@ -234,7 +248,7 @@ export const MultiSelect = React.forwardRef(
                                         className={cn(
                                             'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
                                             selectedValues.length ===
-                                                options.length
+                                                newOptions.length
                                                 ? 'bg-primary text-primary-foreground'
                                                 : 'opacity-50 [&_svg]:invisible',
                                         )}>
@@ -242,7 +256,7 @@ export const MultiSelect = React.forwardRef(
                                     </div>
                                     <span>(Select All)</span>
                                 </CommandItem>
-                                {options.map(option => {
+                                {newOptions.map(option => {
                                     const isSelected = selectedValues.includes(
                                         option.value,
                                     )

@@ -176,8 +176,8 @@ const RenderInput = ({ field, props }) => {
                         options={props.options}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        variant="outline"
                         placeholder="Select options"
-                        animation={2}
                         maxCount={3}
                     />
                 </FormControl>

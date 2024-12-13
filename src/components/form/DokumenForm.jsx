@@ -10,27 +10,27 @@ import currencies from '@/data/Currency'
 
 const dokumen_pelengkap_options = [
     {
-        value: 'spk',
+        value: 'SPK',
         label: 'SPK',
     },
     {
-        value: 'add_spk',
+        value: 'Add SPK',
         label: 'Add SPK',
     },
     {
-        value: 'jaminan_pelaksanaan',
+        value: 'Jaminan Pelaksanaan',
         label: 'Jaminan Pelaksanaan',
     },
     {
-        value: 'jaminan_pemeliharaan',
+        value: 'Jaminan Pemeliharaan',
         label: 'Jaminan Pemeliharaan',
     },
     {
-        value: 'pakta_integritas',
+        value: 'Pakta Integritas',
         label: 'Pakta Integritas',
     },
     {
-        value: 'tkdn',
+        value: 'TKDN',
         label: 'TKDN',
     },
 ]
