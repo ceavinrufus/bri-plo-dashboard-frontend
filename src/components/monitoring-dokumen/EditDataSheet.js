@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/sheet'
 import { EditDokumenSPKForm } from '../form/EditDokumenSPKForm'
 import { DocumentType } from '../context/DokumenContext'
+import { EditDokumenPerjanjianForm } from '../form/EditDokumenPerjanjianForm'
 
 export function EditDataSheet({ type, defaultValues }) {
     return (
@@ -30,7 +31,7 @@ export function EditDataSheet({ type, defaultValues }) {
                 ) : type === DocumentType.JAMINAN ? (
                     <></>
                 ) : type === DocumentType.PERJANJIAN ? (
-                    <></>
+                    <EditDokumenPerjanjianForm defaultValues={defaultValues} />
                 ) : (
                     <></>
                 )}

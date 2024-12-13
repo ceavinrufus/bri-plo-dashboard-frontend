@@ -79,7 +79,8 @@ export function EditDataForm({ defaultValues }) {
             console.log(response.data)
             transformedData.nodin_plos = response.data.nodin_plos
             transformedData.nodin_users = response.data.nodin_users
-            transformedData.nodin_ip_pengadaans = response.data.nodin_ip_pengadaans
+            transformedData.nodin_ip_pengadaans =
+                response.data.nodin_ip_pengadaans
 
             toast({
                 title: 'Success',
@@ -113,10 +114,7 @@ export function EditDataForm({ defaultValues }) {
 
     return (
         <Form {...form}>
-            <PengadaanForm
-                form={form}
-                onSubmit={onSubmit}
-                defaultValues={defaultValues}>
+            <PengadaanForm form={form} onSubmit={onSubmit}>
                 <Button type="submit">
                     {isProcessing ? (
                         <PulseLoader

@@ -96,10 +96,7 @@ export function AddDataForm() {
 
     return (
         <Form {...form}>
-            <PengadaanForm
-                form={form}
-                onSubmit={onSubmit}
-                defaultValues={defaultValues}>
+            <PengadaanForm form={form} onSubmit={onSubmit}>
                 <Button type="submit">
                     {isProcessing ? (
                         <PulseLoader

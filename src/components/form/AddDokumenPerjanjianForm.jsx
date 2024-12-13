@@ -74,10 +74,7 @@ export function AddDokumenPerjanjianForm() {
 
     return (
         <Form {...form}>
-            <DokumenPerjanjianForm
-                form={form}
-                onSubmit={onSubmit}
-                defaultValues={defaultValues}>
+            <DokumenPerjanjianForm form={form} onSubmit={onSubmit}>
                 <Button type="submit">
                     {isProcessing ? (
                         <PulseLoader

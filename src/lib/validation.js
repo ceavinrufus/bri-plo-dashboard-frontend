@@ -75,7 +75,7 @@ export const DokumenSPKFormValidation = z.object({
         .string()
         .min(1, { message: 'Tim Pemrakarsa is required.' }),
     nomor_spk: z.string().min(1, { message: 'Nomor SPK is required.' }),
-    tanggal_spk: z.union([z.string(), z.date()]).nullable().optional(),
+    tanggal_spk: z.union([z.string(), z.date()]),
     jenis_pekerjaan: z
         .string()
         .min(1, { message: 'Jenis Pekerjaan is required.' }),
@@ -113,7 +113,7 @@ export const DokumenPerjanjianFormValidation = z.object({
         .string()
         .min(1, { message: 'Tim Pemrakarsa is required.' }),
     nomor_spk: z.string().min(1, { message: 'Nomor SPK is required.' }),
-    tanggal_spk: z.union([z.string(), z.date()]).nullable().optional(),
+    tanggal_spk: z.union([z.string(), z.date()]),
     jenis_pekerjaan: z
         .string()
         .min(1, { message: 'Jenis Pekerjaan is required.' }),
@@ -127,5 +127,5 @@ export const DokumenPerjanjianFormValidation = z.object({
     pic_pengadaan: z.string().nullable().optional(),
     pic_pelaksana_pekerjaan: z.string().nullable().optional(),
     nomor_kontrak: z.string().min(1, { message: 'Nomor Kontrak is required.' }),
-    tanggal_kontrak: z.union([z.string(), z.date()]).nullable().optional(),
+    tanggal_kontrak: z.union([z.string(), z.date()]),
 })

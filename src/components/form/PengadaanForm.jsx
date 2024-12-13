@@ -11,7 +11,7 @@ import { NodinCollapsible } from '../NodinCollapsible'
 import { ProjectContext } from '../context/ProjectContext'
 import { useWatch } from 'react-hook-form'
 
-const PengadaanForm = ({ form, onSubmit, defaultValues, children }) => {
+const PengadaanForm = ({ form, onSubmit, children }) => {
     const isVerificationComplete = useWatch({
         control: form.control,
         name: 'is_verification_complete',

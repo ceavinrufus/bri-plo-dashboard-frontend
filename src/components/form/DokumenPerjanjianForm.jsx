@@ -36,7 +36,7 @@ const GET_PENGADAAN_DATA = gql`
     }
 `
 
-const DokumenPerjanjianForm = ({ form, onSubmit, defaultValues, children }) => {
+const DokumenPerjanjianForm = ({ form, onSubmit, children }) => {
     const [getPengadaanData, { data, loading, error }] =
         useLazyQuery(GET_PENGADAAN_DATA)
 
@@ -51,7 +51,6 @@ const DokumenPerjanjianForm = ({ form, onSubmit, defaultValues, children }) => {
                 variables: { nomor_spk: nomorSpk },
                 onCompleted: data => {
                     form.setValue('jenis_pekerjaan', data.pengadaan.perihal)
-                    form.setValue('tanggal_spk', data.pengadaan.tanggal_spk)
                     form.setValue('tanggal_spk', data.pengadaan.tanggal_spk)
                     form.setValue('tim_pemrakarsa', data.pengadaan.tim)
                     form.setValue(
