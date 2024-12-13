@@ -57,6 +57,7 @@ const MonitoringDokumenSPKTable = () => {
     const { loading, error, data } = useQuery(GET_DOKUMEN_SPKS, {
         client,
         onCompleted: data => {
+            // console.log(data.dokumen_spks)
             setDokumenSPKData(data.dokumen_spks)
         },
         onError: error => console.error(error),

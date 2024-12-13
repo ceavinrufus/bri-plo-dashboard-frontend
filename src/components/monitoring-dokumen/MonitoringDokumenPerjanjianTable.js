@@ -50,7 +50,7 @@ const MonitoringDokumenPerjanjianTable = () => {
     const { loading, error, data } = useQuery(GET_DOKUMEN_PERJANJIANS, {
         client,
         onCompleted: data => {
-            console.log(data)
+            // console.log(data.dokumen_perjanjians)
             setDokumenPerjanjianData(data.dokumen_perjanjians)
         },
         onError: error => console.error(error),

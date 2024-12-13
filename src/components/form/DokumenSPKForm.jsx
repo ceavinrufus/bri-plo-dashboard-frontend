@@ -79,7 +79,6 @@ const DokumenSPKForm = ({ form, onSubmit, defaultValues, children }) => {
                 onCompleted: data => {
                     form.setValue('jenis_pekerjaan', data.pengadaan.perihal)
                     form.setValue('tanggal_spk', data.pengadaan.tanggal_spk)
-                    form.setValue('tanggal_spk', data.pengadaan.tanggal_spk)
                     form.setValue('tim_pemrakarsa', data.pengadaan.tim)
                     form.setValue(
                         'pic_pengadaan',

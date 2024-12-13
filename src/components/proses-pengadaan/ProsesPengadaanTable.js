@@ -99,7 +99,7 @@ const ProsesPengadaanTable = ({ departemen }) => {
         variables: departemen ? { departemen } : {},
         client,
         onCompleted: data => {
-            console.log(data.pengadaans)
+            // console.log(data.pengadaans)
             setPengadaanData(data.pengadaans)
         },
     })
