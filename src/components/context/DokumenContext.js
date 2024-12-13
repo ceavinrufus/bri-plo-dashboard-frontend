@@ -11,19 +11,38 @@ export const DocumentType = {
 
 // Create a provider component
 export const DokumenProvider = ({ children }) => {
-    const [dokumenData, setDokumenData] = useState([])
+    const [dokumenSPKData, setDokumenSPKData] = useState([])
+    const [dokumenPerjanjianData, setDokumenPerjanjianData] = useState([])
 
-    const addDokumen = newData => {
-        setDokumenData([...dokumenData, newData])
+    const addDokumenSPK = newData => {
+        setDokumenSPKData([...dokumenSPKData, newData])
     }
 
-    const removeDokumen = id => {
-        setDokumenData(dokumenData.filter(data => data.id !== id))
+    const removeDokumenSPK = id => {
+        setDokumenSPKData(dokumenSPKData.filter(data => data.id !== id))
     }
 
-    const updateDokumen = (id, updatedFields) => {
-        setDokumenData(
-            dokumenData.map(data =>
+    const updateDokumenSPK = (id, updatedFields) => {
+        setDokumenSPKData(
+            dokumenSPKData.map(data =>
+                data.id === id ? { ...data, ...updatedFields } : data,
+            ),
+        )
+    }
+
+    const addDokumenPerjanjian = newData => {
+        setDokumenPerjanjianData([...dokumenPerjanjianData, newData])
+    }
+
+    const removeDokumenPerjanjian = id => {
+        setDokumenPerjanjianData(
+            dokumenPerjanjianData.filter(data => data.id !== id),
+        )
+    }
+
+    const updateDokumenPerjanjian = (id, updatedFields) => {
+        setDokumenPerjanjianData(
+            dokumenPerjanjianData.map(data =>
                 data.id === id ? { ...data, ...updatedFields } : data,
             ),
         )
@@ -32,11 +51,16 @@ export const DokumenProvider = ({ children }) => {
     return (
         <DokumenContext.Provider
             value={{
-                dokumenData,
-                addDokumen,
-                removeDokumen,
-                updateDokumen,
-                setDokumenData,
+                dokumenSPKData,
+                dokumenPerjanjianData,
+                addDokumenSPK,
+                removeDokumenSPK,
+                updateDokumenSPK,
+                setDokumenSPKData,
+                addDokumenPerjanjian,
+                removeDokumenPerjanjian,
+                updateDokumenPerjanjian,
+                setDokumenPerjanjianData,
             }}>
             {children}
         </DokumenContext.Provider>

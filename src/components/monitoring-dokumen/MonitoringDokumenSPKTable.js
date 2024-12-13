@@ -48,7 +48,7 @@ const GET_DOKUMENS = gql`
 `
 
 const MonitoringDokumenSPKTable = () => {
-    const { dokumenData, setDokumenData } = useContext(DokumenContext)
+    const { dokumenSPKData, setDokumenSPKData } = useContext(DokumenContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
 
@@ -57,7 +57,7 @@ const MonitoringDokumenSPKTable = () => {
     const { loading, error, data } = useQuery(GET_DOKUMENS, {
         client,
         onCompleted: data => {
-            setDokumenData(data.dokumen_spks)
+            setDokumenSPKData(data.dokumen_spks)
         },
         onError: error => console.error(error),
     })
@@ -76,7 +76,7 @@ const MonitoringDokumenSPKTable = () => {
                 <p>Error: {error.message}</p>
             ) : (
                 <DataTable
-                    data={dokumenData}
+                    data={dokumenSPKData}
                     filters={[
                         { kolom: 'tim_pemrakarsa', isUppercaseValue: true },
                     ]}

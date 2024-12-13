@@ -100,7 +100,7 @@ const monitoringDokumenSPKActions = (id = 'actions') => ({
     enableHiding: false,
     cell: ({ row }) => {
         const dokumen = row.original
-        const { removeDokumen } = useContext(DokumenContext)
+        const { removeDokumenSPK } = useContext(DokumenContext)
 
         return (
             <DropdownMenu>
@@ -131,7 +131,7 @@ const monitoringDokumenSPKActions = (id = 'actions') => ({
                                         'Data has been deleted successfully!',
                                     status: 'success',
                                 })
-                                removeDokumen(dokumen.id)
+                                removeDokumenSPK(dokumen.id)
                             } catch (error) {
                                 toast({
                                     title: 'Error',
@@ -159,7 +159,7 @@ const monitoringDokumenPerjanjianActions = (id = 'actions') => ({
     enableHiding: false,
     cell: ({ row }) => {
         const dokumen = row.original
-        const { removeDokumen } = useContext(DokumenContext)
+        const { removeDokumenPerjanjian } = useContext(DokumenContext)
 
         return (
             <DropdownMenu>
@@ -190,7 +190,7 @@ const monitoringDokumenPerjanjianActions = (id = 'actions') => ({
                                         'Data has been deleted successfully!',
                                     status: 'success',
                                 })
-                                removeDokumen(dokumen.id)
+                                removeDokumenPerjanjian(dokumen.id)
                             } catch (error) {
                                 toast({
                                     title: 'Error',

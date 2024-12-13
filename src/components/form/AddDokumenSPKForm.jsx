@@ -15,7 +15,7 @@ import { useAuth } from '@/hooks/auth'
 import DokumenSPKForm from './DokumenSPKForm'
 
 export function AddDokumenSPKForm() {
-    const { addDokumen } = useContext(DokumenContext)
+    const { addDokumenSPK } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
     const { user } = useAuth({ middleware: 'auth' })
 
@@ -61,7 +61,7 @@ export function AddDokumenSPKForm() {
                 description: 'Data has been submitted successfully!',
                 status: 'success',
             })
-            addDokumen({
+            addDokumenSPK({
                 id: response.data.id,
                 ...transformedData,
             })

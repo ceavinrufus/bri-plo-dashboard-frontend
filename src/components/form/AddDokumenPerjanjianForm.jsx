@@ -15,7 +15,7 @@ import { useAuth } from '@/hooks/auth'
 import DokumenPerjanjianForm from './DokumenPerjanjianForm'
 
 export function AddDokumenPerjanjianForm() {
-    const { addDokumen } = useContext(DokumenContext)
+    const { addDokumenPerjanjian } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
     const { user } = useAuth({ middleware: 'auth' })
 
@@ -55,7 +55,7 @@ export function AddDokumenPerjanjianForm() {
                 description: 'Data has been submitted successfully!',
                 status: 'success',
             })
-            addDokumen({
+            addDokumenPerjanjian({
                 id: response.data.id,
                 ...transformedData,
             })

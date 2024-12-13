@@ -14,7 +14,7 @@ import DokumenSPKForm from './DokumenSPKForm'
 import { transformDokumenDataForSubmit } from '@/lib/utils'
 
 export function EditDokumenSPKForm({ defaultValues }) {
-    const { updateDokumen } = useContext(DokumenContext)
+    const { updateDokumenSPK } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
 
     const form = useForm({
@@ -70,7 +70,7 @@ export function EditDokumenSPKForm({ defaultValues }) {
                 description: 'Data has been edited successfully!',
                 status: 'success',
             })
-            updateDokumen(defaultValues.id, {
+            updateDokumenSPK(defaultValues.id, {
                 ...transformedData,
             })
         } catch (error) {

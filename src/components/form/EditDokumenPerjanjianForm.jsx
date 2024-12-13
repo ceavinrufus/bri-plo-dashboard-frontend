@@ -14,7 +14,7 @@ import DokumenPerjanjianForm from './DokumenPerjanjianForm'
 import { transformDokumenDataForSubmit } from '@/lib/utils'
 
 export function EditDokumenPerjanjianForm({ defaultValues }) {
-    const { updateDokumen } = useContext(DokumenContext)
+    const { updateDokumenPerjanjian } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
 
     const form = useForm({
@@ -58,7 +58,7 @@ export function EditDokumenPerjanjianForm({ defaultValues }) {
                 description: 'Data has been edited successfully!',
                 status: 'success',
             })
-            updateDokumen(defaultValues.id, {
+            updateDokumenPerjanjian(defaultValues.id, {
                 ...transformedData,
             })
         } catch (error) {
