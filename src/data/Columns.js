@@ -1507,14 +1507,16 @@ export const monitoringDokumenSPKColumns = [
     {
         accessorKey: 'catatan',
         header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() =>
-                    column.toggleSorting(column.getIsSorted() === 'asc')
-                }>
-                Catatan
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
+            <div className="w-72 md:w-96">
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Catatan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
         ),
         cell: ({ row }) => <div>{row.getValue('catatan')}</div>,
         enableSorting: false,

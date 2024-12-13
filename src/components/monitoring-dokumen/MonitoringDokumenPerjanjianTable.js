@@ -9,9 +9,9 @@ import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
 
-const GET_DOKUMENS = gql`
-    query GetDokumens {
-        dokumen_spks {
+const GET_DOKUMEN_PERJANJIANS = gql`
+    query GetDokumenPerjanjians {
+        dokumen_perjanjians {
             id
             tanggal_spk_diterima
             tim_pemrakarsa
@@ -30,19 +30,11 @@ const GET_DOKUMENS = gql`
             jangka_waktu
             pelaksana_pekerjaan
             pic_pelaksana_pekerjaan
-            dokumen_pelengkap
-            tanggal_info_ke_vendor
-            tanggal_pengambilan
-            identitas_pengambil
-            tanggal_pengembalian
-            dokumen_yang_dikembalikan
-            tkdn_percentage
-            tanggal_penyerahan_dokumen
-            penerima_dokumen
+            nomor_kontrak
+            tanggal_kontrak
             pic_legal {
                 name
             }
-            catatan
         }
     }
 `
@@ -55,10 +47,11 @@ const MonitoringDokumenPerjanjianTable = () => {
 
     if (!user) return null
 
-    const { loading, error, data } = useQuery(GET_DOKUMENS, {
+    const { loading, error, data } = useQuery(GET_DOKUMEN_PERJANJIANS, {
         client,
         onCompleted: data => {
-            setDokumenPerjanjianData(data.dokumen_spks)
+            console.log(data)
+            setDokumenPerjanjianData(data.dokumen_perjanjians)
         },
         onError: error => console.error(error),
     })

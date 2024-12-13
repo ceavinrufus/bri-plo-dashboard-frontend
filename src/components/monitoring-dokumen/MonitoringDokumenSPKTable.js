@@ -9,8 +9,8 @@ import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
 
-const GET_DOKUMENS = gql`
-    query GetDokumens {
+const GET_DOKUMEN_SPKS = gql`
+    query GetDokumenSPKs {
         dokumen_spks {
             id
             tanggal_spk_diterima
@@ -54,7 +54,7 @@ const MonitoringDokumenSPKTable = () => {
 
     if (!user) return null
 
-    const { loading, error, data } = useQuery(GET_DOKUMENS, {
+    const { loading, error, data } = useQuery(GET_DOKUMEN_SPKS, {
         client,
         onCompleted: data => {
             setDokumenSPKData(data.dokumen_spks)
