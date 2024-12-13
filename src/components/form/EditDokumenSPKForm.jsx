@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { updateDokumenData } from '@/lib/actions'
+import { updateDokumenSPKData } from '@/lib/actions'
 import { useContext, useState } from 'react'
 import { DokumenContext } from '../context/DokumenContext'
 import { DokumenSPKFormValidation } from '@/lib/validation'
@@ -60,7 +60,7 @@ export function EditDokumenSPKForm({ defaultValues }) {
         )
 
         try {
-            const response = await updateDokumenData(
+            const response = await updateDokumenSPKData(
                 defaultValues.id,
                 transformedData,
             )

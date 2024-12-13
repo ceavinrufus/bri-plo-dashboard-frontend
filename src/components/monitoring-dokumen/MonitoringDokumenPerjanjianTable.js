@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useContext } from 'react'
-import { AddDataSheet, DocumentType } from './AddDataSheet'
+import { AddDataSheet } from './AddDataSheet'
 import { monitoringDokumenPerjanjianColumns } from '@/data/Columns'
 import { DataTable } from '../DataTable'
-import { DokumenContext } from '../context/DokumenContext'
+import { DocumentType, DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'

@@ -363,33 +363,33 @@ export const deleteHariLiburData = async hariLiburId => {
     }
 }
 
-// Define the function to fetch dokumen data
-export const fetchDokumenData = async () => {
+// Define the function to fetch dokumen SPK data
+export const fetchDokumenSPKData = async () => {
     try {
         // Get the backend URL from environment variables
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
         // Make the API request
-        const response = await axios.get(`${backendUrl}/api/dokumen`)
+        const response = await axios.get(`${backendUrl}/api/dokumen/spk`)
 
         // Return the data from the response
         return response.data
     } catch (error) {
         // Handle errors
-        console.error('Error fetching dokumen data:', error)
+        console.error('Error fetching dokumen SPK data:', error)
         throw error
     }
 }
 
-// Define the function to post dokumen data
-export const postDokumenData = async data => {
+// Define the function to post dokumen SPK data
+export const postDokumenSPKData = async data => {
     try {
         // Get the backend URL from environment variables
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
         // Make the API request
         const response = await axios.post(
-            `${backendUrl}/api/dokumen/store`,
+            `${backendUrl}/api/dokumen/spk/store`,
             data,
         )
 
@@ -397,20 +397,20 @@ export const postDokumenData = async data => {
         return response.data
     } catch (error) {
         // Handle errors
-        console.error('Error posting dokumen data:', error)
+        console.error('Error posting dokumen SPK data:', error)
         throw error
     }
 }
 
-// Define the function to update dokumen data
-export const updateDokumenData = async (dokumenId, data) => {
+// Define the function to update dokumen SPK data
+export const updateDokumenSPKData = async (dokumenId, data) => {
     try {
         // Get the backend URL from environment variables
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
         // Make the API request
         const response = await axios.put(
-            `${backendUrl}/api/dokumen/update/${dokumenId}`,
+            `${backendUrl}/api/dokumen/spk/update/${dokumenId}`,
             data,
         )
 
@@ -418,27 +418,107 @@ export const updateDokumenData = async (dokumenId, data) => {
         return response.data
     } catch (error) {
         // Handle errors
-        console.error('Error updating dokumen data:', error)
+        console.error('Error updating dokumen SPK data:', error)
         throw error
     }
 }
 
-// Define the function to delete dokumen data
-export const deleteDokumenData = async dokumenId => {
+// Define the function to delete dokumen SPK data
+export const deleteDokumenSPKData = async dokumenId => {
     try {
         // Get the backend URL from environment variables
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
 
         // Make the API request to delete the dokumen
         const response = await axios.delete(
-            `${backendUrl}/api/dokumen/delete/${dokumenId}`,
+            `${backendUrl}/api/dokumen/spk/delete/${dokumenId}`,
         )
 
         // Return the response data
         return response.data
     } catch (error) {
         // Handle errors
-        console.error('Error deleting dokumen data:', error)
+        console.error('Error deleting dokumen SPK data:', error)
+        throw error
+    }
+}
+
+// Define the function to fetch dokumen perjanjian data
+export const fetchDokumenPerjanjianData = async () => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.get(`${backendUrl}/api/dokumen/perjanjian`)
+
+        // Return the data from the response
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error fetching dokumen perjanjian data:', error)
+        throw error
+    }
+}
+
+// Define the function to post dokumen perjanjian data
+export const postDokumenPerjanjianData = async data => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.post(
+            `${backendUrl}/api/dokumen/perjanjian/store`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error posting dokumen perjanjian data:', error)
+        throw error
+    }
+}
+
+// Define the function to update dokumen perjanjian data
+export const updateDokumenPerjanjianData = async (dokumenId, data) => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.put(
+            `${backendUrl}/api/dokumen/perjanjian/update/${dokumenId}`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error updating dokumen perjanjian data:', error)
+        throw error
+    }
+}
+
+// Define the function to delete dokumen perjanjian data
+export const deleteDokumenPerjanjianData = async dokumenId => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request to delete the dokumen
+        const response = await axios.delete(
+            `${backendUrl}/api/dokumen/perjanjian/delete/${dokumenId}`,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error deleting dokumen perjanjian data:', error)
         throw error
     }
 }

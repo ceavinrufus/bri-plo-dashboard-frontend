@@ -3,6 +3,12 @@ import React, { createContext, useState } from 'react'
 // Create the context
 export const DokumenContext = createContext()
 
+export const DocumentType = {
+    SPK: 'spk',
+    JAMINAN: 'jaminan',
+    PERJANJIAN: 'perjanjian',
+}
+
 // Create a provider component
 export const DokumenProvider = ({ children }) => {
     const [dokumenData, setDokumenData] = useState([])

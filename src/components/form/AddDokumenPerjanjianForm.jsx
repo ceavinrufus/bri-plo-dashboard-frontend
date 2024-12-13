@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { postDokumenData } from '@/lib/actions'
+import { postDokumenPerjanjianData } from '@/lib/actions'
 import { transformDokumenDataForSubmit } from '@/lib/utils'
 import { DokumenPerjanjianFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
@@ -48,7 +48,7 @@ export function AddDokumenPerjanjianForm() {
             data,
         )
         try {
-            const response = await postDokumenData(transformedData)
+            const response = await postDokumenPerjanjianData(transformedData)
 
             toast({
                 title: 'Success',

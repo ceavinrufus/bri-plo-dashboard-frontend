@@ -7,15 +7,9 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
-import { AddDataForm } from '../form/AddDataForm'
 import { AddDokumenSPKForm } from '../form/AddDokumenSPKForm'
 import { AddDokumenPerjanjianForm } from '../form/AddDokumenPerjanjianForm'
-
-export const DocumentType = {
-    SPK: 'spk',
-    JAMINAN: 'jaminan',
-    PERJANJIAN: 'perjanjian',
-}
+import { DocumentType } from '../context/DokumenContext'
 
 export function AddDataSheet({ type }) {
     return (

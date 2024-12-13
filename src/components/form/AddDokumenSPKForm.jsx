@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { postDokumenData } from '@/lib/actions'
+import { postDokumenSPKData } from '@/lib/actions'
 import { formatDateYMD, transformDokumenDataForSubmit } from '@/lib/utils'
 import { DokumenSPKFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
@@ -54,7 +54,7 @@ export function AddDokumenSPKForm() {
             data,
         )
         try {
-            const response = await postDokumenData(transformedData)
+            const response = await postDokumenSPKData(transformedData)
 
             toast({
                 title: 'Success',

@@ -7,6 +7,7 @@ import {
     SheetTrigger,
 } from '@/components/ui/sheet'
 import { EditDokumenSPKForm } from '../form/EditDokumenSPKForm'
+import { DocumentType } from '../context/DokumenContext'
 
 export function EditDataSheet({ type, defaultValues }) {
     return (
