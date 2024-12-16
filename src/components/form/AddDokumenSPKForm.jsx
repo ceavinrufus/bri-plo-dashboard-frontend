@@ -64,6 +64,7 @@ export function AddDokumenSPKForm() {
             addDokumenSPK({
                 id: response.data.id,
                 ...transformedData,
+                spk: JSON.parse(transformedData.spk),
             })
         } catch (error) {
             toast({

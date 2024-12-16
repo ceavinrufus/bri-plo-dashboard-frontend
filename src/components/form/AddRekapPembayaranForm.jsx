@@ -74,6 +74,8 @@ export function AddRekapPembayaranForm() {
             addPembayaran({
                 id: response.data.id,
                 ...transformedData,
+                spk: JSON.parse(transformedData.spk),
+                invoice: JSON.parse(transformedData.invoice),
             })
         } catch (error) {
             toast({

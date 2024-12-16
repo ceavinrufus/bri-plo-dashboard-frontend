@@ -27,15 +27,15 @@ export function EditRekapPembayaranForm({ defaultValues }) {
             nomor_perjanjian: defaultValues.nomor_perjanjian || '',
             tanggal_perjanjian: defaultValues.tanggal_perjanjian || undefined,
             perihal: defaultValues.perihal || '',
-            nilai_spk: defaultValues.nilai_spk || '',
-            spk_currency: defaultValues.spk_currency || '',
-            spk_rate: defaultValues.spk_rate || '',
+            nilai_spk: defaultValues.spk?.amount,
+            spk_currency: defaultValues.spk?.currency,
+            spk_rate: defaultValues.spk?.rate,
             vendor: defaultValues.vendor || '',
             tkdn: defaultValues.tkdn || '',
             nomor_invoice: defaultValues.nomor_invoice || '',
-            nilai_invoice: defaultValues.nilai_invoice || '',
-            invoice_currency: defaultValues.invoice_currency || '',
-            invoice_rate: defaultValues.invoice_rate || '',
+            nilai_invoice: defaultValues.invoice?.amount,
+            invoice_currency: defaultValues.invoice?.currency,
+            invoice_rate: defaultValues.invoice?.rate,
             nomor_rekening: defaultValues.nomor_rekening || '',
             nota_fiat: defaultValues.nota_fiat || '',
             tanggal_fiat: defaultValues.tanggal_fiat || undefined,
@@ -72,6 +72,8 @@ export function EditRekapPembayaranForm({ defaultValues }) {
             })
             updatePembayaran(defaultValues.id, {
                 ...transformedData,
+                spk: JSON.parse(transformedData.spk),
+                invoice: JSON.parse(transformedData.invoice),
             })
         } catch (error) {
             toast({

@@ -72,6 +72,7 @@ export function EditDokumenSPKForm({ defaultValues }) {
             })
             updateDokumenSPK(defaultValues.id, {
                 ...transformedData,
+                spk: JSON.parse(transformedData.spk),
             })
         } catch (error) {
             toast({

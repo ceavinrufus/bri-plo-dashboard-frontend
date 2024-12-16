@@ -56,6 +56,7 @@ export function EditDokumenPerjanjianForm({ defaultValues }) {
             })
             updateDokumenPerjanjian(defaultValues.id, {
                 ...transformedData,
+                spk: JSON.parse(transformedData.spk),
             })
         } catch (error) {
             toast({

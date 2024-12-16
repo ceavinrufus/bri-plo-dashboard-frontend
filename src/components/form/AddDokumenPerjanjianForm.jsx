@@ -58,6 +58,7 @@ export function AddDokumenPerjanjianForm() {
             addDokumenPerjanjian({
                 id: response.data.id,
                 ...transformedData,
+                spk: JSON.parse(transformedData.spk),
             })
         } catch (error) {
             toast({

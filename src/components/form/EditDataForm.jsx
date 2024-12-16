@@ -76,7 +76,7 @@ export function EditDataForm({ defaultValues }) {
                 defaultValues.id,
                 transformedData,
             )
-            console.log(response.data)
+
             transformedData.nodin_plos = response.data.nodin_plos
             transformedData.nodin_users = response.data.nodin_users
             transformedData.nodin_ip_pengadaans =
