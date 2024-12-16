@@ -222,6 +222,36 @@ export const transformDokumenDataForSubmit = (previousData, data) => {
     return transformedData
 }
 
+export const transformRekapPembayaranSubmit = (previousData, data) => {
+    const transformedData = {
+        ...data,
+        spk: data.nilai_spk
+            ? JSON.stringify({
+                  rate: parseFloat(data.spk_rate),
+                  amount: parseFloat(data.nilai_spk),
+                  currency: data.spk_currency,
+              })
+            : null,
+        invoice: data.nilai_invoice
+            ? JSON.stringify({
+                  rate: parseFloat(data.invoice_rate),
+                  amount: parseFloat(data.nilai_invoice),
+                  currency: data.invoice_currency,
+              })
+            : null,
+        tanggal_spk: formatDateYMD(data.tanggal_spk),
+        pic_pc_id: previousData.pic_pc.id,
+        pic_pc: {
+            id: previousData.pic_pc.id,
+            name: previousData.pic_pc.name,
+        },
+        pic_pay_id: data.pic_pay_id,
+        pic_pay: data.pic_pay,
+    }
+
+    return transformedData
+}
+
 const emptyOrNullArray = array => {
     if (array.length === 0) {
         return []

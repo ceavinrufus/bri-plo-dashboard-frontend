@@ -1290,8 +1290,8 @@ export const monitoringDokumenSPKColumns = [
         cell: ({ row }) => (
             <div>
                 {convertToCurrencyString(
-                    row.getValue('spk').amount,
-                    row.getValue('spk').currency,
+                    row.getValue('spk')?.amount,
+                    row.getValue('spk')?.currency,
                 )}
             </div>
         ),
@@ -1744,8 +1744,8 @@ export const monitoringDokumenPerjanjianColumns = [
         cell: ({ row }) => (
             <div>
                 {convertToCurrencyString(
-                    row.getValue('spk').amount,
-                    row.getValue('spk').currency,
+                    row.getValue('spk')?.amount,
+                    row.getValue('spk')?.currency,
                 )}
             </div>
         ),
@@ -2050,8 +2050,8 @@ export const rekapPembayaranColumns = [
         cell: ({ row }) => (
             <div>
                 {convertToCurrencyString(
-                    row.getValue('spk').amount,
-                    row.getValue('spk').currency,
+                    row.getValue('spk')?.amount,
+                    row.getValue('spk')?.currency,
                 )}
             </div>
         ),
@@ -2117,8 +2117,8 @@ export const rekapPembayaranColumns = [
         cell: ({ row }) => (
             <div>
                 {convertToCurrencyString(
-                    row.getValue('invoice').amount,
-                    row.getValue('invoice').currency,
+                    row.getValue('invoice')?.amount,
+                    row.getValue('invoice')?.currency,
                 )}
             </div>
         ),

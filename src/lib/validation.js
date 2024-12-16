@@ -129,3 +129,31 @@ export const DokumenPerjanjianFormValidation = z.object({
     nomor_kontrak: z.string().min(1, { message: 'Nomor Kontrak is required.' }),
     tanggal_kontrak: z.union([z.string(), z.date()]),
 })
+
+// Pembayaran form validation
+export const RekapPembayaranFormValidation = z.object({
+    pic_pay_id: z.string().nullable().optional(),
+    tanggal_terima: z.union([z.string(), z.date()]).nullable().optional(),
+    nomor_spk: z.string(),
+    tanggal_spk: z.union([z.string(), z.date()]),
+    nomor_perjanjian: z.string().nullable().optional(),
+    tanggal_perjanjian: z.union([z.string(), z.date()]).nullable().optional(),
+    perihal: z.string().nullable().optional(),
+    nilai_spk: z.union([z.string(), z.number()]).nullable().optional(),
+    spk_currency: z.string().nullable().optional(),
+    spk_rate: z.union([z.string(), z.number()]).nullable().optional(),
+    vendor: z.string().nullable().optional(),
+    tkdn: z.union([z.string(), z.number()]).nullable().optional(),
+    nomor_invoice: z.string().nullable().optional(),
+    nilai_invoice: z.union([z.string(), z.number()]).nullable().optional(),
+    invoice_currency: z.string().nullable().optional(),
+    invoice_rate: z.union([z.string(), z.number()]).nullable().optional(),
+    nomor_rekening: z.string().nullable().optional(),
+    nota_fiat: z.string().nullable().optional(),
+    tanggal_fiat: z.union([z.string(), z.date()]).nullable().optional(),
+    sla: z.union([z.string(), z.date()]).nullable().optional(),
+    hari_pengerjaan: z.number().nullable().optional(),
+    status_pembayaran: z.string().nullable().optional(),
+    tanggal_pembayaran: z.union([z.string(), z.date()]).nullable().optional(),
+    keterangan: z.string().nullable().optional(),
+})

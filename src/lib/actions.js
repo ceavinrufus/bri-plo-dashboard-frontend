@@ -22,6 +22,24 @@ export const fetchUserData = async () => {
 }
 
 // Define the function to fetch data
+export const fetchUserDataByTim = async ({ tim }) => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.get(`${backendUrl}/api/users/tim/${tim}`)
+
+        // Return the data from the response
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error fetching data:', error)
+        throw error
+    }
+}
+
+// Define the function to fetch data
 export const fetchProjectData = async () => {
     try {
         // Get the backend URL from environment variables

@@ -7,9 +7,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
-import { AddDokumenSPKForm } from '../form/AddDokumenSPKForm'
-import { AddDokumenPerjanjianForm } from '../form/AddDokumenPerjanjianForm'
-import { DocumentType } from '../context/DokumenContext'
+import { AddRekapPembayaranForm } from '../form/AddRekapPembayaranForm'
 
 export function AddDataSheet() {
     return (
@@ -24,7 +22,7 @@ export function AddDataSheet() {
                         Fill in the form below to add new data.
                     </SheetDescription>
                 </SheetHeader>
-                {/* AddRekapPembayaranForm */}
+                <AddRekapPembayaranForm />
             </SheetContent>
         </Sheet>
     )

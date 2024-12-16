@@ -1,4 +1,5 @@
-import React, { createContext, useState } from 'react'
+import { fetchUserDataByTim } from '@/lib/actions'
+import React, { createContext, useEffect, useState } from 'react'
 
 // Create the context
 export const PembayaranContext = createContext()
@@ -6,6 +7,28 @@ export const PembayaranContext = createContext()
 // Create a provider component
 export const PembayaranProvider = ({ children }) => {
     const [pembayaranData, setPembayaranData] = useState([])
+    const [userOptions, setUserOptions] = useState([])
+
+    useEffect(() => {
+        const getUserOptions = async () => {
+            try {
+                const response = await fetchUserDataByTim({ tim: 'psg' })
+
+                const userOptionsMap = response.data
+                    ? response.data.map(user => ({
+                          value: user.id.toString(),
+                          label: user.name,
+                      }))
+                    : []
+
+                setUserOptions(userOptionsMap)
+            } catch (error) {
+                console.error('Error fetching user options:', error)
+            }
+        }
+
+        getUserOptions()
+    }, [])
 
     const addPembayaran = newData => {
         setPembayaranData([...pembayaranData, newData])
@@ -26,6 +49,7 @@ export const PembayaranProvider = ({ children }) => {
     return (
         <PembayaranContext.Provider
             value={{
+                userOptions,
                 pembayaranData,
                 addPembayaran,
                 removePembayaran,
