@@ -1,8 +1,23 @@
+'use client'
+
 import MonitoringDokumenPerjanjianTable from '@/components/monitoring-dokumen/MonitoringDokumenPerjanjianTable'
 import MonitoringDokumenSPKTable from '@/components/monitoring-dokumen/MonitoringDokumenSPKTable'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 const MonitoringDokumen = () => {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const [activeTab, setActiveTab] = useState('spk')
+
+    useEffect(() => {
+        const tab = searchParams.get('tab') || 'spk' // Default to 'spk' if no tab is provided
+        if (['spk', 'jaminan', 'perjanjian'].includes(tab)) {
+            setActiveTab(tab)
+        }
+    }, [searchParams])
+
     return (
         <div className="py-12">
             <div className="mx-auto sm:px-6 lg:px-8">
@@ -11,6 +26,11 @@ const MonitoringDokumen = () => {
                         <Tabs
                             orientation="vertical"
                             defaultValue="spk"
+                            value={activeTab}
+                            onValueChange={value => {
+                                setActiveTab(value)
+                                router.push(`?tab=${value}`)
+                            }}
                             className="space-y-4">
                             <div className="w-full overflow-x-auto pb-2">
                                 <TabsList>
