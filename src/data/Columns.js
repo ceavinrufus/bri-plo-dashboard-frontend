@@ -12,12 +12,14 @@ import { Button } from '@/components/ui/button'
 import { convertToCurrencyString } from '@/utils'
 import { EditDataSheet } from '@/components/proses-pengadaan/EditDataSheet'
 import { EditDataSheet as EditDokumenSheet } from '@/components/monitoring-dokumen/EditDataSheet'
+import { EditDataSheet as EditPembayaranSheet } from '@/components/rekap-pembayaran/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY, getLatestDate } from '@/lib/utils'
 import {
     deleteDokumenPerjanjianData,
     deleteDokumenSPKData,
     deletePengadaanData,
+    deleteRekapPembayaranData,
 } from '@/lib/actions'
 import { useContext } from 'react'
 import { PengadaanContext } from '@/components/context/PengadaanContext'
@@ -30,6 +32,7 @@ import {
     DocumentType,
     DokumenContext,
 } from '@/components/context/DokumenContext'
+import { PembayaranContext } from '@/components/context/PembayaranContext'
 
 const prosesPengadaanActions = (id = 'actions') => ({
     id,
@@ -207,6 +210,74 @@ const monitoringDokumenPerjanjianActions = (id = 'actions') => ({
                         type={DocumentType.PERJANJIAN}
                         defaultValues={dokumen}
                     />
+                </DropdownMenuContent>
+            </DropdownMenu>
+        )
+    },
+})
+
+const rekapPembayaranActions = (id = 'actions') => ({
+    id,
+    enableHiding: false,
+    cell: ({ row }) => {
+        const rekapPembayaran = row.original
+        const { removePembayaran } = useContext(PembayaranContext)
+
+        return (
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                        onClick={() =>
+                            navigator.clipboard.writeText(
+                                rekapPembayaran.nomor_spk,
+                            )
+                        }>
+                        Salin nomor SPK
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={() =>
+                            navigator.clipboard.writeText(
+                                rekapPembayaran.nomor_invoice,
+                            )
+                        }>
+                        Salin nomor invoice
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={async () => {
+                            try {
+                                await deleteRekapPembayaranData(
+                                    rekapPembayaran.id,
+                                )
+
+                                toast({
+                                    title: 'Success',
+                                    description:
+                                        'Data has been deleted successfully!',
+                                    status: 'success',
+                                })
+                                removePembayaran(rekapPembayaran.id)
+                            } catch (error) {
+                                toast({
+                                    title: 'Error',
+                                    description:
+                                        error.response?.data?.message ||
+                                        'An error occurred while deleting data.',
+                                    status: 'error',
+                                })
+                            }
+                        }}>
+                        Delete data rekap pembayaran
+                    </DropdownMenuItem>
+                    <EditPembayaranSheet defaultValues={rekapPembayaran} />
                 </DropdownMenuContent>
             </DropdownMenu>
         )
@@ -1821,6 +1892,408 @@ export const monitoringDokumenPerjanjianColumns = [
     },
     // Actions
     monitoringDokumenPerjanjianActions('actions2'),
+]
+
+export const rekapPembayaranColumns = [
+    // Select
+    {
+        id: 'select',
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && 'indeterminate')
+                }
+                onCheckedChange={value =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={value => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    // PIC PC
+    {
+        accessorKey: 'pic_pc',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC PC
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic_pc').name}</div>,
+    },
+    // Tanggal Terima
+    {
+        accessorKey: 'tanggal_terima',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Terima
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_terima'))}</div>
+        ),
+    },
+    // Nomor SPK
+    {
+        accessorKey: 'nomor_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_spk')}</div>,
+    },
+    // Tanggal SPK
+    {
+        accessorKey: 'tanggal_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_spk'))}</div>
+        ),
+    },
+    // Nomor Perjanjian
+    {
+        accessorKey: 'nomor_perjanjian',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor Perjanjian
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_perjanjian')}</div>,
+    },
+    // Tanggal Perjanjian
+    {
+        accessorKey: 'tanggal_perjanjian',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Perjanjian
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_perjanjian'))}</div>
+        ),
+    },
+    // Perihal
+    {
+        accessorKey: 'perihal',
+        header: ({ column }) => (
+            <div className="w-72 md:w-96">
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Perihal
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        ),
+        cell: ({ row }) => <div>{row.getValue('perihal')}</div>,
+    },
+    rekapPembayaranActions('actions1'),
+    // Nilai SPK
+    {
+        accessorKey: 'spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nilai SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {convertToCurrencyString(
+                    row.getValue('spk').amount,
+                    row.getValue('spk').currency,
+                )}
+            </div>
+        ),
+    },
+    // Vendor/Pelaksana Pekerjaan
+    {
+        accessorKey: 'vendor',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Vendor/Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('vendor')}</div>,
+    },
+    // TKDN
+    {
+        accessorKey: 'tkdn',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                TKDN
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('tkdn')}%</div>,
+    },
+    // Nomor Invoice
+    {
+        accessorKey: 'nomor_invoice',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor Invoice
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_invoice')}</div>,
+    },
+    // Nominal Invoice
+    {
+        accessorKey: 'invoice',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nominal Invoice
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {convertToCurrencyString(
+                    row.getValue('invoice').amount,
+                    row.getValue('invoice').currency,
+                )}
+            </div>
+        ),
+    },
+    // Invoice Currency
+    {
+        accessorKey: 'invoice_currency',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Invoice Currency
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('invoice_currency')}</div>,
+    },
+    // Invoice Rate
+    {
+        accessorKey: 'invoice_rate',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Invoice Rate
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('invoice_rate')}</div>,
+    },
+    // Nomor Rekening
+    {
+        accessorKey: 'nomor_rekening',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor Rekening
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_rekening')}</div>,
+    },
+    // PIC Pay
+    {
+        accessorKey: 'pic_pay',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC Pay
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic_pay').name}</div>,
+    },
+    // Nota Fiat
+    {
+        accessorKey: 'nota_fiat',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nota Fiat
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nota_fiat')}</div>,
+    },
+    // Tanggal Fiat
+    {
+        accessorKey: 'tanggal_fiat',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Fiat
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_fiat'))}</div>
+        ),
+    },
+    // SLA
+    {
+        accessorKey: 'sla',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                SLA
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('sla')}</div>,
+    },
+    // Hari Pengerjaan
+    {
+        accessorKey: 'hari_pengerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Hari Pengerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('hari_pengerjaan')}</div>,
+    },
+    // Status Pembayaran
+    {
+        accessorKey: 'status_pembayaran',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Status Pembayaran
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('status_pembayaran')}</div>,
+    },
+    // Tanggal Pembayaran
+    {
+        accessorKey: 'tanggal_pembayaran',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Pembayaran
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_pembayaran'))}</div>
+        ),
+    },
+    // Keterangan
+    {
+        accessorKey: 'keterangan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Keterangan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('keterangan')}</div>,
+    },
+    // Actions
+    rekapPembayaranActions('actions2'),
 ]
 
 export const userColumns = [

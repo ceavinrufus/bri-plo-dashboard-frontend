@@ -10,6 +10,7 @@ import { PengadaanProvider } from '@/components/context/PengadaanContext'
 import { ProjectProvider } from '@/components/context/ProjectContext'
 import { DokumenProvider } from '@/components/context/DokumenContext'
 import { HariLiburProvider } from '@/components/context/HariLiburContext'
+import { PembayaranProvider } from '@/components/context/PembayaranContext'
 
 const AppLayout = ({ children }) => {
     const { user } = useAuth({ middleware: 'auth' })
@@ -28,9 +29,11 @@ const AppLayout = ({ children }) => {
                 <HariLiburProvider>
                     <PengadaanProvider>
                         <DokumenProvider>
-                            <ProjectProvider>
-                                <div>{children}</div>
-                            </ProjectProvider>
+                            <PembayaranProvider>
+                                <ProjectProvider>
+                                    <div>{children}</div>
+                                </ProjectProvider>
+                            </PembayaranProvider>
                         </DokumenProvider>
                     </PengadaanProvider>
                 </HariLiburProvider>

@@ -522,3 +522,83 @@ export const deleteDokumenPerjanjianData = async dokumenId => {
         throw error
     }
 }
+
+// Define the function to fetch rekap pembayaran data
+export const fetchRekapPembayaranData = async () => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.get(`${backendUrl}/api/rekap-pembayaran`)
+
+        // Return the data from the response
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error fetching rekap pembayaran data:', error)
+        throw error
+    }
+}
+
+// Define the function to post rekap pembayaran data
+export const postRekapPembayaranData = async data => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.post(
+            `${backendUrl}/api/rekap-pembayaran/store`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error posting rekap pembayaran data:', error)
+        throw error
+    }
+}
+
+// Define the function to update rekap pembayaran data
+export const updateRekapPembayaranData = async (rekapPembayaranId, data) => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.put(
+            `${backendUrl}/api/rekap-pembayaran/update/${rekapPembayaranId}`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error updating rekap pembayaran data:', error)
+        throw error
+    }
+}
+
+// Define the function to delete rekap pembayaran data
+export const deleteRekapPembayaranData = async rekapPembayaranId => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request to delete the rekap pembayaran
+        const response = await axios.delete(
+            `${backendUrl}/api/rekap-pembayaran/delete/${rekapPembayaranId}`,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error deleting rekap pembayaran data:', error)
+        throw error
+    }
+}
