@@ -11,7 +11,7 @@ import { DokumenContext } from '../context/DokumenContext'
 import { DokumenSPKFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
 import DokumenSPKForm from './DokumenSPKForm'
-import { transformDokumenDataForSubmit } from '@/lib/utils'
+import { transformDokumenSpkDataForSubmit } from '@/lib/utils'
 
 export function EditDokumenSPKForm({ defaultValues }) {
     const { updateDokumenSPK } = useContext(DokumenContext)
@@ -54,7 +54,7 @@ export function EditDokumenSPKForm({ defaultValues }) {
 
     async function onSubmit(data) {
         setIsProcessing(true)
-        const transformedData = transformDokumenDataForSubmit(
+        const transformedData = transformDokumenSpkDataForSubmit(
             defaultValues,
             data,
         )

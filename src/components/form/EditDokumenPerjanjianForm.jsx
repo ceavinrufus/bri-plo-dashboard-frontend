@@ -11,7 +11,7 @@ import { DokumenContext } from '../context/DokumenContext'
 import { DokumenPerjanjianFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
 import DokumenPerjanjianForm from './DokumenPerjanjianForm'
-import { transformDokumenDataForSubmit } from '@/lib/utils'
+import { transformDokumenPerjanjianDataForSubmit } from '@/lib/utils'
 
 export function EditDokumenPerjanjianForm({ defaultValues }) {
     const { updateDokumenPerjanjian } = useContext(DokumenContext)
@@ -38,7 +38,7 @@ export function EditDokumenPerjanjianForm({ defaultValues }) {
 
     async function onSubmit(data) {
         setIsProcessing(true)
-        const transformedData = transformDokumenDataForSubmit(
+        const transformedData = transformDokumenPerjanjianDataForSubmit(
             defaultValues,
             data,
         )

@@ -108,7 +108,10 @@ export const DokumenSPKFormValidation = z.object({
 
 // Dokumen Perjanjian form validation
 export const DokumenPerjanjianFormValidation = z.object({
-    tanggal_spk_diterima: z.union([z.string(), z.date()]).nullable().optional(),
+    tanggal_permohonan_diterima: z
+        .union([z.string(), z.date()])
+        .nullable()
+        .optional(),
     tim_pemrakarsa: z
         .string()
         .min(1, { message: 'Tim Pemrakarsa is required.' }),

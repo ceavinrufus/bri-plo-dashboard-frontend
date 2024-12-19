@@ -13,7 +13,7 @@ const GET_DOKUMEN_PERJANJIANS = gql`
     query GetDokumenPerjanjians {
         dokumen_perjanjians {
             id
-            tanggal_spk_diterima
+            tanggal_permohonan_diterima
             tim_pemrakarsa
             pic_pengadaan {
                 id

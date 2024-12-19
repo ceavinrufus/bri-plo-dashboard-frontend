@@ -6,7 +6,7 @@ import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { postDokumenSPKData } from '@/lib/actions'
-import { formatDateYMD, transformDokumenDataForSubmit } from '@/lib/utils'
+import { formatDateYMD, transformDokumenSpkDataForSubmit } from '@/lib/utils'
 import { DokumenSPKFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
@@ -20,7 +20,7 @@ export function AddDokumenSPKForm() {
     const { user } = useAuth({ middleware: 'auth' })
 
     const defaultValues = {
-        tanggal_spk_diterima: undefined,
+        tanggal_spk_diterima: new Date().toISOString().split('T')[0],
         tim_pemrakarsa: '',
         nomor_spk: '',
         tanggal_spk: undefined,
@@ -49,7 +49,7 @@ export function AddDokumenSPKForm() {
 
     async function onSubmit(data) {
         setIsProcessing(true)
-        const transformedData = transformDokumenDataForSubmit(
+        const transformedData = transformDokumenSpkDataForSubmit(
             defaultValues,
             data,
         )

@@ -79,6 +79,12 @@ const DokumenPerjanjianForm = ({ form, onSubmit, children }) => {
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-6">
             <CustomFormField
+                fieldType={FormFieldType.DATE_PICKER}
+                control={form.control}
+                name="tanggal_permohonan_diterima"
+                label="Tanggal Permohonan Diterima"
+            />
+            <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
                 name="nomor_spk"

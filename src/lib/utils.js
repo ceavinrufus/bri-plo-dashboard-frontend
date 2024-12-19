@@ -194,9 +194,10 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
     return transformedData
 }
 
-export const transformDokumenDataForSubmit = (previousData, data) => {
+export const transformDokumenSpkDataForSubmit = (previousData, data) => {
     const transformedData = {
         ...data,
+        tanggal_spk_diterima: formatDateYMD(data.tanggal_spk_diterima),
         spk: data.nilai_spk
             ? JSON.stringify({
                   rate: parseFloat(data.spk_rate),
@@ -217,6 +218,38 @@ export const transformDokumenDataForSubmit = (previousData, data) => {
             address: data.alamat_pelaksana_pekerjaan || '',
             phone_number: data.no_telpon_pelaksana_pekerjaan || '',
         }),
+    }
+
+    return transformedData
+}
+
+export const transformDokumenPerjanjianDataForSubmit = (previousData, data) => {
+    const transformedData = {
+        ...data,
+        tanggal_permohonan_diterima: formatDateYMD(
+            data.tanggal_permohonan_diterima,
+        ),
+        spk: data.nilai_spk
+            ? JSON.stringify({
+                  rate: parseFloat(data.spk_rate),
+                  amount: parseFloat(data.nilai_spk),
+                  currency: data.spk_currency,
+              })
+            : null,
+        tanggal_spk: formatDateYMD(data.tanggal_spk),
+        pic_legal_id: previousData.pic_legal.id,
+        pic_legal: {
+            id: previousData.pic_legal.id,
+            name: previousData.pic_legal.name,
+        },
+        pic_pengadaan_id: JSON.parse(data.pic_pengadaan).id,
+        pic_pengadaan: data.pic_pengadaan,
+        pelaksana_pekerjaan: JSON.stringify({
+            name: data.pelaksana_pekerjaan || '',
+            address: data.alamat_pelaksana_pekerjaan || '',
+            phone_number: data.no_telpon_pelaksana_pekerjaan || '',
+        }),
+        tanggal_kontrak: formatDateYMD(data.tanggal_kontrak),
     }
 
     return transformedData

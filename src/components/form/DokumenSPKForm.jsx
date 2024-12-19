@@ -106,6 +106,12 @@ const DokumenSPKForm = ({ form, onSubmit, defaultValues, children }) => {
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-6">
             <CustomFormField
+                fieldType={FormFieldType.DATE_PICKER}
+                control={form.control}
+                name="tanggal_spk_diterima"
+                label="Tanggal SPK Diterima"
+            />
+            <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={form.control}
                 name="nomor_spk"

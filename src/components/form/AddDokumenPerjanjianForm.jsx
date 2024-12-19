@@ -6,7 +6,7 @@ import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { postDokumenPerjanjianData } from '@/lib/actions'
-import { transformDokumenDataForSubmit } from '@/lib/utils'
+import { transformDokumenPerjanjianDataForSubmit } from '@/lib/utils'
 import { DokumenPerjanjianFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
@@ -20,7 +20,7 @@ export function AddDokumenPerjanjianForm() {
     const { user } = useAuth({ middleware: 'auth' })
 
     const defaultValues = {
-        tanggal_spk_diterima: undefined,
+        tanggal_permohonan_diterima: new Date().toISOString().split('T')[0],
         tim_pemrakarsa: '',
         nomor_spk: '',
         tanggal_spk: undefined,
@@ -43,7 +43,7 @@ export function AddDokumenPerjanjianForm() {
 
     async function onSubmit(data) {
         setIsProcessing(true)
-        const transformedData = transformDokumenDataForSubmit(
+        const transformedData = transformDokumenPerjanjianDataForSubmit(
             defaultValues,
             data,
         )
