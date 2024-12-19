@@ -1145,6 +1145,14 @@ export const prosesPengadaanColumns = [
 ]
 
 export const monitoringDokumenSPKColumns = [
+    // Tanggal Penyerahan Dokumen
+    {
+        accessorKey: 'tanggal_penyerahan_dokumen',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
     // Select
     {
         id: 'select',
@@ -1296,7 +1304,7 @@ export const monitoringDokumenSPKColumns = [
             </div>
         ),
     },
-    // Jangka Waktu
+    // Jangka Waktu Pekerjaan
     {
         accessorKey: 'jangka_waktu',
         header: ({ column }) => (
@@ -1305,7 +1313,7 @@ export const monitoringDokumenSPKColumns = [
                 onClick={() =>
                     column.toggleSorting(column.getIsSorted() === 'asc')
                 }>
-                Jangka Waktu
+                Jangka Waktu Pekerjaan
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
@@ -1453,27 +1461,84 @@ export const monitoringDokumenSPKColumns = [
         ),
         cell: ({ row }) => <div>{row.getValue('identitas_pengambil')}</div>,
     },
-    // Tanggal Jatuh Tempo
+    // SLA Pengambilan SPK
     {
-        accessorKey: 'tanggal_jatuh_tempo',
+        accessorKey: 'sla_pengambilan_spk',
         header: ({ column }) => (
             <Button
                 variant="ghost"
                 onClick={() =>
                     column.toggleSorting(column.getIsSorted() === 'asc')
                 }>
-                Tanggal Jatuh Tempo
+                SLA Pengambilan SPK
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
         cell: ({ row }) => {
+            const { calculateWorkingDays } = useContext(HariLiburContext)
+
+            const tanggal_spk = new Date(row.getValue('tanggal_spk'))
+            const diff = calculateWorkingDays(
+                tanggal_spk,
+                row.getValue('tanggal_pengambilan'),
+            )
+            const diffWithToday = calculateWorkingDays(
+                tanggal_spk,
+                new Date().toISOString().split('T')[0],
+            )
+            const isOverSla = row.getValue('tanggal_pengambilan')
+                ? diff > 7
+                : diffWithToday > 7
+
+            return (
+                <div className={`${isOverSla ? 'text-red-500' : ''}`}>
+                    {row.getValue('tanggal_pengambilan')
+                        ? diff
+                        : `Ongoing (${diffWithToday} hari)`}{' '}
+                    {diff && row.getValue('tanggal_pengambilan') ? 'hari' : ''}
+                </div>
+            )
+        },
+    },
+    // SLA Pengembalian SPK
+    {
+        accessorKey: 'sla_pengembalian_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                SLA Pengembalian SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const { calculateWorkingDays } = useContext(HariLiburContext)
+
             const tanggal_pengambilan = new Date(
                 row.getValue('tanggal_pengambilan'),
             )
-            const jatuh_tempo = tanggal_pengambilan.setDate(
-                tanggal_pengambilan.getDate() + 7,
+            const diff = calculateWorkingDays(
+                tanggal_pengambilan,
+                row.getValue('tanggal_pengembalian'),
             )
-            return <div>{formatDateDMY(jatuh_tempo)}</div>
+            const diffWithToday = calculateWorkingDays(
+                tanggal_pengambilan,
+                new Date().toISOString().split('T')[0],
+            )
+            const isOverSla = row.getValue('tanggal_pengembalian')
+                ? diff > 7
+                : diffWithToday > 7
+
+            return (
+                <div className={`${isOverSla ? 'text-red-500' : ''}`}>
+                    {row.getValue('tanggal_pengembalian')
+                        ? diff
+                        : `Ongoing (${diffWithToday} hari)`}{' '}
+                    {diff && row.getValue('tanggal_pengembalian') ? 'hari' : ''}
+                </div>
+            )
         },
     },
     // Tanggal Pengembalian
@@ -1525,16 +1590,16 @@ export const monitoringDokumenSPKColumns = [
         ),
         cell: ({ row }) => <div>{row.getValue('tkdn_percentage')}</div>,
     },
-    // Tanggal Penyerahan Dokumen
+    // Tanggal Penyerahan Jaminan
     {
-        accessorKey: 'tanggal_penyerahan_dokumen',
+        accessorKey: 'tanggal_penyerahan_jaminan',
         header: ({ column }) => (
             <Button
                 variant="ghost"
                 onClick={() =>
                     column.toggleSorting(column.getIsSorted() === 'asc')
                 }>
-                Tanggal Penyerahan Dokumen
+                Tanggal Penyerahan Jaminan
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),

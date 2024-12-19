@@ -75,7 +75,6 @@ const DashboardMetrics = ({ metrics }) => {
                 </CardHeader>
                 <MetricContent
                     value={metrics.costEfficiencyAnggaran.toFixed(2)}
-                    target={metrics.target}
                 />
             </Card>
             <Card>

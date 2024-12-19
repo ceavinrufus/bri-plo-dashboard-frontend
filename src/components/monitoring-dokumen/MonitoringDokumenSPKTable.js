@@ -91,6 +91,9 @@ const MonitoringDokumenSPKTable = () => {
                             placeholder: 'Search nomor SPK...',
                         },
                     ]}
+                    defaultColumnVisibility={{
+                        tanggal_penyerahan_dokumen: false,
+                    }}
                     columns={monitoringDokumenSPKColumns}
                     onDataFilter={setFilteredData}
                 />

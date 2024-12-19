@@ -34,9 +34,8 @@ const MonitoringDokumen = () => {
                             className="space-y-4">
                             <div className="w-full overflow-x-auto pb-2">
                                 <TabsList>
-                                    <TabsTrigger value="spk">SPK</TabsTrigger>
-                                    <TabsTrigger value="jaminan">
-                                        Jaminan
+                                    <TabsTrigger value="spk">
+                                        SPK & Jaminan
                                     </TabsTrigger>
                                     <TabsTrigger value="perjanjian">
                                         Perjanjian
@@ -45,9 +44,6 @@ const MonitoringDokumen = () => {
                             </div>
                             <TabsContent value="spk" className="space-y-4">
                                 <MonitoringDokumenSPKTable />
-                            </TabsContent>
-                            <TabsContent value="jaminan" className="space-y-4">
-                                Jaminan
                             </TabsContent>
                             <TabsContent
                                 value="perjanjian"
