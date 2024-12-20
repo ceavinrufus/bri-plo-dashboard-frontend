@@ -86,7 +86,6 @@ export const DokumenSPKFormValidation = z.object({
     pelaksana_pekerjaan: z.string().nullable().optional(),
     alamat_pelaksana_pekerjaan: z.string().nullable().optional(),
     no_telpon_pelaksana_pekerjaan: z.string().nullable().optional(),
-    pic_pengadaan: z.string().nullable().optional(),
     pic_pelaksana_pekerjaan: z.string().nullable().optional(),
     dokumen_pelengkap: z.array(z.string()).nullable().optional(),
     tanggal_info_ke_vendor: z

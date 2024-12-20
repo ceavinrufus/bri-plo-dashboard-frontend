@@ -211,8 +211,10 @@ export const transformDokumenSpkDataForSubmit = (previousData, data) => {
             id: previousData.pic_legal.id,
             name: previousData.pic_legal.name,
         },
-        pic_pengadaan_id: JSON.parse(data.pic_pengadaan).id,
-        pic_pengadaan: data.pic_pengadaan,
+        pic_pengadaan_id: data.pic_pengadaan
+            ? JSON.parse(data.pic_pengadaan).id
+            : previousData.pic_pengadaan.id,
+        pic_pengadaan: data.pic_pengadaan || previousData.pic_pengadaan,
         pelaksana_pekerjaan: JSON.stringify({
             name: data.pelaksana_pekerjaan || '',
             address: data.alamat_pelaksana_pekerjaan || '',
@@ -242,8 +244,10 @@ export const transformDokumenPerjanjianDataForSubmit = (previousData, data) => {
             id: previousData.pic_legal.id,
             name: previousData.pic_legal.name,
         },
-        pic_pengadaan_id: JSON.parse(data.pic_pengadaan).id,
-        pic_pengadaan: data.pic_pengadaan,
+        pic_pengadaan_id: data.pic_pengadaan
+            ? JSON.parse(data.pic_pengadaan).id
+            : previousData.pic_pengadaan.id,
+        pic_pengadaan: data.pic_pengadaan || previousData.pic_pengadaan,
         pelaksana_pekerjaan: JSON.stringify({
             name: data.pelaksana_pekerjaan || '',
             address: data.alamat_pelaksana_pekerjaan || '',
