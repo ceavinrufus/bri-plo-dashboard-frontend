@@ -1144,10 +1144,85 @@ export const prosesPengadaanColumns = [
     prosesPengadaanActions('actions2'),
 ]
 
+const dokumenSPKJaminanColumn = type => ({
+    accessorKey: type,
+    header: ({ column }) => (
+        <div className="w-72 md:w-96">
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }
+                className="capitalize">
+                {type.replace(/_/g, ' ')}
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        </div>
+    ),
+    cell: ({ row }) => {
+        const jaminans = row.getValue('dokumen_jaminans')[type]
+        let jaminansKey = Object.keys(
+            row.getValue('dokumen_jaminans')[type] || {},
+        )
+        jaminansKey = jaminansKey.filter(
+            key => key !== 'type' && key !== '__typename' && key !== 'id',
+        )
+        return (
+            <div className="">
+                {jaminansKey &&
+                    jaminansKey.map(key => (
+                        <div key={key}>
+                            {key === 'tanggal_diterima' ? (
+                                <p>
+                                    <strong>Tanggal Diterima:</strong>{' '}
+                                    {formatDateDMY(jaminans[key])}
+                                </p>
+                            ) : key === 'waktu_mulai' ? (
+                                <p>
+                                    <strong>Waktu Mulai:</strong>{' '}
+                                    {formatDateDMY(jaminans[key])}
+                                </p>
+                            ) : key === 'waktu_berakhir' ? (
+                                <p>
+                                    <strong>Waktu Berakhir:</strong>{' '}
+                                    {formatDateDMY(jaminans[key])}
+                                </p>
+                            ) : key === 'nilai' ? (
+                                <p>
+                                    <strong>Nilai:</strong>{' '}
+                                    {convertToCurrencyString(
+                                        jaminans[key]?.amount,
+                                        jaminans[key]?.currency,
+                                    )}
+                                </p>
+                            ) : (
+                                <p>
+                                    <strong className="capitalize">
+                                        {key}:
+                                    </strong>{' '}
+                                    {jaminans[key]}
+                                </p>
+                            )}
+                        </div>
+                    ))}
+            </div>
+        )
+    },
+    enableSorting: false,
+})
+
 export const monitoringDokumenSPKColumns = [
     // Tanggal Penyerahan Dokumen
     {
         accessorKey: 'tanggal_penyerahan_dokumen',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
+    // Dokumen Jaminans
+    {
+        accessorKey: 'dokumen_jaminans',
         header: () => null, // No header for the shadow column
         cell: () => null, // No cell rendering for the shadow column
         enableSorting: false,
@@ -1446,6 +1521,7 @@ export const monitoringDokumenSPKColumns = [
             <div>{formatDateDMY(row.getValue('tanggal_pengambilan'))}</div>
         ),
     },
+    monitoringDokumenSPKActions('actions2'),
     // Identitas Pengambil
     {
         accessorKey: 'identitas_pengambil',
@@ -1624,6 +1700,7 @@ export const monitoringDokumenSPKColumns = [
         ),
         cell: ({ row }) => <div>{row.getValue('penerima_dokumen')}</div>,
     },
+    monitoringDokumenSPKActions('actions3'),
     // PIC Legal
     {
         accessorKey: 'pic_legal',
@@ -1657,8 +1734,16 @@ export const monitoringDokumenSPKColumns = [
         cell: ({ row }) => <div>{row.getValue('catatan')}</div>,
         enableSorting: false,
     },
+    // Jaminan Uang Muka
+    dokumenSPKJaminanColumn('jaminan_uang_muka'),
+    // Jaminan Pelaksanaan
+    dokumenSPKJaminanColumn('jaminan_pembayaran'),
+    // Jaminan Pemeliharaan
+    dokumenSPKJaminanColumn('jaminan_pelaksanaan'),
+    // Jaminan Pemeliharaan
+    dokumenSPKJaminanColumn('jaminan_pemeliharaan'),
     // Actions
-    monitoringDokumenSPKActions('actions2'),
+    monitoringDokumenSPKActions('actions4'),
 ]
 
 export const monitoringDokumenPerjanjianColumns = [

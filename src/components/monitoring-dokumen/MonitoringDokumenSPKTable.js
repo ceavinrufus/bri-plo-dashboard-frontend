@@ -39,6 +39,21 @@ const GET_DOKUMEN_SPKS = gql`
             tkdn_percentage
             tanggal_penyerahan_dokumen
             penerima_dokumen
+            dokumen_jaminans {
+                id
+                penerbit
+                dokumen_keabsahan
+                nilai {
+                    currency
+                    amount
+                    rate
+                }
+                nomor_jaminan
+                tanggal_diterima
+                type
+                waktu_berakhir
+                waktu_mulai
+            }
             pic_legal {
                 name
             }
@@ -57,8 +72,29 @@ const MonitoringDokumenSPKTable = () => {
     const { loading, error, data } = useQuery(GET_DOKUMEN_SPKS, {
         client,
         onCompleted: data => {
-            // console.log(data.dokumen_spks)
-            setDokumenSPKData(data.dokumen_spks)
+            const transformedData = data.dokumen_spks.map(spk => {
+                const transformedDokumenJaminans = spk.dokumen_jaminans.reduce(
+                    (acc, dokumenJaminan) => {
+                        const { type, ...rest } = dokumenJaminan
+                        const typeMapping = {
+                            JUM: 'jaminan_uang_muka',
+                            JBayar: 'jaminan_pembayaran',
+                            Jampel: 'jaminan_pelaksanaan',
+                            JPelihara: 'jaminan_pemeliharaan',
+                        }
+                        const mappedType = typeMapping[type] || type
+                        acc[mappedType] = rest
+                        return acc
+                    },
+                    {},
+                )
+                return {
+                    ...spk,
+                    dokumen_jaminans: transformedDokumenJaminans,
+                }
+            })
+
+            setDokumenSPKData(transformedData)
         },
         onError: error => console.error(error),
     })
