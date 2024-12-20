@@ -1,5 +1,6 @@
 'use client'
 
+import MonitoringDokumenJaminanTable from '@/components/monitoring-dokumen/MonitoringDokumenJaminanTable'
 import MonitoringDokumenPerjanjianTable from '@/components/monitoring-dokumen/MonitoringDokumenPerjanjianTable'
 import MonitoringDokumenSPKTable from '@/components/monitoring-dokumen/MonitoringDokumenSPKTable'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -37,6 +38,9 @@ const MonitoringDokumen = () => {
                                     <TabsTrigger value="spk">
                                         SPK & Jaminan
                                     </TabsTrigger>
+                                    <TabsTrigger value="jaminan">
+                                        Jaminan
+                                    </TabsTrigger>
                                     <TabsTrigger value="perjanjian">
                                         Perjanjian
                                     </TabsTrigger>
@@ -44,6 +48,9 @@ const MonitoringDokumen = () => {
                             </div>
                             <TabsContent value="spk" className="space-y-4">
                                 <MonitoringDokumenSPKTable />
+                            </TabsContent>
+                            <TabsContent value="jaminan" className="space-y-4">
+                                <MonitoringDokumenJaminanTable />
                             </TabsContent>
                             <TabsContent
                                 value="perjanjian"

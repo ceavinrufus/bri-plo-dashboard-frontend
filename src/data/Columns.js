@@ -1198,13 +1198,52 @@ const dokumenSPKJaminanColumn = type => ({
                             ) : (
                                 <p>
                                     <strong className="capitalize">
-                                        {key}:
+                                        {key.replace(/_/g, ' ')}:
                                     </strong>{' '}
                                     {jaminans[key]}
                                 </p>
                             )}
                         </div>
                     ))}
+            </div>
+        )
+    },
+    enableSorting: false,
+})
+
+const jaminanAttributes = (type, attribute) => ({
+    accessorKey: attribute + '_' + type,
+    header: ({ column }) => (
+        <div className="w-72 md:w-96">
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }
+                className="capitalize">
+                {(attribute + '_' + type).replace(/_/g, ' ')}
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        </div>
+    ),
+    cell: ({ row }) => {
+        const jaminans = row.getValue('dokumen_jaminans')[type]
+
+        if (!jaminans) return
+        return (
+            <div className="">
+                {attribute === 'tanggal_diterima'
+                    ? formatDateDMY(jaminans[attribute])
+                    : attribute === 'waktu_mulai'
+                      ? formatDateDMY(jaminans[attribute])
+                      : attribute === 'waktu_berakhir'
+                        ? formatDateDMY(jaminans[attribute])
+                        : attribute === 'nilai'
+                          ? convertToCurrencyString(
+                                jaminans[attribute]?.amount,
+                                jaminans[attribute]?.currency,
+                            )
+                          : jaminans[attribute]}
             </div>
         )
     },
@@ -1742,6 +1781,127 @@ export const monitoringDokumenSPKColumns = [
     dokumenSPKJaminanColumn('jaminan_pelaksanaan'),
     // Jaminan Pemeliharaan
     dokumenSPKJaminanColumn('jaminan_pemeliharaan'),
+    // Actions
+    monitoringDokumenSPKActions('actions4'),
+]
+
+export const monitoringDokumenJaminanColumns = [
+    // Dokumen Jaminans
+    {
+        accessorKey: 'dokumen_jaminans',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
+    // Select
+    {
+        id: 'select',
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && 'indeterminate')
+                }
+                onCheckedChange={value =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={value => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    // Nomor SPK
+    {
+        accessorKey: 'nomor_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_spk')}</div>,
+    },
+    // Tanggal SPK
+    {
+        accessorKey: 'tanggal_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_spk'))}</div>
+        ),
+    },
+    // Jenis Pekerjaan
+    {
+        accessorKey: 'jenis_pekerjaan',
+        header: ({ column }) => (
+            <div className="w-72 md:w-96">
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Jenis Pekerjaan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        ),
+        cell: ({ row }) => <div>{row.getValue('jenis_pekerjaan')}</div>,
+        enableHiding: false,
+    },
+    monitoringDokumenSPKActions('actions1'),
+    // PIC Legal
+    {
+        accessorKey: 'pic_legal',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC Legal
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic_legal').name}</div>,
+    },
+    // Jaminan
+    ...[
+        'jaminan_uang_muka',
+        'jaminan_pembayaran',
+        'jaminan_pelaksanaan',
+        'jaminan_pemeliharaan',
+    ].flatMap(type =>
+        [
+            'tanggal_diterima',
+            'penerbit',
+            'nomor_jaminan',
+            'dokumen_keabsahan',
+            'nilai',
+            'waktu_mulai',
+            'waktu_berakhir',
+        ].map(attribute => jaminanAttributes(type, attribute)),
+    ),
     // Actions
     monitoringDokumenSPKActions('actions4'),
 ]

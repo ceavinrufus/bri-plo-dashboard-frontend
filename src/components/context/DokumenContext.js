@@ -13,6 +13,7 @@ export const DocumentType = {
 export const DokumenProvider = ({ children }) => {
     const [dokumenSPKData, setDokumenSPKData] = useState([])
     const [dokumenPerjanjianData, setDokumenPerjanjianData] = useState([])
+    const [dokumenJaminanData, setDokumenJaminanData] = useState([])
 
     const addDokumenSPK = newData => {
         setDokumenSPKData([...dokumenSPKData, newData])
@@ -48,11 +49,28 @@ export const DokumenProvider = ({ children }) => {
         )
     }
 
+    const addDokumenJaminan = newData => {
+        setDokumenJaminanData([...dokumenJaminanData, newData])
+    }
+
+    const removeDokumenJaminan = id => {
+        setDokumenJaminanData(dokumenJaminanData.filter(data => data.id !== id))
+    }
+
+    const updateDokumenJaminan = (id, updatedFields) => {
+        setDokumenJaminanData(
+            dokumenJaminanData.map(data =>
+                data.id === id ? { ...data, ...updatedFields } : data,
+            ),
+        )
+    }
+
     return (
         <DokumenContext.Provider
             value={{
                 dokumenSPKData,
                 dokumenPerjanjianData,
+                dokumenJaminanData,
                 addDokumenSPK,
                 removeDokumenSPK,
                 updateDokumenSPK,
@@ -61,6 +79,10 @@ export const DokumenProvider = ({ children }) => {
                 removeDokumenPerjanjian,
                 updateDokumenPerjanjian,
                 setDokumenPerjanjianData,
+                addDokumenJaminan,
+                removeDokumenJaminan,
+                updateDokumenJaminan,
+                setDokumenJaminanData,
             }}>
             {children}
         </DokumenContext.Provider>
