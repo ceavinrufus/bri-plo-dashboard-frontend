@@ -71,7 +71,6 @@ export function EditDataForm({ defaultValues }) {
         )
 
         try {
-            console.log(transformedData)
             const response = await updatePengadaanData(
                 defaultValues.id,
                 transformedData,

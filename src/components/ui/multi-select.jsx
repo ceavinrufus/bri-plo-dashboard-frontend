@@ -72,7 +72,6 @@ export const MultiSelect = React.forwardRef(
         const [newOptions, setNewOptions] = React.useState(options)
 
         const handleInputKeyDown = event => {
-            console.log(selectedValues)
             if (event.key === 'Enter') {
                 const inputValue = event.currentTarget.value.trim()
                 if (inputValue && !selectedValues.includes(inputValue)) {

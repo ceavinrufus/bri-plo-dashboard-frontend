@@ -9,6 +9,8 @@ import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import client from '@/lib/apolloClient'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 
 const GET_DOKUMEN_JAMINANS = gql`
     query GetDokumenJaminans {
@@ -59,7 +61,6 @@ const DokumenDataTable = ({ type }) => {
         acc[`waktu_berakhir_${key}`] = type === key
         return acc
     }, {})
-    console.log(columnVisibility)
 
     return (
         <>
@@ -98,6 +99,22 @@ const MonitoringDokumenJaminanTable = () => {
     const { setDokumenJaminanData } = useContext(DokumenContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [activeTab, setActiveTab] = useState('jaminan_uang_muka')
+    const searchParams = useSearchParams()
+    const router = useRouter()
+
+    useEffect(() => {
+        const type = searchParams.get('type') || 'spk' // Default to 'jaminan_uang_muka' if no type is provided
+        if (
+            [
+                'jaminan_uang_muka',
+                'jaminan_pembayaran',
+                'jaminan_pelaksanaan',
+                'jaminan_pelaksanaan',
+            ].includes(type)
+        ) {
+            setActiveTab(type)
+        }
+    }, [searchParams])
 
     if (!user) return null
 
@@ -115,7 +132,7 @@ const MonitoringDokumenJaminanTable = () => {
                             JPelihara: 'jaminan_pemeliharaan',
                         }
                         const mappedType = typeMapping[type] || type
-                        acc[mappedType] = rest
+                        acc[mappedType] = { type, ...rest }
                         return acc
                     },
                     {},
@@ -125,7 +142,6 @@ const MonitoringDokumenJaminanTable = () => {
                     dokumen_jaminans: transformedDokumenJaminans,
                 }
             })
-
             setDokumenJaminanData(transformedData)
         },
         onError: error => console.error(error),
@@ -144,6 +160,10 @@ const MonitoringDokumenJaminanTable = () => {
                     value={activeTab}
                     onValueChange={value => {
                         setActiveTab(value)
+                        const params = new URLSearchParams(searchParams)
+                        params.set('type', value)
+
+                        router.push(`?${params.toString()}`)
                     }}
                     className="">
                     <div className="w-full overflow-x-auto pb-4">

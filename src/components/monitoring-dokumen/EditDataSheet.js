@@ -9,6 +9,7 @@ import {
 import { EditDokumenSPKForm } from '../form/EditDokumenSPKForm'
 import { DocumentType } from '../context/DokumenContext'
 import { EditDokumenPerjanjianForm } from '../form/EditDokumenPerjanjianForm'
+import { EditDokumenJaminanForm } from '../form/EditDokumenJaminanForm'
 
 export function EditDataSheet({ type, defaultValues }) {
     return (
@@ -17,7 +18,7 @@ export function EditDataSheet({ type, defaultValues }) {
                 className={
                     'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 w-full'
                 }>
-                Edit informasi pengadaan
+                Edit informasi dokumen
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
@@ -29,7 +30,7 @@ export function EditDataSheet({ type, defaultValues }) {
                 {type === DocumentType.SPK ? (
                     <EditDokumenSPKForm defaultValues={defaultValues} />
                 ) : type === DocumentType.JAMINAN ? (
-                    <></>
+                    <EditDokumenJaminanForm defaultValues={defaultValues} />
                 ) : type === DocumentType.PERJANJIAN ? (
                     <EditDokumenPerjanjianForm defaultValues={defaultValues} />
                 ) : (

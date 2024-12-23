@@ -225,6 +225,24 @@ export const transformDokumenSpkDataForSubmit = (previousData, data) => {
     return transformedData
 }
 
+export const transformDokumenJaminanDataForSubmit = (previousData, data) => {
+    const transformedData = {
+        ...data,
+        tanggal_diterima: formatDateYMD(data.tanggal_diterima),
+        nilai: data.nilai_amount
+            ? JSON.stringify({
+                  rate: parseFloat(data.nilai_rate),
+                  amount: parseFloat(data.nilai_amount),
+                  currency: data.nilai_currency,
+              })
+            : null,
+        waktu_mulai: formatDateYMD(data.waktu_mulai),
+        waktu_berakhir: formatDateYMD(data.waktu_berakhir),
+    }
+
+    return transformedData
+}
+
 export const transformDokumenPerjanjianDataForSubmit = (previousData, data) => {
     const transformedData = {
         ...data,

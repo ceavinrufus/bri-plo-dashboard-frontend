@@ -12,6 +12,7 @@ import { AddDokumenPerjanjianForm } from '../form/AddDokumenPerjanjianForm'
 import { DocumentType } from '../context/DokumenContext'
 
 export function AddDataSheet({ type }) {
+    if (type === DocumentType.JAMINAN) return
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -26,8 +27,6 @@ export function AddDataSheet({ type }) {
                 </SheetHeader>
                 {type === DocumentType.SPK ? (
                     <AddDokumenSPKForm />
-                ) : type === DocumentType.JAMINAN ? (
-                    <></>
                 ) : type === DocumentType.PERJANJIAN ? (
                     <AddDokumenPerjanjianForm />
                 ) : (

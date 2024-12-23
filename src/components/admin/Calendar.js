@@ -129,7 +129,6 @@ const Calendar = () => {
                 })
 
                 setDatesWithEvents(eventDates)
-                console.log('Hari libur data:', holidays)
             } catch (error) {
                 console.error('Error fetching hari libur data:', error)
                 throw error
@@ -386,7 +385,7 @@ const Toolbar = ({ data, handleRemoveEvent, handleEditEvent }) => {
     const onDelete = async () => {
         try {
             await deleteHariLiburData(data.id)
-            console.log(data)
+
             toast({
                 title: 'Success',
                 description: 'Data has been deleted successfully!',

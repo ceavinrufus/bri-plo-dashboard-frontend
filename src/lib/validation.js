@@ -132,6 +132,23 @@ export const DokumenPerjanjianFormValidation = z.object({
     tanggal_kontrak: z.union([z.string(), z.date()]),
 })
 
+// Dokumen Jaminan form validation
+export const DokumenJaminanFormValidation = z.object({
+    type: z
+        .enum(['JUM', 'Jampel', 'JBayar', 'JPelihara'])
+        .nullable()
+        .optional(),
+    tanggal_diterima: z.union([z.string(), z.date()]).nullable().optional(),
+    penerbit: z.string().min(1, { message: 'Penerbit is required.' }),
+    nomor_jaminan: z.string().min(1, { message: 'Nomor Jaminan is required.' }),
+    dokumen_keabsahan: z.string().nullable().optional(),
+    nilai_amount: z.union([z.string(), z.number()]).nullable().optional(),
+    nilai_currency: z.string().nullable().optional(),
+    nilai_rate: z.union([z.string(), z.number()]).nullable().optional(),
+    waktu_mulai: z.union([z.string(), z.date()]).nullable().optional(),
+    waktu_berakhir: z.union([z.string(), z.date()]).nullable().optional(),
+})
+
 // Pembayaran form validation
 export const RekapPembayaranFormValidation = z.object({
     pic_pay_id: z.string().nullable().optional(),

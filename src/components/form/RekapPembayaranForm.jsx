@@ -8,7 +8,6 @@ import { SelectItem } from '../ui/select'
 const RekapPembayaranForm = ({ form, onSubmit, defaultValues, children }) => {
     const { userOptions } = useContext(PembayaranContext)
 
-    console.log(userOptions)
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-6">
             <CustomFormField
