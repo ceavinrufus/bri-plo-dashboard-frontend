@@ -1560,16 +1560,7 @@ export const monitoringDokumenSPKColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => (
-            <div>
-                {row.getValue('pic_pelaksana_pekerjaan') &&
-                    JSON.parse(row.getValue('pic_pelaksana_pekerjaan')).name +
-                        ' (' +
-                        JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))
-                            .phone_number +
-                        ')'}
-            </div>
-        ),
+        cell: ({ row }) => <div>{row.getValue('pic_pelaksana_pekerjaan')}</div>,
     },
     // Dokumen Pelengkap Pengembalian SPK
     {
@@ -2202,16 +2193,7 @@ export const monitoringDokumenPerjanjianColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => (
-            <div>
-                {row.getValue('pic_pelaksana_pekerjaan') &&
-                    JSON.parse(row.getValue('pic_pelaksana_pekerjaan')).name +
-                        ' (' +
-                        JSON.parse(row.getValue('pic_pelaksana_pekerjaan'))
-                            .phone_number +
-                        ')'}
-            </div>
-        ),
+        cell: ({ row }) => <div>{row.getValue('pic_pelaksana_pekerjaan')}</div>,
     },
     // Nomor Kontrak
     {
