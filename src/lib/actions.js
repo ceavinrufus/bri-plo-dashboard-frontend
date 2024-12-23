@@ -39,6 +39,27 @@ export const fetchUserDataByTim = async ({ tim }) => {
     }
 }
 
+// Define the function to update user data
+export const updateUserData = async (userId, data) => {
+    try {
+        // Get the backend URL from environment variables
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        // Make the API request
+        const response = await axios.put(
+            `${backendUrl}/api/users/update/${userId}`,
+            data,
+        )
+
+        // Return the response data
+        return response.data
+    } catch (error) {
+        // Handle errors
+        console.error('Error updating user data:', error)
+        throw error
+    }
+}
+
 // Define the function to fetch data
 export const fetchProjectData = async () => {
     try {

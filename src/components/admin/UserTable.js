@@ -1,30 +1,18 @@
 'use client'
 
 import * as React from 'react'
-import { fetchUserData } from '@/lib/actions'
-import { useState, useEffect } from 'react'
 import { DataTable } from '../DataTable'
 import { userColumns } from '@/data/Columns'
+import { useContext } from 'react'
+import { UsersContext } from '../context/UsersContext'
 
 const UserTable = () => {
-    const [userData, setUserData] = useState([])
-
-    useEffect(() => {
-        const loadData = async () => {
-            try {
-                const response = await fetchUserData()
-                setUserData(response.data)
-            } catch (err) {
-                console.error(err)
-            }
-        }
-        loadData()
-    }, [])
+    const { usersData } = useContext(UsersContext)
 
     return (
         <div className="w-full">
             <DataTable
-                data={userData}
+                data={usersData}
                 columns={userColumns}
                 filters={[
                     { kolom: 'role', isUppercaseValue: false },

@@ -5,6 +5,7 @@ import { AppSidebar } from '@/components/admin/app-sidebar'
 import { useAuth } from '@/hooks/auth'
 import Loading from '../(app)/Loading'
 import { Toaster } from '@/components/ui/toaster'
+import { UsersProvider } from '@/components/context/UsersContext'
 
 export default function Layout({ children }) {
     const { user } = useAuth({ middleware: 'admin' })
@@ -16,10 +17,12 @@ export default function Layout({ children }) {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <main className="min-h-screen w-full">
-                <SidebarTrigger />
-                {children}
-            </main>
+            <UsersProvider>
+                <main className="min-h-screen w-full">
+                    <SidebarTrigger />
+                    {children}
+                </main>
+            </UsersProvider>
             <Toaster />
         </SidebarProvider>
     )

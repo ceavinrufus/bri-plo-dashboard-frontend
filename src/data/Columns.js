@@ -33,6 +33,7 @@ import {
     DokumenContext,
 } from '@/components/context/DokumenContext'
 import { PembayaranContext } from '@/components/context/PembayaranContext'
+import { EditUserDialog } from '@/components/EditUserDialog'
 
 const prosesPengadaanActions = (id = 'actions') => ({
     id,
@@ -2679,28 +2680,7 @@ export const userColumns = [
                             }>
                             Salin PN
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                            className="cursor-pointer"
-                            onClick={async () => {
-                                try {
-                                    toast({
-                                        title: 'Success',
-                                        description:
-                                            'Password reset successfully!',
-                                        status: 'success',
-                                    })
-                                } catch (error) {
-                                    toast({
-                                        title: 'Error',
-                                        description:
-                                            error.response?.data?.message ||
-                                            'An error occurred while resetting password',
-                                        status: 'error',
-                                    })
-                                }
-                            }}>
-                            Reset password
-                        </DropdownMenuItem>
+                        <EditUserDialog userData={userData} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
