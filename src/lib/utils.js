@@ -25,6 +25,17 @@ export const formatDateDMY = dateString => {
     return `${day}-${month}-${year}`
 }
 
+export const formatDateMY = dateString => {
+    if (!dateString) return null
+
+    const date = new Date(dateString)
+
+    const month = date.toLocaleString('default', { month: 'long' }) // Full month name
+    const year = date.getFullYear()
+
+    return `${month} ${year}`
+}
+
 export const formatDateWithWords = dateString => {
     if (!dateString) return null
 

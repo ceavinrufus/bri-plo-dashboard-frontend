@@ -8,6 +8,7 @@ import { DocumentType, DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
+import { formatDateMY } from '@/lib/utils'
 
 const GET_DOKUMEN_SPKS = gql`
     query GetDokumenSPKs {
@@ -91,9 +92,26 @@ const MonitoringDokumenSPKTable = () => {
                 return {
                     ...spk,
                     dokumen_jaminans: transformedDokumenJaminans,
+                    jatuh_tempo_jaminan_uang_muka: formatDateMY(
+                        transformedDokumenJaminans.jaminan_uang_muka
+                            ?.waktu_berakhir,
+                    ),
+                    jatuh_tempo_jaminan_pembayaran: formatDateMY(
+                        transformedDokumenJaminans.jaminan_pembayaran
+                            ?.waktu_berakhir,
+                    ),
+                    jatuh_tempo_jaminan_pelaksanaan: formatDateMY(
+                        transformedDokumenJaminans.jaminan_pelaksanaan
+                            ?.waktu_berakhir,
+                    ),
+                    jatuh_tempo_jaminan_pemeliharaan: formatDateMY(
+                        transformedDokumenJaminans.jaminan_pemeliharaan
+                            ?.waktu_berakhir,
+                    ),
                 }
             })
 
+            console.log('transformedData', transformedData)
             setDokumenSPKData(transformedData)
         },
         onError: error => console.error(error),
@@ -116,6 +134,10 @@ const MonitoringDokumenSPKTable = () => {
                     data={dokumenSPKData}
                     filters={[
                         { kolom: 'tim_pemrakarsa', isUppercaseValue: true },
+                        { kolom: 'jatuh_tempo_jaminan_uang_muka' },
+                        { kolom: 'jatuh_tempo_jaminan_pembayaran' },
+                        { kolom: 'jatuh_tempo_jaminan_pelaksanaan' },
+                        { kolom: 'jatuh_tempo_jaminan_pemeliharaan' },
                     ]}
                     searches={[
                         {

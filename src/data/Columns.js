@@ -1310,6 +1310,24 @@ const jaminanAttributes = (type, attribute) => ({
     enableSorting: false,
 })
 
+const jatuhTempoJaminan = type => ({
+    accessorKey: 'jatuh_tempo_' + type,
+    header: ({ column }) => (
+        <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className="capitalize">
+            Jatuh Tempo {type.replace(/_/g, ' ')}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+    ),
+    cell: ({ row }) => {
+        const jatuh_tempo = row.getValue('jatuh_tempo_' + type)
+
+        return <div>{jatuh_tempo}</div>
+    },
+})
+
 export const monitoringDokumenSPKColumns = [
     // Tanggal Penyerahan Dokumen
     {
@@ -1832,6 +1850,14 @@ export const monitoringDokumenSPKColumns = [
     dokumenSPKJaminanColumn('jaminan_pelaksanaan'),
     // Jaminan Pemeliharaan
     dokumenSPKJaminanColumn('jaminan_pemeliharaan'),
+    // Jatuh Tempo Jaminan Uang Muka
+    jatuhTempoJaminan('jaminan_uang_muka'),
+    // Jatuh Tempo Jaminan Pembayaran
+    jatuhTempoJaminan('jaminan_pembayaran'),
+    // Jatuh Tempo Jaminan Pelaksanaan
+    jatuhTempoJaminan('jaminan_pelaksanaan'),
+    // Jatuh Tempo Jaminan Pemeliharaan
+    jatuhTempoJaminan('jaminan_pemeliharaan'),
     // Actions
     monitoringDokumenSPKActions('actions4'),
 ]
