@@ -11,6 +11,7 @@ import client from '@/lib/apolloClient'
 import { formatDateMY } from '@/lib/utils'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
+import * as XLSX from 'xlsx'
 
 const GET_DOKUMEN_SPKS = gql`
     query GetDokumenSPKs {
@@ -58,6 +59,7 @@ const GET_DOKUMEN_SPKS = gql`
                 waktu_mulai
             }
             pic_legal {
+                id
                 name
             }
             catatan
@@ -114,11 +116,46 @@ const MonitoringDokumenSPKTable = () => {
                 }
             })
 
-            // console.log('transformedData', transformedData)
             setDokumenSPKData(transformedData)
         },
         onError: error => console.error(error),
     })
+
+    const handleExport = () => {
+        const exportData = dokumenSPKData.map(item => ({
+            id: item.id,
+            tanggal_spk_diterima: item.tanggal_spk_diterima,
+            tim_pemrakarsa: item.tim_pemrakarsa,
+            pic_pengadaan_id: item.pic_pengadaan?.id,
+            pic_pengadaan_name: item.pic_pengadaan?.name,
+            nomor_spk: item.nomor_spk,
+            tanggal_spk: item.tanggal_spk,
+            jenis_pekerjaan: item.jenis_pekerjaan,
+            nilai_spk: item.spk?.amount,
+            currency_spk: item.spk?.currency,
+            rate_spk: item.spk?.rate,
+            jangka_waktu: item.jangka_waktu,
+            pelaksana_pekerjaan: item.pelaksana_pekerjaan,
+            pic_pelaksana_pekerjaan: item.pic_pelaksana_pekerjaan,
+            dokumen_pelengkap: item.dokumen_pelengkap,
+            tanggal_info_ke_vendor: item.tanggal_info_ke_vendor,
+            tanggal_pengambilan: item.tanggal_pengambilan,
+            identitas_pengambil: item.identitas_pengambil,
+            tanggal_pengembalian: item.tanggal_pengembalian,
+            dokumen_yang_dikembalikan: item.dokumen_yang_dikembalikan,
+            tkdn_percentage: item.tkdn_percentage,
+            tanggal_penyerahan_dokumen: item.tanggal_penyerahan_dokumen,
+            penerima_dokumen: item.penerima_dokumen,
+            pic_legal_id: item.pic_legal?.id,
+            pic_legal_name: item.pic_legal?.name,
+            catatan: item.catatan,
+        }))
+
+        const ws = XLSX.utils.json_to_sheet(exportData)
+        const wb = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(wb, ws, 'Dokumen SPK Data')
+        XLSX.writeFile(wb, 'dokumen_spk_data.xlsx')
+    }
 
     if (loading) return <div>Loading...</div>
 
@@ -128,13 +165,12 @@ const MonitoringDokumenSPKTable = () => {
                 <h1 className="mb-4 md:mb-0">Monitoring Dokumen SPK</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet type={DocumentType.SPK} />
-                    {/* <Button
-                        onClick={() =>
-                            router.push('/monitoring-dokumen/bulk-import')
-                        }
-                        variant="default">
-                        Bulk Import
-                    </Button> */}
+                    <Button
+                        onClick={handleExport}
+                        variant=""
+                        className="default bg-green-700 hover:bg-green-600">
+                        Export as Excel
+                    </Button>
                 </div>
             </div>
             {error ? (
@@ -161,6 +197,10 @@ const MonitoringDokumenSPKTable = () => {
                     ]}
                     defaultColumnVisibility={{
                         tanggal_penyerahan_dokumen: false,
+                        jatuh_tempo_jaminan_uang_muka: false,
+                        jatuh_tempo_jaminan_pembayaran: false,
+                        jatuh_tempo_jaminan_pelaksanaan: false,
+                        jatuh_tempo_jaminan_pemeliharaan: false,
                     }}
                     columns={monitoringDokumenSPKColumns}
                     onDataFilter={setFilteredData}
