@@ -76,6 +76,7 @@ const RekapPembayaranTable = () => {
     const handleExport = () => {
         const exportData = pembayaranData.map(item => ({
             id: item?.id,
+            pic_pc_id: item.pic_pc.id,
             pic_pc_name: item.pic_pc.name,
             tanggal_terima: item.tanggal_terima,
             nomor_spk: item.nomor_spk,
@@ -93,6 +94,7 @@ const RekapPembayaranTable = () => {
             currency_invoice: item.invoice.currency,
             rate_invoice: item.invoice.rate,
             nomor_rekening: item.nomor_rekening,
+            pic_pay_id: item.pic_pay.id,
             pic_pay_name: item.pic_pay.name,
             nota_fiat: item.nota_fiat,
             tanggal_fiat: item.tanggal_fiat,

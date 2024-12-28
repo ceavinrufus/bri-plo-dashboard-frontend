@@ -190,6 +190,7 @@ const ProsesPengadaanTable = ({ departemen }) => {
                 nilai_hps: `${item.hps?.amount}`,
                 rate_hps: `${item.hps?.rate}`,
                 tkdn_percentage: item.tkdn_percentage,
+                pic_id: item.pic.id,
                 pic_name: item.pic.name,
             })
         })
