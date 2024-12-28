@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import client from '@/lib/apolloClient'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
+import { formatDateMY } from '@/lib/utils'
 
 const GET_DOKUMEN_JAMINANS = gql`
     query GetDokumenJaminans {
@@ -59,6 +60,7 @@ const DokumenDataTable = ({ type }) => {
         acc[`nilai_${key}`] = type === key
         acc[`waktu_mulai_${key}`] = type === key
         acc[`waktu_berakhir_${key}`] = type === key
+        acc[`jatuh_tempo_${key}`] = false
         return acc
     }, {})
 
@@ -74,9 +76,7 @@ const DokumenDataTable = ({ type }) => {
             </div>
             <DataTable
                 data={dokumenJaminanData}
-                // filters={[
-                //     { kolom: 'tim_pemrakarsa', isUppercaseValue: true },
-                // ]}
+                filters={[{ kolom: `jatuh_tempo_${type}` }]}
                 searches={[
                     {
                         kolom: 'jenis_pekerjaan',
@@ -140,6 +140,22 @@ const MonitoringDokumenJaminanTable = () => {
                 return {
                     ...spk,
                     dokumen_jaminans: transformedDokumenJaminans,
+                    jatuh_tempo_jaminan_uang_muka: formatDateMY(
+                        transformedDokumenJaminans.jaminan_uang_muka
+                            ?.waktu_berakhir,
+                    ),
+                    jatuh_tempo_jaminan_pembayaran: formatDateMY(
+                        transformedDokumenJaminans.jaminan_pembayaran
+                            ?.waktu_berakhir,
+                    ),
+                    jatuh_tempo_jaminan_pelaksanaan: formatDateMY(
+                        transformedDokumenJaminans.jaminan_pelaksanaan
+                            ?.waktu_berakhir,
+                    ),
+                    jatuh_tempo_jaminan_pemeliharaan: formatDateMY(
+                        transformedDokumenJaminans.jaminan_pemeliharaan
+                            ?.waktu_berakhir,
+                    ),
                 }
             })
             setDokumenJaminanData(transformedData)
