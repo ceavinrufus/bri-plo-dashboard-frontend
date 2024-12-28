@@ -136,7 +136,11 @@ const MonitoringDokumenSPKTable = () => {
             currency_spk: item.spk?.currency,
             rate_spk: item.spk?.rate,
             jangka_waktu: item.jangka_waktu,
-            pelaksana_pekerjaan: item.pelaksana_pekerjaan,
+            pelaksana_pekerjaan: JSON.parse(item.pelaksana_pekerjaan).name,
+            alamat_pelaksana_pekerjaan: JSON.parse(item.pelaksana_pekerjaan)
+                .address,
+            no_telp_pelaksana_pekerjaan: JSON.parse(item.pelaksana_pekerjaan)
+                .phone_number,
             pic_pelaksana_pekerjaan: item.pic_pelaksana_pekerjaan,
             dokumen_pelengkap: item.dokumen_pelengkap,
             tanggal_info_ke_vendor: item.tanggal_info_ke_vendor,
