@@ -116,6 +116,7 @@ const MonitoringDokumenSPKTable = () => {
                 }
             })
 
+            console.log(transformedData)
             setDokumenSPKData(transformedData)
         },
         onError: error => console.error(error),
@@ -146,6 +147,78 @@ const MonitoringDokumenSPKTable = () => {
             tkdn_percentage: item.tkdn_percentage,
             tanggal_penyerahan_dokumen: item.tanggal_penyerahan_dokumen,
             penerima_dokumen: item.penerima_dokumen,
+            // Jaminan Uang Muka
+            tanggal_diterima_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.tanggal_diterima,
+            penerbit_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.penerbit,
+            nomor_jaminan_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.nomor_jaminan,
+            nilai_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.nilai?.amount,
+            currency_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.nilai?.currency,
+            rate_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.nilai?.rate,
+            waktu_mulai_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.waktu_mulai,
+            waktu_berakhir_jaminan_uang_muka:
+                item.dokumen_jaminans.jaminan_uang_muka?.waktu_berakhir,
+            // Jaminan Pembayaran
+            tanggal_diterima_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.tanggal_diterima,
+            penerbit_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.penerbit,
+            nomor_jaminan_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.nomor_jaminan,
+            nilai_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.nilai?.amount,
+            currency_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.nilai?.currency,
+            rate_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.nilai?.rate,
+            waktu_mulai_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.waktu_mulai,
+            waktu_berakhir_jaminan_pembayaran:
+                item.dokumen_jaminans.jaminan_pembayaran?.waktu_berakhir,
+            // Jaminan Pelaksanaan
+            tanggal_diterima_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.tanggal_diterima,
+            penerbit_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.penerbit,
+            nomor_jaminan_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.nomor_jaminan,
+            dokumen_keabsahan_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.dokumen_keabsahan,
+            nilai_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.nilai?.amount,
+            currency_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.nilai?.currency,
+            rate_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.nilai?.rate,
+            waktu_mulai_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.waktu_mulai,
+            waktu_berakhir_jaminan_pelaksanaan:
+                item.dokumen_jaminans.jaminan_pelaksanaan?.waktu_berakhir,
+            // Jaminan Pemeliharaan
+            tanggal_diterima_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.tanggal_diterima,
+            penerbit_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.penerbit,
+            nomor_jaminan_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.nomor_jaminan,
+            dokumen_keabsahan_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.dokumen_keabsahan,
+            nilai_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.nilai?.amount,
+            currency_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.nilai?.currency,
+            rate_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.nilai?.rate,
+            waktu_mulai_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.waktu_mulai,
+            waktu_berakhir_jaminan_pemeliharaan:
+                item.dokumen_jaminans.jaminan_pemeliharaan?.waktu_berakhir,
             pic_legal_id: item.pic_legal?.id,
             pic_legal_name: item.pic_legal?.name,
             catatan: item.catatan,
