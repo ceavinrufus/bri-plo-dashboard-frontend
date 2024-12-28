@@ -1502,7 +1502,12 @@ export const monitoringDokumenSPKColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('jangka_waktu')}</div>,
+        cell: ({ row }) => (
+            <div>
+                {row.getValue('jangka_waktu')}{' '}
+                {row.getValue('jangka_waktu') ? 'hari' : ''}
+            </div>
+        ),
     },
     monitoringDokumenSPKActions('actions1'),
     // Pelaksana Pekerjaan
