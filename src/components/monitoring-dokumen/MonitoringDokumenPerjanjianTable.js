@@ -8,6 +8,8 @@ import { DocumentType, DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
+import { useRouter } from 'next/navigation'
+import { Button } from '../ui/button'
 
 const GET_DOKUMEN_PERJANJIANS = gql`
     query GetDokumenPerjanjians {
@@ -44,6 +46,7 @@ const MonitoringDokumenPerjanjianTable = () => {
         useContext(DokumenContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
+    const router = useRouter()
 
     if (!user) return null
 
@@ -64,6 +67,13 @@ const MonitoringDokumenPerjanjianTable = () => {
                 <h1 className="mb-4 md:mb-0">Monitoring Dokumen Perjanjian</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet type={DocumentType.PERJANJIAN} />
+                    {/* <Button
+                        onClick={() =>
+                            router.push('/monitoring-dokumen/bulk-import')
+                        }
+                        variant="default">
+                        Bulk Import
+                    </Button> */}
                 </div>
             </div>
             {error ? (

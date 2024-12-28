@@ -9,6 +9,8 @@ import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
 import { formatDateMY } from '@/lib/utils'
+import { Button } from '../ui/button'
+import { useRouter } from 'next/navigation'
 
 const GET_DOKUMEN_SPKS = gql`
     query GetDokumenSPKs {
@@ -67,6 +69,7 @@ const MonitoringDokumenSPKTable = () => {
     const { dokumenSPKData, setDokumenSPKData } = useContext(DokumenContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
+    const router = useRouter()
 
     if (!user) return null
 
@@ -125,6 +128,13 @@ const MonitoringDokumenSPKTable = () => {
                 <h1 className="mb-4 md:mb-0">Monitoring Dokumen SPK</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet type={DocumentType.SPK} />
+                    {/* <Button
+                        onClick={() =>
+                            router.push('/monitoring-dokumen/bulk-import')
+                        }
+                        variant="default">
+                        Bulk Import
+                    </Button> */}
                 </div>
             </div>
             {error ? (

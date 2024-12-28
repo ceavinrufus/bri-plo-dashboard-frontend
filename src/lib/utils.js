@@ -195,10 +195,10 @@ export const transformPengadaanDataForSubmit = (previousData, data) => {
         nodin_alert_at: data.verification_completed_at
             ? null
             : generateNodinAlert(previousData, data),
-        pic_id: previousData.pic.id,
+        pic_id: previousData.pic?.id,
         pic: {
-            id: previousData.pic.id,
-            name: previousData.pic.name,
+            id: previousData.pic?.id,
+            name: previousData.pic?.name,
         },
     }
 
@@ -217,14 +217,14 @@ export const transformDokumenSpkDataForSubmit = (previousData, data) => {
               })
             : null,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
-        pic_legal_id: previousData.pic_legal.id,
+        pic_legal_id: previousData.pic_legal?.id,
         pic_legal: {
-            id: previousData.pic_legal.id,
-            name: previousData.pic_legal.name,
+            id: previousData.pic_legal?.id,
+            name: previousData.pic_legal?.name,
         },
         pic_pengadaan_id: data.pic_pengadaan
-            ? JSON.parse(data.pic_pengadaan).id
-            : previousData.pic_pengadaan.id,
+            ? JSON.parse(data.pic_pengadaan)?.id
+            : previousData.pic_pengadaan?.id,
         pic_pengadaan: data.pic_pengadaan || previousData.pic_pengadaan,
         pelaksana_pekerjaan: JSON.stringify({
             name: data.pelaksana_pekerjaan || '',
@@ -268,14 +268,14 @@ export const transformDokumenPerjanjianDataForSubmit = (previousData, data) => {
               })
             : null,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
-        pic_legal_id: previousData.pic_legal.id,
+        pic_legal_id: previousData.pic_legal?.id,
         pic_legal: {
-            id: previousData.pic_legal.id,
-            name: previousData.pic_legal.name,
+            id: previousData.pic_legal?.id,
+            name: previousData.pic_legal?.name,
         },
         pic_pengadaan_id: data.pic_pengadaan
-            ? JSON.parse(data.pic_pengadaan).id
-            : previousData.pic_pengadaan.id,
+            ? JSON.parse(data.pic_pengadaan)?.id
+            : previousData.pic_pengadaan?.id,
         pic_pengadaan: data.pic_pengadaan || previousData.pic_pengadaan,
         pelaksana_pekerjaan: JSON.stringify({
             name: data.pelaksana_pekerjaan || '',
@@ -306,10 +306,10 @@ export const transformRekapPembayaranSubmit = (previousData, data) => {
               })
             : null,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
-        pic_pc_id: previousData.pic_pc.id,
+        pic_pc_id: previousData.pic_pc?.id,
         pic_pc: {
-            id: previousData.pic_pc.id,
-            name: previousData.pic_pc.name,
+            id: previousData.pic_pc?.id,
+            name: previousData.pic_pc?.name,
         },
         pic_pay_id: data.pic_pay_id,
         pic_pay: data.pic_pay,

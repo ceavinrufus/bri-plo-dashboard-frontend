@@ -14,6 +14,7 @@ import { useAuth } from '@/hooks/auth'
 import client from '@/lib/apolloClient'
 import { calculateMetrics } from '@/lib/utils'
 import { AddDataSheet } from './AddDataSheet'
+import { useRouter } from 'next/navigation'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String) {
@@ -92,6 +93,7 @@ const ProsesPengadaanTable = ({ departemen }) => {
     const { pengadaanData, setPengadaanData } = useContext(PengadaanContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
+    const router = useRouter()
 
     if (!user) return null
 
@@ -148,7 +150,7 @@ const ProsesPengadaanTable = ({ departemen }) => {
             }
 
             exportData.push({
-                id: item.id,
+                id: item?.id,
                 tim: item.tim,
                 departemen: item.departemen,
                 proyek: item.proyek,
@@ -214,6 +216,13 @@ const ProsesPengadaanTable = ({ departemen }) => {
 
                     {user.departemen === 'bcp' && <ProjectsSheet />}
                     <AddDataSheet />
+                    <Button
+                        onClick={() =>
+                            router.push('/proses-pengadaan/bulk-import')
+                        }
+                        variant="default">
+                        Bulk Import
+                    </Button>
                     <Button
                         onClick={handleExport}
                         variant=""

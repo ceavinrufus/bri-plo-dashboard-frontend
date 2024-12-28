@@ -66,7 +66,7 @@ const prosesPengadaanActions = (id = 'actions') => ({
                                 className="cursor-pointer"
                                 onClick={async () => {
                                     try {
-                                        await deletePengadaanData(pengadaan.id)
+                                        await deletePengadaanData(pengadaan?.id)
 
                                         toast({
                                             title: 'Success',
@@ -74,7 +74,7 @@ const prosesPengadaanActions = (id = 'actions') => ({
                                                 'Data has been deleted successfully!',
                                             status: 'success',
                                         })
-                                        removePengadaan(pengadaan.id)
+                                        removePengadaan(pengadaan?.id)
                                     } catch (error) {
                                         toast({
                                             title: 'Error',
@@ -127,7 +127,7 @@ const monitoringDokumenSPKActions = (id = 'actions') => ({
                         className="cursor-pointer"
                         onClick={async () => {
                             try {
-                                await deleteDokumenSPKData(dokumen.id)
+                                await deleteDokumenSPKData(dokumen?.id)
 
                                 toast({
                                     title: 'Success',
@@ -135,7 +135,7 @@ const monitoringDokumenSPKActions = (id = 'actions') => ({
                                         'Data has been deleted successfully!',
                                     status: 'success',
                                 })
-                                removeDokumenSPK(dokumen.id)
+                                removeDokumenSPK(dokumen?.id)
                             } catch (error) {
                                 toast({
                                     title: 'Error',
@@ -186,7 +186,7 @@ const monitoringDokumenJaminanActions = (id = 'actions') => ({
                         className="cursor-pointer"
                         onClick={async () => {
                             try {
-                                await deleteDokumenSPKData(dokumen.id)
+                                await deleteDokumenSPKData(dokumen?.id)
 
                                 toast({
                                     title: 'Success',
@@ -194,7 +194,7 @@ const monitoringDokumenJaminanActions = (id = 'actions') => ({
                                         'Data has been deleted successfully!',
                                     status: 'success',
                                 })
-                                removeDokumenSPK(dokumen.id)
+                                removeDokumenSPK(dokumen?.id)
                             } catch (error) {
                                 toast({
                                     title: 'Error',
@@ -245,7 +245,7 @@ const monitoringDokumenPerjanjianActions = (id = 'actions') => ({
                         className="cursor-pointer"
                         onClick={async () => {
                             try {
-                                await deleteDokumenPerjanjianData(dokumen.id)
+                                await deleteDokumenPerjanjianData(dokumen?.id)
 
                                 toast({
                                     title: 'Success',
@@ -253,7 +253,7 @@ const monitoringDokumenPerjanjianActions = (id = 'actions') => ({
                                         'Data has been deleted successfully!',
                                     status: 'success',
                                 })
-                                removeDokumenPerjanjian(dokumen.id)
+                                removeDokumenPerjanjian(dokumen?.id)
                             } catch (error) {
                                 toast({
                                     title: 'Error',
@@ -315,7 +315,7 @@ const rekapPembayaranActions = (id = 'actions') => ({
                         onClick={async () => {
                             try {
                                 await deleteRekapPembayaranData(
-                                    rekapPembayaran.id,
+                                    rekapPembayaran?.id,
                                 )
 
                                 toast({
@@ -324,7 +324,7 @@ const rekapPembayaranActions = (id = 'actions') => ({
                                         'Data has been deleted successfully!',
                                     status: 'success',
                                 })
-                                removePembayaran(rekapPembayaran.id)
+                                removePembayaran(rekapPembayaran?.id)
                             } catch (error) {
                                 toast({
                                     title: 'Error',
@@ -1422,7 +1422,7 @@ export const monitoringDokumenSPKColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('pic_pengadaan').name}</div>,
+        cell: ({ row }) => <div>{row.getValue('pic_pengadaan')?.name}</div>,
     },
     // Nomor SPK
     {
@@ -1526,7 +1526,7 @@ export const monitoringDokumenSPKColumns = [
             </Button>
         ),
         cell: ({ row }) => (
-            <div>{JSON.parse(row.getValue('pelaksana_pekerjaan')).name}</div>
+            <div>{JSON.parse(row.getValue('pelaksana_pekerjaan'))?.name}</div>
         ),
     },
     // Alamat Pelaksana Pekerjaan
@@ -1822,7 +1822,7 @@ export const monitoringDokumenSPKColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('pic_legal').name}</div>,
+        cell: ({ row }) => <div>{row.getValue('pic_legal')?.name}</div>,
     },
     // Catatan
     {
@@ -1959,7 +1959,7 @@ export const monitoringDokumenJaminanColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('pic_legal').name}</div>,
+        cell: ({ row }) => <div>{row.getValue('pic_legal')?.name}</div>,
     },
     monitoringDokumenJaminanActions('actions1'),
     // Jaminan
@@ -2063,7 +2063,7 @@ export const monitoringDokumenPerjanjianColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('pic_pengadaan').name}</div>,
+        cell: ({ row }) => <div>{row.getValue('pic_pengadaan')?.name}</div>,
     },
     // Nomor SPK
     {
@@ -2167,7 +2167,7 @@ export const monitoringDokumenPerjanjianColumns = [
             </Button>
         ),
         cell: ({ row }) => (
-            <div>{JSON.parse(row.getValue('pelaksana_pekerjaan')).name}</div>
+            <div>{JSON.parse(row.getValue('pelaksana_pekerjaan'))?.name}</div>
         ),
     },
     // Alamat Pelaksana Pekerjaan
@@ -2266,7 +2266,7 @@ export const monitoringDokumenPerjanjianColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('pic_legal').name}</div>,
+        cell: ({ row }) => <div>{row.getValue('pic_legal')?.name}</div>,
     },
     // Actions
     monitoringDokumenPerjanjianActions('actions2'),
@@ -2311,7 +2311,7 @@ export const rekapPembayaranColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('pic_pc').name}</div>,
+        cell: ({ row }) => <div>{row.getValue('pic_pc')?.name}</div>,
     },
     // Tanggal Terima
     {
@@ -2559,7 +2559,7 @@ export const rekapPembayaranColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('pic_pay').name}</div>,
+        cell: ({ row }) => <div>{row.getValue('pic_pay')?.name}</div>,
     },
     // Nota Fiat
     {

@@ -24,7 +24,7 @@ export function ProsesPengadaanLogSheet({ defaultValues }) {
                 </SheetHeader>
                 <EditPengadaanLogForm
                     defaultValues={defaultValues.pengadaan_log}
-                    pengadaanId={defaultValues.id}
+                    pengadaanId={defaultValues?.id}
                 />
             </SheetContent>
         </Sheet>

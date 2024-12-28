@@ -11,6 +11,7 @@ import { PembayaranContext } from '@/components/context/PembayaranContext'
 import { useAuth } from '@/hooks/auth'
 import client from '@/lib/apolloClient'
 import { AddDataSheet } from './AddDataSheet'
+import { useRouter } from 'next/navigation'
 
 const GET_REKAP_PEMBAYARANS = gql`
     query GetRekapPembayarans {
@@ -59,12 +60,14 @@ const RekapPembayaranTable = () => {
     const { pembayaranData, setPembayaranData } = useContext(PembayaranContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
+    const router = useRouter()
 
     if (!user) return null
 
     const { loading, error } = useQuery(GET_REKAP_PEMBAYARANS, {
         client,
         onCompleted: data => {
+            console.log(data.rekap_pembayarans)
             setPembayaranData(data.rekap_pembayarans)
         },
         onError: error => console.error(error),
@@ -72,23 +75,25 @@ const RekapPembayaranTable = () => {
 
     const handleExport = () => {
         const exportData = pembayaranData.map(item => ({
-            id: item.id,
-            pic_pc: item.pic_pc,
+            id: item?.id,
+            pic_pc_name: item.pic_pc.name,
             tanggal_terima: item.tanggal_terima,
             nomor_spk: item.nomor_spk,
             tanggal_spk: item.tanggal_spk,
             nomor_perjanjian: item.nomor_perjanjian,
             tanggal_perjanjian: item.tanggal_perjanjian,
             perihal: item.perihal,
-            nilai_spk: item.nilai_spk,
+            nilai_spk: item.spk.amount,
+            rate_spk: item.spk.rate,
+            currency_spk: item.spk.currency,
             pelaksana_pekerjaan: item.pelaksana_pekerjaan,
             tkdn: item.tkdn,
             nomor_invoice: item.nomor_invoice,
-            nominal_invoice: item.nominal_invoice,
-            invoice_currency: item.invoice_currency,
-            invoice_rate: item.invoice_rate,
+            nominal_invoice: item.invoice.amount,
+            currency_invoice: item.invoice.currency,
+            rate_invoice: item.invoice.rate,
             nomor_rekening: item.nomor_rekening,
-            pic_pay: item.pic_pay,
+            pic_pay_name: item.pic_pay.name,
             nota_fiat: item.nota_fiat,
             tanggal_fiat: item.tanggal_fiat,
             sla: item.sla,
@@ -112,6 +117,13 @@ const RekapPembayaranTable = () => {
                 <h1 className="mb-4 md:mb-0">All pembayaran data</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet />
+                    <Button
+                        onClick={() =>
+                            router.push('/rekap-pembayaran/bulk-import')
+                        }
+                        variant="default">
+                        Bulk Import
+                    </Button>
                     <Button
                         onClick={handleExport}
                         variant=""
