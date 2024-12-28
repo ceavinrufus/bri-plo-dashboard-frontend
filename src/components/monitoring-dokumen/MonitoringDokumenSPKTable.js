@@ -239,6 +239,15 @@ const MonitoringDokumenSPKTable = () => {
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet type={DocumentType.SPK} />
                     <Button
+                        onClick={() =>
+                            router.push(
+                                '/monitoring-dokumen/bulk-import?tab=spk',
+                            )
+                        }
+                        variant="default">
+                        Bulk Import
+                    </Button>
+                    <Button
                         onClick={handleExport}
                         variant=""
                         className="default bg-green-700 hover:bg-green-600">
