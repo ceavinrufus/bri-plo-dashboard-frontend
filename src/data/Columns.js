@@ -2435,7 +2435,7 @@ export const rekapPembayaranColumns = [
             </div>
         ),
     },
-    // Vendor/Pelaksana Pekerjaan
+    // Vendor
     {
         accessorKey: 'vendor',
         header: ({ column }) => (
@@ -2444,7 +2444,7 @@ export const rekapPembayaranColumns = [
                 onClick={() =>
                     column.toggleSorting(column.getIsSorted() === 'asc')
                 }>
-                Vendor/Pelaksana Pekerjaan
+                Vendor
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
@@ -2463,7 +2463,9 @@ export const rekapPembayaranColumns = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ row }) => <div>{row.getValue('tkdn')}%</div>,
+        cell: ({ row }) => (
+            <div>{row.getValue('tkdn') ? row.getValue('tkdn') + '%' : ''}</div>
+        ),
     },
     // Nomor Invoice
     {
@@ -2501,36 +2503,6 @@ export const rekapPembayaranColumns = [
                 )}
             </div>
         ),
-    },
-    // Invoice Currency
-    {
-        accessorKey: 'invoice_currency',
-        header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() =>
-                    column.toggleSorting(column.getIsSorted() === 'asc')
-                }>
-                Invoice Currency
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-        ),
-        cell: ({ row }) => <div>{row.getValue('invoice_currency')}</div>,
-    },
-    // Invoice Rate
-    {
-        accessorKey: 'invoice_rate',
-        header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() =>
-                    column.toggleSorting(column.getIsSorted() === 'asc')
-                }>
-                Invoice Rate
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-        ),
-        cell: ({ row }) => <div>{row.getValue('invoice_rate')}</div>,
     },
     // Nomor Rekening
     {

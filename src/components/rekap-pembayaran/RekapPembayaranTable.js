@@ -32,7 +32,7 @@ const GET_REKAP_PEMBAYARANS = gql`
                 currency
                 rate
             }
-            pelaksana_pekerjaan
+            vendor
             tkdn
             nomor_invoice
             invoice {
@@ -87,7 +87,7 @@ const RekapPembayaranTable = () => {
             nilai_spk: item.spk?.amount,
             currency_spk: item.spk?.currency,
             rate_spk: item.spk?.rate,
-            pelaksana_pekerjaan: item.pelaksana_pekerjaan,
+            vendor: item.vendor,
             tkdn: item.tkdn,
             nomor_invoice: item.nomor_invoice,
             nominal_invoice: item.invoice?.amount,
