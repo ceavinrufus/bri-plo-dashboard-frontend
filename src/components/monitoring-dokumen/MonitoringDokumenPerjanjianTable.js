@@ -10,6 +10,7 @@ import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
+import * as XLSX from 'xlsx'
 
 const GET_DOKUMEN_PERJANJIANS = gql`
     query GetDokumenPerjanjians {
@@ -35,6 +36,7 @@ const GET_DOKUMEN_PERJANJIANS = gql`
             nomor_kontrak
             tanggal_kontrak
             pic_legal {
+                id
                 name
             }
         }
@@ -59,6 +61,34 @@ const MonitoringDokumenPerjanjianTable = () => {
         onError: error => console.error(error),
     })
 
+    const handleExport = () => {
+        const exportData = dokumenPerjanjianData.map(item => ({
+            id: item.id,
+            tanggal_permohonan_diterima: item.tanggal_permohonan_diterima,
+            tim_pemrakarsa: item.tim_pemrakarsa,
+            pic_pengadaan_id: item.pic_pengadaan?.id,
+            pic_pengadaan_name: item.pic_pengadaan?.name,
+            nomor_spk: item.nomor_spk,
+            tanggal_spk: item.tanggal_spk,
+            jenis_pekerjaan: item.jenis_pekerjaan,
+            nilai_spk: item.spk?.amount,
+            currency_spk: item.spk?.currency,
+            rate_spk: item.spk?.rate,
+            jangka_waktu: item.jangka_waktu,
+            pelaksana_pekerjaan: item.pelaksana_pekerjaan,
+            pic_pelaksana_pekerjaan: item.pic_pelaksana_pekerjaan,
+            nomor_kontrak: item.nomor_kontrak,
+            tanggal_kontrak: item.tanggal_kontrak,
+            pic_legal_id: item.pic_legal?.id,
+            pic_legal_name: item.pic_legal?.name,
+        }))
+
+        const ws = XLSX.utils.json_to_sheet(exportData)
+        const wb = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(wb, ws, 'Dokumen Perjanjian Data')
+        XLSX.writeFile(wb, 'dokumen_perjanjian_data.xlsx')
+    }
+
     if (loading) return <div>Loading...</div>
 
     return (
@@ -67,13 +97,21 @@ const MonitoringDokumenPerjanjianTable = () => {
                 <h1 className="mb-4 md:mb-0">Monitoring Dokumen Perjanjian</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet type={DocumentType.PERJANJIAN} />
-                    {/* <Button
+                    <Button
                         onClick={() =>
-                            router.push('/monitoring-dokumen/bulk-import')
+                            router.push(
+                                '/monitoring-dokumen/bulk-import?tab=perjanjian',
+                            )
                         }
                         variant="default">
                         Bulk Import
-                    </Button> */}
+                    </Button>
+                    <Button
+                        onClick={handleExport}
+                        variant=""
+                        className="default bg-green-700 hover:bg-green-600">
+                        Export as Excel
+                    </Button>
                 </div>
             </div>
             {error ? (
