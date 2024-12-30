@@ -67,7 +67,6 @@ const RekapPembayaranTable = () => {
     const { loading, error } = useQuery(GET_REKAP_PEMBAYARANS, {
         client,
         onCompleted: data => {
-            console.log(data.rekap_pembayarans)
             setPembayaranData(data.rekap_pembayarans)
         },
         onError: error => console.error(error),

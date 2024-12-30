@@ -13,8 +13,8 @@ import { useRouter } from 'next/navigation'
 import * as XLSX from 'xlsx'
 import { AddDataSheet } from './AddDataSheet'
 
-const GET_DOKUMEN_SPKS = gql`
-    query GetDokumenSPKs($department: String) {
+const GET_PEKERJAANS = gql`
+    query GetPekerjaans($department: String) {
         dokumen_spks(department: $department) {
             id
             tim_pemrakarsa
@@ -68,7 +68,7 @@ const MonitoringPekerjaanTable = ({ department }) => {
 
     if (!user) return null
 
-    const { loading, error, data } = useQuery(GET_DOKUMEN_SPKS, {
+    const { loading, error, data } = useQuery(GET_PEKERJAANS, {
         client,
         variables: { department }, // Pass department argument here
         onCompleted: data => {
@@ -110,7 +110,6 @@ const MonitoringPekerjaanTable = ({ department }) => {
                 }
             })
 
-            console.log(transformedData)
             setDokumenSPKData(transformedData)
         },
         onError: error => console.error(error),

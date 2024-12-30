@@ -22,7 +22,6 @@ export function AddJatuhTempoForm({ defaultValues }) {
     const form = useForm({
         resolver: zodResolver(JatuhTempoFormValidation),
     })
-    console.log(defaultValues)
 
     const onSubmit = async newData => {
         setIsProcessing(true)

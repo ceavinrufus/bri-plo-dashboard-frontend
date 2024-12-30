@@ -116,7 +116,6 @@ const MonitoringDokumenSPKTable = () => {
                 }
             })
 
-            console.log(transformedData)
             setDokumenSPKData(transformedData)
         },
         onError: error => console.error(error),
