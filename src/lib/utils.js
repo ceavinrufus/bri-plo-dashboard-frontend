@@ -217,10 +217,16 @@ export const transformDokumenSpkDataForSubmit = (previousData, data) => {
               })
             : null,
         tanggal_spk: formatDateYMD(data.tanggal_spk),
-        pic_legal_id: previousData.pic_legal?.id,
+        pic_legal_id: previousData.pic_legal
+            ? previousData.pic_legal.id
+            : data.pic_legal?.id,
         pic_legal: {
-            id: previousData.pic_legal?.id,
-            name: previousData.pic_legal?.name,
+            id: previousData.pic_legal
+                ? previousData.pic_legal.id
+                : data.pic_legal?.id,
+            name: previousData.pic_legal
+                ? previousData.pic_legal.name
+                : data.pic_legal?.name,
         },
         pic_pengadaan_id: data.pic_pengadaan
             ? JSON.parse(data.pic_pengadaan)?.id

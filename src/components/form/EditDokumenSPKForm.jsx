@@ -12,10 +12,12 @@ import { DokumenSPKFormValidation } from '@/lib/validation'
 import { PulseLoader } from 'react-spinners'
 import DokumenSPKForm from './DokumenSPKForm'
 import { transformDokumenSpkDataForSubmit } from '@/lib/utils'
+import { useAuth } from '@/hooks/auth'
 
 export function EditDokumenSPKForm({ defaultValues }) {
     const { updateDokumenSPK } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
+    const { user } = useAuth({ middleware: 'auth' })
 
     const form = useForm({
         resolver: zodResolver(DokumenSPKFormValidation),
@@ -25,7 +27,10 @@ export function EditDokumenSPKForm({ defaultValues }) {
             nomor_spk: defaultValues.nomor_spk || '',
             tanggal_spk: defaultValues.tanggal_spk || undefined,
             pelaksana_pekerjaan: defaultValues.nama_vendor || '',
-            pic_legal: defaultValues.pic_legal || { id: '', name: '' },
+            pic_legal: defaultValues.pic_legal || {
+                id: user.id,
+                name: user.name,
+            },
             tanggal_spk_diterima:
                 defaultValues.tanggal_spk_diterima || undefined,
             jangka_waktu: defaultValues.jangka_waktu || '',
@@ -54,9 +59,19 @@ export function EditDokumenSPKForm({ defaultValues }) {
 
     async function onSubmit(data) {
         setIsProcessing(true)
+
         const transformedData = transformDokumenSpkDataForSubmit(
             defaultValues,
-            data,
+            {
+                ...data,
+                pic_legal:
+                    user.tim === 'leg' && user.role !== 'admin'
+                        ? {
+                              id: user.id,
+                              name: user.name,
+                          }
+                        : null,
+            },
         )
 
         try {
