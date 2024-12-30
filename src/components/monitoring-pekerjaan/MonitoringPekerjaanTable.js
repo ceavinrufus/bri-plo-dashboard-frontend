@@ -117,7 +117,6 @@ const MonitoringPekerjaanTable = () => {
     const handleExport = () => {
         const exportData = dokumenSPKData.map(item => ({
             id: item.id,
-            tanggal_spk_diterima: item.tanggal_spk_diterima,
             tim_pemrakarsa: item.tim_pemrakarsa,
             pic_pengadaan_id: item.pic_pengadaan?.id,
             pic_pengadaan_name: item.pic_pengadaan?.name,
@@ -127,22 +126,10 @@ const MonitoringPekerjaanTable = () => {
             nilai_spk: item.spk?.amount,
             currency_spk: item.spk?.currency,
             rate_spk: item.spk?.rate,
-            jangka_waktu: item.jangka_waktu,
             pelaksana_pekerjaan: JSON.parse(item.pelaksana_pekerjaan).name,
-            alamat_pelaksana_pekerjaan: JSON.parse(item.pelaksana_pekerjaan)
-                .address,
             no_telp_pelaksana_pekerjaan: JSON.parse(item.pelaksana_pekerjaan)
                 .phone_number,
             pic_pelaksana_pekerjaan: item.pic_pelaksana_pekerjaan,
-            dokumen_pelengkap: item.dokumen_pelengkap,
-            tanggal_info_ke_vendor: item.tanggal_info_ke_vendor,
-            tanggal_pengambilan: item.tanggal_pengambilan,
-            identitas_pengambil: item.identitas_pengambil,
-            tanggal_pengembalian: item.tanggal_pengembalian,
-            dokumen_yang_dikembalikan: item.dokumen_yang_dikembalikan,
-            tkdn_percentage: item.tkdn_percentage,
-            tanggal_penyerahan_dokumen: item.tanggal_penyerahan_dokumen,
-            penerima_dokumen: item.penerima_dokumen,
             // Jaminan Uang Muka
             tanggal_diterima_jaminan_uang_muka:
                 item.dokumen_jaminans.jaminan_uang_muka?.tanggal_diterima,
@@ -215,15 +202,13 @@ const MonitoringPekerjaanTable = () => {
                 item.dokumen_jaminans.jaminan_pemeliharaan?.waktu_mulai,
             waktu_berakhir_jaminan_pemeliharaan:
                 item.dokumen_jaminans.jaminan_pemeliharaan?.waktu_berakhir,
-            pic_legal_id: item.pic_legal?.id,
-            pic_legal_name: item.pic_legal?.name,
             catatan: item.catatan,
         }))
 
         const ws = XLSX.utils.json_to_sheet(exportData)
         const wb = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(wb, ws, 'Dokumen SPK Data')
-        XLSX.writeFile(wb, 'dokumen_spk_data.xlsx')
+        XLSX.utils.book_append_sheet(wb, ws, 'Pekerjaan Data')
+        XLSX.writeFile(wb, 'pekerjaan_data.xlsx')
     }
 
     if (loading) return <div>Loading...</div>
@@ -231,7 +216,7 @@ const MonitoringPekerjaanTable = () => {
     return (
         <div>
             <div className="flex flex-col md:flex-row">
-                <h1 className="mb-4 md:mb-0">Monitoring Dokumen SPK</h1>
+                <h1 className="mb-4 md:mb-0">Monitoring Pekerjaan</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet />
                     <Button
