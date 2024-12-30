@@ -2100,6 +2100,49 @@ export const monitoringPekerjaanColumns = [
         },
         enableHiding: false,
     },
+
+    // Jatuh Tempo SPK
+    {
+        accessorKey: 'jatuh_tempo_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Jatuh Tempo SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const { calculateWorkingDays } = useContext(HariLiburContext)
+
+            const jatuhTempos = row.getValue('jatuh_tempos')
+            if (!jatuhTempos) return
+            const lastJatuhTempo = jatuhTempos[jatuhTempos.length - 1]
+
+            // const diff = calculateWorkingDays(
+            //     lastJatuhTempo?.tanggal_akhir,
+            //     row.getValue('tanggal_spk'),
+            // )
+            const diffWithToday = calculateWorkingDays(
+                new Date().toISOString().split('T')[0],
+                lastJatuhTempo?.tanggal_akhir,
+            )
+            const isOverJatuhTempo = diffWithToday < 0
+            const under45DaysLeft = diffWithToday < 45
+
+            return (
+                <div className="flex items-center">
+                    <div
+                        className={`h-4 w-4 rounded-full ${isOverJatuhTempo ? 'bg-red-500' : under45DaysLeft ? 'bg-yellow-600' : 'bg-green-500'}`}
+                    />
+                    <span className="ml-2">{`${diffWithToday} hari`}</span>
+                </div>
+            )
+        },
+        enableHiding: false,
+    },
     // Catatan
     {
         accessorKey: 'catatan',
