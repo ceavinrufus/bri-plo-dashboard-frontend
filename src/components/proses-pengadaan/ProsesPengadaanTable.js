@@ -15,6 +15,7 @@ import client from '@/lib/apolloClient'
 import { calculateMetrics } from '@/lib/utils'
 import { AddDataSheet } from './AddDataSheet'
 import { useRouter } from 'next/navigation'
+import { canManageProjects } from '@/utils/roleChecker'
 
 const GET_PENGADAANS = gql`
     query GetPengadaans($departemen: String) {
@@ -216,7 +217,7 @@ const ProsesPengadaanTable = ({ departemen }) => {
                     {/* Stats */}
                     <ProsesPengadaanStats metrics={metrics} />
 
-                    {user.departemen === 'bcp' && <ProjectsSheet />}
+                    {canManageProjects(user) && <ProjectsSheet />}
                     <AddDataSheet />
                     <Button
                         onClick={() =>

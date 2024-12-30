@@ -9,3 +9,25 @@ export const canEditThisData = (user, data) => {
     if (user.role === 'maker') return data.departemen === user.departemen
     return false
 }
+
+export const canManageProjects = user => {
+    return user.departemen === 'bcp' || user.role === 'admin'
+}
+
+export const canSeeMonitoringDokumen = user => {
+    return (
+        user.role === 'admin' ||
+        (user.departemen === 'psr' && user.tim === 'leg')
+    )
+}
+
+export const canSeeMonitoringPekerjaan = user => {
+    return user.role === 'admin' || user.tim === 'igm' || user.tim === 'bcg'
+}
+
+export const canSeeRekapPembayaran = user => {
+    return (
+        user.role === 'admin' ||
+        (user.departemen === 'psr' && user.tim === 'psg')
+    )
+}

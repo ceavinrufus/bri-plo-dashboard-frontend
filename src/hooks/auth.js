@@ -122,15 +122,16 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         if (middleware === 'auth' || middleware === 'admin') {
             if (error) {
                 logout() // Logging out if there is an error
-            } else {
-                if (
-                    window.location.pathname === '/monitoring-dokumen' &&
-                    user?.departemen !== 'psr' &&
-                    user?.role !== 'admin'
-                ) {
-                    router.push('/dashboard') // Redirecting user to dashboard if not authorized
-                }
             }
+            // else {
+            //     if (
+            //         window.location.pathname === '/monitoring-dokumen' &&
+            //         user?.departemen !== 'psr' &&
+            //         user?.role !== 'admin'
+            //     ) {
+            //         router.push('/dashboard') // Redirecting user to dashboard if not authorized
+            //     }
+            // }
         }
 
         if (middleware === 'admin' && user) {
