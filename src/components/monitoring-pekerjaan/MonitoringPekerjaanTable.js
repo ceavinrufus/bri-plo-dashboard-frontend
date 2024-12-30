@@ -1,11 +1,7 @@
 'use client'
 
 import React, { useContext } from 'react'
-import { AddDataSheet } from '../monitoring-dokumen/AddDataSheet'
-import {
-    monitoringDokumenSPKColumns,
-    monitoringPekerjaanColumns,
-} from '@/data/Columns'
+import { monitoringPekerjaanColumns } from '@/data/Columns'
 import { DataTable } from '../DataTable'
 import { DocumentType, DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
@@ -15,6 +11,7 @@ import { formatDateMY } from '@/lib/utils'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import * as XLSX from 'xlsx'
+import { AddDataSheet } from './AddDataSheet'
 
 const GET_DOKUMEN_SPKS = gql`
     query GetDokumenSPKs {
@@ -236,7 +233,7 @@ const MonitoringPekerjaanTable = () => {
             <div className="flex flex-col md:flex-row">
                 <h1 className="mb-4 md:mb-0">Monitoring Dokumen SPK</h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
-                    <AddDataSheet type={DocumentType.SPK} />
+                    <AddDataSheet />
                     <Button
                         onClick={() =>
                             router.push(

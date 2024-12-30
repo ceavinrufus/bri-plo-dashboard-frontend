@@ -7,14 +7,14 @@ import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { postDokumenSPKData } from '@/lib/actions'
 import { formatDateYMD, transformDokumenSpkDataForSubmit } from '@/lib/utils'
-import { DokumenSPKFormValidation } from '@/lib/validation'
+import { PekerjaanFormValidation } from '@/lib/validation'
 import { useContext, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import { DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
-import DokumenSPKForm from './DokumenSPKForm'
+import PekerjaanForm from './PekerjaanForm'
 
-export function AddDokumenSPKForm() {
+export function AddPekerjaanForm() {
     const { addDokumenSPK } = useContext(DokumenContext)
     const [isProcessing, setIsProcessing] = useState(false)
     const { user } = useAuth({ middleware: 'auth' })
@@ -26,24 +26,12 @@ export function AddDokumenSPKForm() {
         tanggal_spk: undefined,
         jenis_pekerjaan: '',
         pelaksana_pekerjaan: '',
-        pic_legal: {
-            id: user.id,
-            name: user.name,
-        },
-        jangka_waktu: '',
         pic_pelaksana_pekerjaan: '',
-        tanggal_info_ke_vendor: '',
-        tanggal_pengambilan: undefined,
-        identitas_pengambil: '',
-        tanggal_pengembalian: undefined,
         catatan: '',
-        tkdn_percentage: '',
-        tanggal_penyerahan_dokumen: undefined,
-        penerima_dokumen: '',
     }
 
     const form = useForm({
-        resolver: zodResolver(DokumenSPKFormValidation),
+        resolver: zodResolver(PekerjaanFormValidation),
         defaultValues,
     })
 
@@ -82,7 +70,7 @@ export function AddDokumenSPKForm() {
 
     return (
         <Form {...form}>
-            <DokumenSPKForm
+            <PekerjaanForm
                 form={form}
                 onSubmit={onSubmit}
                 defaultValues={defaultValues}>
@@ -97,7 +85,7 @@ export function AddDokumenSPKForm() {
                         'Submit'
                     )}
                 </Button>
-            </DokumenSPKForm>
+            </PekerjaanForm>
         </Form>
     )
 }

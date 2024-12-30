@@ -112,6 +112,26 @@ export const DokumenSPKFormValidation = z.object({
     catatan: z.string().nullable().optional(),
 })
 
+// Pekerjaan form validation
+export const PekerjaanFormValidation = z.object({
+    tim_pemrakarsa: z
+        .string()
+        .min(1, { message: 'Tim Pemrakarsa is required.' }),
+    nomor_spk: z.string().min(1, { message: 'Nomor SPK is required.' }),
+    tanggal_spk: z.union([z.string(), z.date()]),
+    jenis_pekerjaan: z
+        .string()
+        .min(1, { message: 'Jenis Pekerjaan is required.' }),
+    nilai_spk: z.union([z.string(), z.number()]).nullable().optional(),
+    spk_currency: z.string().nullable().optional(),
+    spk_rate: z.union([z.string(), z.number()]).nullable().optional(),
+    jangka_waktu: z.string().nullable().optional(),
+    pelaksana_pekerjaan: z.string().nullable().optional(),
+    no_telpon_pelaksana_pekerjaan: z.string().nullable().optional(),
+    pic_pelaksana_pekerjaan: z.string().nullable().optional(),
+    catatan: z.string().nullable().optional(),
+})
+
 // Dokumen Perjanjian form validation
 export const DokumenPerjanjianFormValidation = z.object({
     tanggal_permohonan_diterima: z

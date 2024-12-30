@@ -13,6 +13,7 @@ import { convertToCurrencyString } from '@/utils'
 import { EditDataSheet } from '@/components/proses-pengadaan/EditDataSheet'
 import { EditDataSheet as EditDokumenSheet } from '@/components/monitoring-dokumen/EditDataSheet'
 import { EditDataSheet as EditPembayaranSheet } from '@/components/rekap-pembayaran/EditDataSheet'
+import { EditDataSheet as EditPekerjaanSheet } from '@/components/monitoring-pekerjaan/EditDataSheet'
 import { InformationTooltip } from '@/components/InformationTooltip'
 import { formatDateDMY, getLatestDate } from '@/lib/utils'
 import {
@@ -208,10 +209,7 @@ const monitoringPekerjaanActions = (id = 'actions') => ({
                         }}>
                         Delete data dokumen
                     </DropdownMenuItem>
-                    <EditDokumenSheet
-                        type={DocumentType.SPK}
-                        defaultValues={dokumen}
-                    />
+                    <EditPekerjaanSheet defaultValues={dokumen} />
                     <EditJatuhTemposSheet defaultValues={dokumen} />
                 </DropdownMenuContent>
             </DropdownMenu>
