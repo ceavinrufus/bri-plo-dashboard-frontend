@@ -2159,7 +2159,6 @@ export const monitoringPekerjaanColumns = [
         },
         enableHiding: false,
     },
-
     // Jatuh Tempo SPK
     {
         accessorKey: 'jatuh_tempo_spk',
@@ -2193,13 +2192,29 @@ export const monitoringPekerjaanColumns = [
 
             return (
                 <div className="flex items-center">
-                    <div
-                        className={`h-4 w-4 rounded-full ${isOverJatuhTempo ? 'bg-red-500' : under45DaysLeft ? 'bg-yellow-600' : 'bg-green-500'}`}
-                    />
-                    <span className="ml-2">{`${diffWithToday} hari`}</span>
+                    {row.getValue('is_pekerjaan_selesai') ? (
+                        'Selesai'
+                    ) : diffWithToday ? (
+                        <>
+                            <div
+                                className={`h-4 w-4 rounded-full ${isOverJatuhTempo ? 'bg-red-500' : under45DaysLeft ? 'bg-yellow-600' : 'bg-green-500'}`}
+                            />
+                            <span className="ml-2">{`${diffWithToday} hari`}</span>
+                        </>
+                    ) : (
+                        ''
+                    )}
                 </div>
             )
         },
+        enableHiding: false,
+    },
+    // Is Pekerjaan Selesai
+    {
+        accessorKey: 'is_pekerjaan_selesai',
+        header: null,
+        cell: null,
+        enableSorting: false,
         enableHiding: false,
     },
     // Catatan

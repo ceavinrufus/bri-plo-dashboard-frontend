@@ -55,6 +55,7 @@ const GET_DOKUMEN_SPKS = gql`
                 waktu_mulai
             }
             catatan
+            is_pekerjaan_selesai
         }
     }
 `
@@ -268,6 +269,7 @@ const MonitoringPekerjaanTable = ({ department }) => {
                         jatuh_tempo_jaminan_pembayaran: false,
                         jatuh_tempo_jaminan_pelaksanaan: false,
                         jatuh_tempo_jaminan_pemeliharaan: false,
+                        is_pekerjaan_selesai: false,
                     }}
                     columns={monitoringPekerjaanColumns}
                     onDataFilter={setFilteredData}
