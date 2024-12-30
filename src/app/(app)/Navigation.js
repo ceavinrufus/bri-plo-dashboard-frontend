@@ -40,13 +40,13 @@ const Navigation = ({ user }) => {
                                 active={usePathname() === '/proses-pengadaan'}>
                                 Proses Pengadaan
                             </NavLink>
-                            {/* <NavLink
+                            <NavLink
                                 href="/monitoring-pekerjaan"
                                 active={
                                     usePathname() === '/monitoring-pekerjaan'
                                 }>
                                 Monitoring Pekerjaan
-                            </NavLink> */}
+                            </NavLink>
                             <NavLink
                                 href="/monitoring-dokumen"
                                 active={
@@ -139,11 +139,11 @@ const Navigation = ({ user }) => {
                             active={usePathname() === '/proses-pengadaan'}>
                             Proses Pengadaan
                         </ResponsiveNavLink>
-                        {/* <ResponsiveNavLink
+                        <ResponsiveNavLink
                             href="/monitoring-pekerjaan"
                             active={usePathname() === '/monitoring-pekerjaan'}>
                             Monitoring Pekerjaan
-                        </ResponsiveNavLink> */}
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href="/monitoring-dokumen"
                             active={usePathname() === '/monitoring-dokumen'}>

@@ -1860,6 +1860,319 @@ export const monitoringDokumenSPKColumns = [
     monitoringDokumenSPKActions('actions4'),
 ]
 
+export const monitoringPekerjaanColumns = [
+    // Jatuh Tempos
+    {
+        accessorKey: 'jatuh_tempos',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
+    // Tanggal Penyerahan Dokumen
+    {
+        accessorKey: 'tanggal_penyerahan_dokumen',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
+    // Dokumen Jaminans
+    {
+        accessorKey: 'dokumen_jaminans',
+        header: () => null, // No header for the shadow column
+        cell: () => null, // No cell rendering for the shadow column
+        enableSorting: false,
+        enableHiding: false, // Hides the column
+    },
+    // Select
+    {
+        id: 'select',
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && 'indeterminate')
+                }
+                onCheckedChange={value =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={value => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    // Nomor SPK
+    {
+        accessorKey: 'nomor_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nomor SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('nomor_spk')}</div>,
+    },
+    // Tanggal SPK
+    {
+        accessorKey: 'tanggal_spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{formatDateDMY(row.getValue('tanggal_spk'))}</div>
+        ),
+    },
+    // Tim
+    {
+        accessorKey: 'tim_pemrakarsa',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tim Pemrakarsa
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div className="uppercase text-center">
+                {row.getValue('tim_pemrakarsa')}
+            </div>
+        ),
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id))
+        },
+    },
+    // Jenis Pekerjaan
+    {
+        accessorKey: 'jenis_pekerjaan',
+        header: ({ column }) => (
+            <div className="w-72 md:w-96">
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Jenis Pekerjaan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        ),
+        cell: ({ row }) => <div>{row.getValue('jenis_pekerjaan')}</div>,
+        enableHiding: false,
+    },
+    // Pelaksana Pekerjaan
+    {
+        accessorKey: 'pelaksana_pekerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>{JSON.parse(row.getValue('pelaksana_pekerjaan'))?.name}</div>
+        ),
+    },
+    // Nilai SPK
+    {
+        accessorKey: 'spk',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Nilai SPK
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {convertToCurrencyString(
+                    row.getValue('spk')?.amount,
+                    row.getValue('spk')?.currency,
+                )}
+            </div>
+        ),
+    },
+    // PIC
+    {
+        accessorKey: 'pic_pengadaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC Pengadaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic_pengadaan')?.name}</div>,
+    },
+    monitoringDokumenSPKActions('actions1'),
+    // Keterangan JT Akhir
+    {
+        accessorKey: 'keterangan_jt_akhir',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Keterangan JT Akhir
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const jatuhTempos = row.getValue('jatuh_tempos')
+            if (!jatuhTempos) return
+            const lastJatuhTempo = jatuhTempos[jatuhTempos.length - 1]
+            return <div>{lastJatuhTempo?.keterangan}</div>
+        },
+        enableHiding: false,
+    },
+    // Tanggal Mulai JT Akhir
+    {
+        accessorKey: 'tanggal_mulai_jt_akhir',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Mulai JT Akhir
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const jatuhTempos = row.getValue('jatuh_tempos')
+            if (!jatuhTempos) return
+            const lastJatuhTempo = jatuhTempos[jatuhTempos.length - 1]
+            return <div>{formatDateDMY(lastJatuhTempo?.tanggal_mulai)}</div>
+        },
+        enableHiding: false,
+    },
+    // Tanggal Akhir JT Akhir
+    {
+        accessorKey: 'tanggal_akhir_jt_akhir',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                Tanggal Akhir JT Akhir
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const jatuhTempos = row.getValue('jatuh_tempos')
+            if (!jatuhTempos) return
+            const lastJatuhTempo = jatuhTempos[jatuhTempos.length - 1]
+            return <div>{formatDateDMY(lastJatuhTempo?.tanggal_akhir)}</div>
+        },
+        enableHiding: false,
+    },
+    // Catatan
+    {
+        accessorKey: 'catatan',
+        header: ({ column }) => (
+            <div className="w-72 md:w-96">
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }>
+                    Catatan
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        ),
+        cell: ({ row }) => <div>{row.getValue('catatan')}</div>,
+        enableSorting: false,
+    },
+    monitoringDokumenSPKActions('actions2'),
+    // Jaminan Uang Muka
+    dokumenSPKJaminanColumn('jaminan_uang_muka'),
+    // Jaminan Pelaksanaan
+    dokumenSPKJaminanColumn('jaminan_pembayaran'),
+    // Jaminan Pemeliharaan
+    dokumenSPKJaminanColumn('jaminan_pelaksanaan'),
+    // Jaminan Pemeliharaan
+    dokumenSPKJaminanColumn('jaminan_pemeliharaan'),
+    // Jatuh Tempo Jaminan Uang Muka
+    jatuhTempoJaminan('jaminan_uang_muka'),
+    // Jatuh Tempo Jaminan Pembayaran
+    jatuhTempoJaminan('jaminan_pembayaran'),
+    // Jatuh Tempo Jaminan Pelaksanaan
+    jatuhTempoJaminan('jaminan_pelaksanaan'),
+    // Jatuh Tempo Jaminan Pemeliharaan
+    jatuhTempoJaminan('jaminan_pemeliharaan'),
+    // PIC Pelaksana Pekerjaan
+    {
+        accessorKey: 'pic_pelaksana_pekerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                PIC Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <div>{row.getValue('pic_pelaksana_pekerjaan')}</div>,
+    },
+    // Nomor Telepon Pelaksana Pekerjaan
+    {
+        accessorKey: 'no_telp_pelaksana_pekerjaan',
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() =>
+                    column.toggleSorting(column.getIsSorted() === 'asc')
+                }>
+                No Telp Pelaksana Pekerjaan
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => (
+            <div>
+                {JSON.parse(row.getValue('pelaksana_pekerjaan')).phone_number}
+            </div>
+        ),
+    },
+    // Actions
+    monitoringDokumenSPKActions('actions4'),
+]
+
 export const monitoringDokumenJaminanColumns = [
     // Dokumen Jaminans
     {
