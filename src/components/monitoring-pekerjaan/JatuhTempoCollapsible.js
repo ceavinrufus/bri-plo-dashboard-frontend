@@ -73,13 +73,14 @@ const Toolbar = ({ data }) => {
 
     const onDelete = async () => {
         try {
-            await deleteJatuhTempoData(data.kode)
+            await deleteJatuhTempoData(data.id)
 
             toast({
                 title: 'Success',
                 description: 'Data has been deleted successfully!',
                 status: 'success',
             })
+            window.location.reload()
             // removeProject(data.kode)
         } catch (error) {
             toast({

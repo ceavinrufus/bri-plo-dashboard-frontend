@@ -36,6 +36,7 @@ export function EditJatuhTempoForm({ defaultValues }) {
                 description: 'Data has been submitted successfully!',
                 status: 'success',
             })
+            window.location.reload()
             // updateProject(defaultValues.kode, response.data)
         } catch (error) {
             toast({
