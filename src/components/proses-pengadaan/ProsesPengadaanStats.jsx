@@ -11,9 +11,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import TotalWorksPieChart from '../graph/TotalWorksPieChart'
-import ProsesPengadaanBarChart from '../graph/ProsesPengadaanBarChart'
-import DashboardGraph from '../graph/DashboardGraph'
+import PengadaanGraph from '../graph/PengadaanGraph'
 
 export function ProsesPengadaanStats({ metrics }) {
     return (
@@ -31,7 +29,7 @@ export function ProsesPengadaanStats({ metrics }) {
                     </DrawerHeader>
 
                     <div className="mx-4 gap-4">
-                        <DashboardGraph metrics={metrics} />
+                        <PengadaanGraph metrics={metrics} />
                     </div>
                     <DrawerFooter>
                         <DrawerClose asChild>
