@@ -71,8 +71,8 @@ export const ProjectFormValidation = z.object({
 // Jatuh Tempo form validation
 export const JatuhTempoFormValidation = z.object({
     keterangan: z.string().min(1, { message: 'Keterangan is required.' }),
-    tanggal_mulai: z.union([z.string(), z.date()]).nullable().optional(),
-    tanggal_akhir: z.union([z.string(), z.date()]).nullable().optional(),
+    tanggal_mulai: z.union([z.string(), z.date()]),
+    tanggal_akhir: z.union([z.string(), z.date()]),
 })
 
 // Dokumen SPK form validation

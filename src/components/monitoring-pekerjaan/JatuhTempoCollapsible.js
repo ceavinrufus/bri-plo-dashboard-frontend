@@ -9,8 +9,7 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from '@/components/ui/collapsible'
-import { ProjectContext } from '../context/ProjectContext'
-import { deleteJatuhTempoData, deleteProjectData } from '@/lib/actions'
+import { deleteJatuhTempoData } from '@/lib/actions'
 import { toast } from '@/hooks/use-toast'
 import { JatuhTempoEditDialog } from './JatuhTempoEditDialog'
 
@@ -35,16 +34,22 @@ export function JatuhTempoCollapsible({ defaultValues }) {
                 </CollapsibleTrigger>
             </div>
             <div className="rounded-md border px-4 py-3 font-mono flex text-sm items-center justify-between">
-                <div className="text-sm">
-                    <p>Keterangan: {jatuhTempos[0].keterangan}</p>
-                    <p className="">
-                        Tanggal mulai: {jatuhTempos[0].tanggal_mulai}
-                    </p>
-                    <p className="">
-                        Tanggal akhir: {jatuhTempos[0].tanggal_akhir}
-                    </p>
-                </div>
-                <Toolbar data={jatuhTempos[0]} />
+                {jatuhTempos.length > 0 ? (
+                    <>
+                        <div className="text-sm">
+                            <p>Keterangan: {jatuhTempos[0].keterangan}</p>
+                            <p className="">
+                                Tanggal mulai: {jatuhTempos[0].tanggal_mulai}
+                            </p>
+                            <p className="">
+                                Tanggal akhir: {jatuhTempos[0].tanggal_akhir}
+                            </p>
+                        </div>
+                        <Toolbar data={jatuhTempos[0]} />
+                    </>
+                ) : (
+                    <p className="text-sm">No data available</p>
+                )}
             </div>
             <CollapsibleContent className="space-y-2">
                 {jatuhTempos.slice(1).map((jt, id) => (

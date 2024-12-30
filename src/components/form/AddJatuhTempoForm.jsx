@@ -57,9 +57,12 @@ export function AddJatuhTempoForm({ defaultValues }) {
         <div className="">
             <JatuhTempoCollapsible defaultValues={defaultValues} />
             <Form {...form}>
+                <h3 className="text-sm font-semibold mt-6 mb-4">
+                    Tambah Tahapan Jatuh Tempo
+                </h3>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6 mt-6">
+                    className="space-y-6">
                     <CustomFormField
                         fieldType={FormFieldType.INPUT}
                         control={form.control}
