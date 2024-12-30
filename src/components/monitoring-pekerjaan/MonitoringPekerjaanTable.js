@@ -14,8 +14,8 @@ import * as XLSX from 'xlsx'
 import { AddDataSheet } from './AddDataSheet'
 
 const GET_DOKUMEN_SPKS = gql`
-    query GetDokumenSPKs {
-        dokumen_spks {
+    query GetDokumenSPKs($department: String) {
+        dokumen_spks(department: $department) {
             id
             tim_pemrakarsa
             pic_pengadaan {
@@ -59,7 +59,7 @@ const GET_DOKUMEN_SPKS = gql`
     }
 `
 
-const MonitoringPekerjaanTable = () => {
+const MonitoringPekerjaanTable = ({ department }) => {
     const { dokumenSPKData, setDokumenSPKData } = useContext(DokumenContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
@@ -69,6 +69,7 @@ const MonitoringPekerjaanTable = () => {
 
     const { loading, error, data } = useQuery(GET_DOKUMEN_SPKS, {
         client,
+        variables: { department }, // Pass department argument here
         onCompleted: data => {
             const transformedData = data.dokumen_spks.map(spk => {
                 const transformedDokumenJaminans = spk.dokumen_jaminans.reduce(
@@ -216,7 +217,9 @@ const MonitoringPekerjaanTable = () => {
     return (
         <div>
             <div className="flex flex-col md:flex-row">
-                <h1 className="mb-4 md:mb-0">Monitoring Pekerjaan</h1>
+                <h1 className="mb-4 md:mb-0">
+                    Monitoring Pekerjaan {department.toUpperCase()}
+                </h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     <AddDataSheet />
                     <Button
