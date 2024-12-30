@@ -7,11 +7,13 @@ import { DocumentType, DokumenContext } from '../context/DokumenContext'
 import { useAuth } from '@/hooks/auth'
 import { gql, useQuery } from '@apollo/client'
 import client from '@/lib/apolloClient'
-import { formatDateMY } from '@/lib/utils'
+import { calculateJatuhTempoMetrics, formatDateMY } from '@/lib/utils'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import * as XLSX from 'xlsx'
 import { AddDataSheet } from './AddDataSheet'
+import { HariLiburContext } from '../context/HariLiburContext'
+import { MonitoringPekerjaanStats } from './MonitoringPekerjaanStats'
 
 const GET_PEKERJAANS = gql`
     query GetPekerjaans($department: String) {
@@ -61,6 +63,7 @@ const GET_PEKERJAANS = gql`
 `
 
 const MonitoringPekerjaanTable = ({ department }) => {
+    const { calculateWorkingDays } = useContext(HariLiburContext)
     const { dokumenSPKData, setDokumenSPKData } = useContext(DokumenContext)
     const { user } = useAuth({ middleware: 'auth' })
     const [filteredData, setFilteredData] = React.useState([])
@@ -114,6 +117,10 @@ const MonitoringPekerjaanTable = ({ department }) => {
         },
         onError: error => console.error(error),
     })
+    const metrics = calculateJatuhTempoMetrics(
+        filteredData,
+        calculateWorkingDays,
+    )
 
     const handleExport = () => {
         const exportData = dokumenSPKData.map(item => ({
@@ -221,6 +228,9 @@ const MonitoringPekerjaanTable = ({ department }) => {
                     Monitoring Pekerjaan {department.toUpperCase()}
                 </h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
+                    {/* Stats */}
+                    <MonitoringPekerjaanStats metrics={metrics} />
+
                     <AddDataSheet />
                     <Button
                         onClick={() =>

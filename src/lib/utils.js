@@ -369,6 +369,54 @@ export function getLatestDate(dates) {
     return latestDate
 }
 
+export const calculateJatuhTempoMetrics = (
+    pekerjaanData,
+    calculateWorkingDays,
+) => {
+    const today = new Date().toISOString().split('T')[0]
+
+    const metrics = {
+        selesai: 0,
+        overdue: 0,
+        under45Days: 0,
+        overOrEqual45Days: 0,
+        not_started: 0,
+    }
+
+    pekerjaanData.forEach(pekerjaan => {
+        if (pekerjaan.is_pekerjaan_selesai) {
+            metrics.selesai += 1
+            return
+        }
+
+        const jatuhTempos = pekerjaan.jatuh_tempos || []
+        if (jatuhTempos.length === 0) {
+            metrics.not_started += 1
+            return
+        }
+
+        const lastJatuhTempo = jatuhTempos[jatuhTempos.length - 1]
+        const diffWithToday = calculateWorkingDays(
+            today,
+            lastJatuhTempo.tanggal_akhir,
+        )
+
+        if (diffWithToday < 0) {
+            metrics.overdue += 1
+        } else if (diffWithToday < 45) {
+            metrics.under45Days += 1
+        } else {
+            metrics.overOrEqual45Days += 1
+        }
+    })
+
+    return {
+        ...metrics,
+        totalWorks:
+            pekerjaanData.length - metrics.selesai - metrics.not_started,
+    }
+}
+
 export const calculateMetrics = data => {
     const totalHPS = data.reduce(
         (sum, item) => sum + item.hps?.amount * item.hps?.rate || 0,

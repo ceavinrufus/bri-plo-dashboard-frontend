@@ -11,9 +11,9 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
-import PengadaanGraph from '../graph/PengadaanGraph'
+import PekerjaanGraph from '../graph/PekerjaanGraph'
 
-export function ProsesPengadaanStats({ metrics }) {
+export function MonitoringPekerjaanStats({ metrics }) {
     return (
         <Drawer>
             <DrawerTrigger asChild>
@@ -22,7 +22,7 @@ export function ProsesPengadaanStats({ metrics }) {
             <DrawerContent>
                 <div className="mx-auto w-full">
                     <DrawerHeader>
-                        <DrawerTitle>Statistik pengadaan</DrawerTitle>
+                        <DrawerTitle>Statistik pekerjaan</DrawerTitle>
                         <DrawerDescription>
                             Anda bisa mengganti filter yang ada untuk melihat
                             statistik yang berbeda
@@ -30,7 +30,7 @@ export function ProsesPengadaanStats({ metrics }) {
                     </DrawerHeader>
 
                     <div className="mx-4 gap-4">
-                        <PengadaanGraph metrics={metrics} />
+                        <PekerjaanGraph metrics={metrics} />
                     </div>
                     <DrawerFooter>
                         <DrawerClose asChild>

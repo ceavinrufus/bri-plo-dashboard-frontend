@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import DashboardMetrics from '@/components/graph/DashboardMetrics'
 import { fetchDepartmentData } from '@/lib/actions'
 import DashboardGraph from '@/components/graph/DashboardGraph'
-import { calculateMetrics } from '@/lib/utils'
+import { calculateJatuhTempoMetrics, calculateMetrics } from '@/lib/utils'
 import { PieChart, Pie, Tooltip } from 'recharts'
 import { HariLiburContext } from '@/components/context/HariLiburContext'
 
@@ -60,51 +60,6 @@ const Dashboard = () => {
     const [metrics, setMetrics] = useState(null)
     const { calculateWorkingDays } = useContext(HariLiburContext)
 
-    const calculateJatuhTempoMetrics = pekerjaanData => {
-        const today = new Date().toISOString().split('T')[0]
-
-        const metrics = {
-            selesai: 0,
-            overdue: 0,
-            under45Days: 0,
-            overOrEqual45Days: 0,
-            not_started: 0,
-        }
-
-        pekerjaanData.forEach(pekerjaan => {
-            if (pekerjaan.is_pekerjaan_selesai) {
-                metrics.selesai += 1
-                return
-            }
-
-            const jatuhTempos = pekerjaan.jatuh_tempos || []
-            if (jatuhTempos.length === 0) {
-                metrics.not_started += 1
-                return
-            }
-
-            const lastJatuhTempo = jatuhTempos[jatuhTempos.length - 1]
-            const diffWithToday = calculateWorkingDays(
-                today,
-                lastJatuhTempo.tanggal_akhir,
-            )
-
-            if (diffWithToday < 0) {
-                metrics.overdue += 1
-            } else if (diffWithToday < 45) {
-                metrics.under45Days += 1
-            } else {
-                metrics.overOrEqual45Days += 1
-            }
-        })
-
-        return {
-            ...metrics,
-            totalWorks:
-                pekerjaanData.length - metrics.selesai - metrics.not_started,
-        }
-    }
-
     useEffect(() => {
         const fetchData = async () => {
             const departmentsData = await fetchDepartmentData()
@@ -155,8 +110,10 @@ const Dashboard = () => {
 
             pekerjaansResults.forEach((result, index) => {
                 const departmentData = result.data?.dokumen_spks || []
-                const departmentMetrics =
-                    calculateJatuhTempoMetrics(departmentData)
+                const departmentMetrics = calculateJatuhTempoMetrics(
+                    departmentData,
+                    calculateWorkingDays,
+                )
                 newMetrics[departmentCodes[index]] = {
                     ...newMetrics[departmentCodes[index]],
                     pekerjaan: {
@@ -167,8 +124,10 @@ const Dashboard = () => {
             })
 
             const allPengadaanMetrics = calculateMetrics(allPengadaanData)
-            const allPekerjaanMetrics =
-                calculateJatuhTempoMetrics(allPekerjaanData)
+            const allPekerjaanMetrics = calculateJatuhTempoMetrics(
+                allPekerjaanData,
+                calculateWorkingDays,
+            )
 
             setMetrics({
                 ...newMetrics,
