@@ -29,6 +29,9 @@ const MonitoringPekerjaan = () => {
                                 className="space-y-4">
                                 <div className="w-full overflow-x-auto pb-2">
                                     <TabsList>
+                                        <TabsTrigger value="all">
+                                            All
+                                        </TabsTrigger>
                                         <TabsTrigger value="igp">
                                             IGP
                                         </TabsTrigger>
@@ -38,9 +41,13 @@ const MonitoringPekerjaan = () => {
                                     </TabsList>
                                 </div>
 
-                                <MonitoringPekerjaanTable
-                                    department={activeTab}
-                                />
+                                {activeTab === 'all' ? (
+                                    <MonitoringPekerjaanTable />
+                                ) : (
+                                    <MonitoringPekerjaanTable
+                                        department={activeTab}
+                                    />
+                                )}
                             </Tabs>
                         ) : (
                             'You have no access to see this page'

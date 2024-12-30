@@ -73,7 +73,7 @@ const MonitoringPekerjaanTable = ({ department }) => {
 
     const { loading, error, data } = useQuery(GET_PEKERJAANS, {
         client,
-        variables: { department }, // Pass department argument here
+        variables: department ? { department } : {}, // Include only if department is defined
         onCompleted: data => {
             const transformedData = data.dokumen_spks.map(spk => {
                 const transformedDokumenJaminans = spk.dokumen_jaminans.reduce(
@@ -225,7 +225,7 @@ const MonitoringPekerjaanTable = ({ department }) => {
         <div>
             <div className="flex flex-col md:flex-row">
                 <h1 className="mb-4 md:mb-0">
-                    Monitoring Pekerjaan {department.toUpperCase()}
+                    Monitoring Pekerjaan {department?.toUpperCase()}
                 </h1>
                 <div className="flex gap-2 ml-auto flex-wrap">
                     {/* Stats */}
