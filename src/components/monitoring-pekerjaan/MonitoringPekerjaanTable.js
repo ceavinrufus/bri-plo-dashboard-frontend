@@ -37,6 +37,7 @@ const GET_DOKUMEN_SPKS = gql`
             pelaksana_pekerjaan
             pic_pelaksana_pekerjaan
             jatuh_tempos {
+                id
                 keterangan
                 tanggal_mulai
                 tanggal_akhir

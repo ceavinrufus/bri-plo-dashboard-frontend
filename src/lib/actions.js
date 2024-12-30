@@ -641,3 +641,61 @@ export const deleteRekapPembayaranData = async rekapPembayaranId => {
         throw error
     }
 }
+
+// Define the function to fetch jatuh tempo dokumen SPK data
+export const fetchJatuhTempoData = async () => {
+    try {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+        const response = await axios.get(
+            `${backendUrl}/api/jatuh-tempo-dokumen-spk`,
+        )
+        return response.data
+    } catch (error) {
+        console.error('Error fetching jatuh tempo dokumen SPK data:', error)
+        throw error
+    }
+}
+
+// Define the function to post jatuh tempo dokumen SPK data
+export const postJatuhTempoData = async data => {
+    try {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+        const response = await axios.post(
+            `${backendUrl}/api/jatuh-tempo-dokumen-spk/store`,
+            data,
+        )
+        return response.data
+    } catch (error) {
+        console.error('Error posting jatuh tempo dokumen SPK data:', error)
+        throw error
+    }
+}
+
+// Define the function to update jatuh tempo dokumen SPK data
+export const updateJatuhTempoData = async (jatuhTempoDokumenSpkId, data) => {
+    try {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+        const response = await axios.put(
+            `${backendUrl}/api/jatuh-tempo-dokumen-spk/update/${jatuhTempoDokumenSpkId}`,
+            data,
+        )
+        return response.data
+    } catch (error) {
+        console.error('Error updating jatuh tempo dokumen SPK data:', error)
+        throw error
+    }
+}
+
+// Define the function to delete jatuh tempo dokumen SPK data
+export const deleteJatuhTempoData = async jatuhTempoDokumenSpkId => {
+    try {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+        const response = await axios.delete(
+            `${backendUrl}/api/jatuh-tempo-dokumen-spk/delete/${jatuhTempoDokumenSpkId}`,
+        )
+        return response.data
+    } catch (error) {
+        console.error('Error deleting jatuh tempo dokumen SPK data:', error)
+        throw error
+    }
+}

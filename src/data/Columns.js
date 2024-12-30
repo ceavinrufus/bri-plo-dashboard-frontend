@@ -34,6 +34,7 @@ import {
 } from '@/components/context/DokumenContext'
 import { PembayaranContext } from '@/components/context/PembayaranContext'
 import { EditUserDialog } from '@/components/EditUserDialog'
+import { EditJatuhTemposSheet } from '@/components/monitoring-pekerjaan/EditJatuhTemposSheet'
 
 const prosesPengadaanActions = (id = 'actions') => ({
     id,
@@ -152,6 +153,66 @@ const monitoringDokumenSPKActions = (id = 'actions') => ({
                         type={DocumentType.SPK}
                         defaultValues={dokumen}
                     />
+                </DropdownMenuContent>
+            </DropdownMenu>
+        )
+    },
+})
+
+const monitoringPekerjaanActions = (id = 'actions') => ({
+    id,
+    enableHiding: false,
+    cell: ({ row }) => {
+        const dokumen = row.original
+        const { removeDokumenSPK } = useContext(DokumenContext)
+
+        return (
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                        onClick={() =>
+                            navigator.clipboard.writeText(dokumen.nomor_spk)
+                        }>
+                        Salin nomor SPK
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={async () => {
+                            try {
+                                await deleteDokumenSPKData(dokumen?.id)
+
+                                toast({
+                                    title: 'Success',
+                                    description:
+                                        'Data has been deleted successfully!',
+                                    status: 'success',
+                                })
+                                removeDokumenSPK(dokumen?.id)
+                            } catch (error) {
+                                toast({
+                                    title: 'Error',
+                                    description:
+                                        error.response?.data?.message ||
+                                        'An error occurred while deleting data.',
+                                    status: 'error',
+                                })
+                            }
+                        }}>
+                        Delete data dokumen
+                    </DropdownMenuItem>
+                    <EditDokumenSheet
+                        type={DocumentType.SPK}
+                        defaultValues={dokumen}
+                    />
+                    <EditJatuhTemposSheet defaultValues={dokumen} />
                 </DropdownMenuContent>
             </DropdownMenu>
         )
@@ -2036,7 +2097,7 @@ export const monitoringPekerjaanColumns = [
         ),
         cell: ({ row }) => <div>{row.getValue('pic_pengadaan')?.name}</div>,
     },
-    monitoringDokumenSPKActions('actions1'),
+    monitoringPekerjaanActions('actions1'),
     // Keterangan JT Akhir
     {
         accessorKey: 'keterangan_jt_akhir',
@@ -2161,7 +2222,7 @@ export const monitoringPekerjaanColumns = [
         cell: ({ row }) => <div>{row.getValue('catatan')}</div>,
         enableSorting: false,
     },
-    monitoringDokumenSPKActions('actions2'),
+    monitoringPekerjaanActions('actions2'),
     // Jaminan Uang Muka
     dokumenSPKJaminanColumn('jaminan_uang_muka'),
     // Jaminan Pelaksanaan
@@ -2213,7 +2274,7 @@ export const monitoringPekerjaanColumns = [
         ),
     },
     // Actions
-    monitoringDokumenSPKActions('actions4'),
+    monitoringPekerjaanActions('actions3'),
 ]
 
 export const monitoringDokumenJaminanColumns = [

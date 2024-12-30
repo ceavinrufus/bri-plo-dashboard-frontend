@@ -68,6 +68,13 @@ export const ProjectFormValidation = z.object({
     jenis: z.string().min(3, { message: 'Minimum 3 characters.' }),
 })
 
+// Jatuh Tempo form validation
+export const JatuhTempoFormValidation = z.object({
+    keterangan: z.string().min(1, { message: 'Keterangan is required.' }),
+    tanggal_mulai: z.union([z.string(), z.date()]).nullable().optional(),
+    tanggal_akhir: z.union([z.string(), z.date()]).nullable().optional(),
+})
+
 // Dokumen SPK form validation
 export const DokumenSPKFormValidation = z.object({
     tanggal_spk_diterima: z.union([z.string(), z.date()]).nullable().optional(),
