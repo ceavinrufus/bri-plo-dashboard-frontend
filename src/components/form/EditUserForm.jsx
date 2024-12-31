@@ -102,12 +102,14 @@ export function EditUserForm({ defaultValues }) {
                     ))}
                 </CustomFormField>
                 <CustomFormField
-                    fieldType={FormFieldType.INPUT}
+                    fieldType={FormFieldType.SELECT}
                     control={form.control}
                     name="role"
-                    label="Role"
-                    placeholder="Enter role"
-                />
+                    label="Role">
+                    <SelectItem value="admin">Admin</SelectItem>
+                    <SelectItem value="team-admin">Team Admin</SelectItem>
+                    <SelectItem value="maker">Maker</SelectItem>
+                </CustomFormField>
                 <Button type="submit">
                     {isProcessing ? (
                         <PulseLoader
